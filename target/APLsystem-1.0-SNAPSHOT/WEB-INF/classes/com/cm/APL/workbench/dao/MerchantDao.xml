@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cm.APL.workbench.dao.MerchantDao">
+
+    <select id="getMerchantList" resultType="Merchant">
+        select mid,mname from merchant
+    </select>
+
+    <insert id="save">
+        insert into merchant(
+            mid,
+            mname,
+            mage,
+            maddress,
+            memail,
+            mphone,
+            description,
+            createBy,
+            createDate,
+            company
+        )
+        values(
+#{mid},
+#{mname},
+#{mage},
+#{maddress},
+#{memail},
+#{mphone},
+#{description},
+#{createBy},
+#{createDate},
+#{company}
+        )
+    </insert>
+
+    <select id="getTotalByCondition" resultType="int">
+         select count(*)
+         from merchant
+        <where>
+
+            <if test="mname!=null and mname!=''">
+
+                mname like '%' #{mname} '%'
+
+            </if>
+
+            <if test="mphone!=null and mphone!=''">
+
+                and mphone like '%' #{mphone} '%'
+
+            </if>
+
+            <if test="maddress!=null and maddress!=''">
+
+                and maddress like '%' #{maddress} '%'
+
+            </if>
+
+            <if test="description!=null and description!=''">
+
+                and description like '%' #{description} '%'
+
+            </if>
+
+        </where>
+    </select>
+
+    <select id="getMerchantListByCondition" resultType="Merchant">
+        select mname,mphone,maddress,description,createDate from merchant
+        <where>
+
+            <if test="mname!=null and mname!=''">
+
+                mname like '%' #{mname} '%'
+
+            </if>
+
+            <if test="mphone!=null and mphone!=''">
+
+                and mphone like '%' #{mphone} '%'
+
+            </if>
+
+            <if test="maddress!=null and maddress!=''">
+
+                and maddress like '%' #{maddress} '%'
+
+            </if>
+
+            <if test="description!=null and description!=''">
+
+                and description like '%' #{description} '%'
+
+            </if>
+
+        </where>
+        order by createDate desc
+        limit #{skipCount},#{pageSize}
+    </select>
+
+</mapper>
