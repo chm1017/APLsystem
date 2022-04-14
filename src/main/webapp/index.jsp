@@ -7,10 +7,16 @@
 <head>
 	<base href="<%=basePath%>">
 <meta charset="UTF-8">
+	<title></title>
 </head>
 <body>
 	<script type="text/javascript">
 		document.location.href = "login.jsp";
+
+		// nihao
+
+
+
 	</script>
 </body>
 </html>
