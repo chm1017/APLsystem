@@ -12,11 +12,6 @@
 <body>
 	<script type="text/javascript">
 		document.location.href = "login.jsp";
-
-		// nihao
-
-
-
 	</script>
 </body>
 </html>
