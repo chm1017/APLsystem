@@ -9,32 +9,176 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<base href="<%=basePath%>">
 <meta charset="UTF-8">
 
-<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<link href="../../jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 
-<script type="text/javascript" src="../../jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="../../jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
 
 <script type="text/javascript">
 
 	$(function(){
-		
+
+		pageList(1, 2);
 		//定制字段
 		$("#definedColumns > li").click(function(e) {
 			//防止下拉菜单消失
 	        e.stopPropagation();
 	    });
-		
+		//为创建按钮绑定事件，打开添加操作的模态窗口
+		$("#addBtn").click(function () {
+			//走后台，目的是为了取得用户信息列表，为所有者下拉框铺值
+			$.ajax({
+				url : "workbench/driver/getUserList.do",
+				type : "get",
+				dataType : "json",
+				success : function (data) {
+					var html = "<option></option>";
+					//遍历出来的每一个n，就是每一个user对象
+					$.each(data,function (i,n) {
+
+						html += "<option value='"+n.id+"'>"+n.name+"</option>";
+
+					})
+					$("#create-createBy").html(html);
+
+					//取得当前登录用户的id
+					//在js中使用el表达式，el表达式一定要套用在字符串中
+					var id = "${user.id}";
+					$("#create-createBy").val(id);
+					//所有者下拉框处理完毕后，展现模态窗口
+					$("#createDriverModal").modal("show");
+
+				}
+			})
+		})
+		//为保存按钮绑定事件，执行添加操作
+		$("#saveBtn").click(function () {
+
+			$.ajax({
+
+				url : "workbench/driver/save.do",
+				data : {
+
+					"createBy" : $.trim($("#create-createBy").val()),
+					"dname" : $.trim($("#create-dname").val()),
+					"dage" : $.trim($("#create-dage").val()),
+					"dphone" : $.trim($("#create-dphone").val()),
+					"daddress" : $.trim($("#create-daddress").val()),
+					"idNumber" : $.trim($("#create-idNumber").val()),
+					"dplace" : $.trim($("#create-dplace").val()),
+					"driveId" : $.trim($("#create-driveId").val()),
+					"stage" : $.trim($("#create-stage").val())
+				},
+				type : "post",
+				dataType : "json",
+				success : function (data) {
+					if(data.success){
+
+						pageList(1,$("#driverPage").bs_pagination('getOption', 'rowsPerPage'));
+
+						$("#driverAddForm")[0].reset();
+
+						//关闭添加操作的模态窗口
+						$("#createDriverModal").modal("hide");
+						// alert("添加陈工")
+
+					}else{
+						alert("添加商户信息失败");
+					}
+
+				}
+			})
+
+		})
+		//为全选的复选框绑定事件，触发全选操作
+		$("#qx").click(function () {
+
+			$("input[name=xz]").prop("checked",this.checked);
+
+		})
+		$("#productBody").on("click",$("input[name=xz]"),function () {
+
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+
+		})
+
 	});
-	
+	function pageList(pageNo,pageSize) {
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+
+		$.ajax({
+
+			url : "workbench/driver/pageList.do",
+			data : {
+
+				"pageNo" : pageNo,
+				"pageSize" : pageSize
+
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data.dataList,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><input type="checkbox" name="xz" value="'+n.did+'"/></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.mid+'\';">'+n.dname+'</a></td>';
+					html += '<td>'+n.dage+'</td>';
+					html += '<td>'+n.dphone+'</td>';
+					html += '<td>'+n.daddress+'</td>';
+					html += '<td>'+n.stage+'</td>';
+					html += '<td>'+n.dplace+'</td>';
+					html += '</tr>';
+
+				})
+				// alert(html);
+
+				$("#driverBody").html(html);
+
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#driverPage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					//该回调函数时在，点击分页组件的时候触发的
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+			}
+		})
+
+	}
+
+
 </script>
 </head>
 <body>
 
 	<!-- 创建司机的模态窗口 -->
-	<div class="modal fade" id="createCustomerModal" role="dialog">
+	<div class="modal fade" id="createDriverModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -44,15 +188,13 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<h4 class="modal-title" id="myModalLabel1">创建司机</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-horizontal" role="form">
+					<form class="form-horizontal" role="form" id="driverAddForm">
 					
 						<div class="form-group">
 							<label for="create-createBy" class="col-sm-2 control-label">创建人<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-createBy">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+
 								</select>
 							</div>
 							<label for="create-dname" class="col-sm-2 control-label">司机姓名<span style="font-size: 15px; color: red;">*</span></label>
@@ -115,7 +257,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+					<button type="button" class="btn btn-primary" id="saveBtn">保存</button>
 				</div>
 			</div>
 		</div>
@@ -258,81 +400,34 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			</div> -->
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
-				  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createCustomerModal"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				
 			</div>
 			<div style="position: relative;top: 10px;">
-				<table class="table table-hover">
+				<table class="table table-hover" >
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="qx" /></td>
 							<td>姓名</td>
 							<td>年龄</td>
 							<td>电话</td>
 							<td>地址</td>
-							<td>司机所属网点</td>
+
 							<td>状态</td>
+							<td>司机所属网点</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>
-							<td>zhangsan</td>
-							<td>010-84846003</td>
-							<td>http://www.bjpowernode.com</td>
-							<td>010-84846003</td>
-							<td>66</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点</a></td>
-                            <td>zhangsan</td>
-                            <td>010-84846003</td>
-                            <td>http://www.bjpowernode.com</td>
-							<td>010-5455</td>
-							<td>99</td>
-                        </tr>
+					<tbody id="driverBody">
+
 					</tbody>
 				</table>
 			</div>
 			
-			<div style="height: 50px; position: relative;top: 30px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
+			<div style="height: 50px; position: relative;top: 30px;" id="driverPage">
+
 			</div>
 			
 		</div>

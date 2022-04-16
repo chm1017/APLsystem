@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cm.APL.workbench.dao.OrderDao">
+
+    <select id="getTotalById" resultType="int">
+        select count(*) from orderList where oid=#{oid}
+    </select>
+    <select id="getProductListByOrderId" resultType="Order">
+        select * from orderList where oid = #{oid}
+    </select>
+
+    <insert id="addProductToOrder">
+        insert into orderList (id,
+pname,
+price,
+createDate,
+count,
+oid,
+totalprice,
+mname,
+paddress
+ )  values(
+#{id},
+#{pname},
+#{price},
+#{createDate},
+#{count},
+#{oid},
+#{totalprice},
+#{mname},
+#{paddress}
+)
+    </insert>
+
+
+
+
+</mapper>

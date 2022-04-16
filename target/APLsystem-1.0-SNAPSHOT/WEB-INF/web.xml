@@ -15,15 +15,51 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
+    <servlet>
+        <servlet-name>TransactionController</servlet-name>
+        <servlet-class>com.cm.APL.workbench.controller.TransactionController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>TransactionController</servlet-name>
+        <url-pattern>/workbench/transaction/getProductById.do</url-pattern>
+        <url-pattern>/workbench/transaction/add.do</url-pattern>
+        <url-pattern>/workbench/transaction/addProductToOrder.do</url-pattern>
+        <url-pattern>/workbench/transaction/orderProductList.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CarController</servlet-name>
+        <servlet-class>com.cm.APL.workbench.controller.CarController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CarController</servlet-name>
+        <url-pattern>/workbench/car/getDriverList.do</url-pattern>
+        <url-pattern>/workbench/car/save.do</url-pattern>
+        <url-pattern>/workbench/car/pageList.do</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>DriverController</servlet-name>
+        <servlet-class>com.cm.APL.workbench.controller.DriverController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DriverController</servlet-name>
+        <url-pattern>/workbench/driver/getUserList.do</url-pattern>
+        <url-pattern>/workbench/driver/save.do</url-pattern>
+        <url-pattern>/workbench/driver/pageList.do</url-pattern>
+    </servlet-mapping>
+
 <servlet>
-    <servlet-name>ProjectController</servlet-name>
+    <servlet-name>ProductController</servlet-name>
     <servlet-class>com.cm.APL.workbench.controller.ProductController</servlet-class>
 </servlet>
     <servlet-mapping>
-        <servlet-name>ProjectController</servlet-name>
+        <servlet-name>ProductController</servlet-name>
         <url-pattern>/workbench/product/getUserList.do</url-pattern>
         <url-pattern>/workbench/product/getMerchantList.do</url-pattern>
         <url-pattern>/workbench/project/save.do</url-pattern>
+        <url-pattern>/workbench/product/pageList.do</url-pattern>
+        <url-pattern>/workbench/product/getProductById.do</url-pattern>
     </servlet-mapping>
     
     <servlet>

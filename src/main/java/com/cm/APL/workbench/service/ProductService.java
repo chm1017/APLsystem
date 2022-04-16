@@ -1,7 +1,14 @@
 package com.cm.APL.workbench.service;
 
-import com.cm.APL.workbench.domain.Fproduct;
+import com.bjpowernode.crm.vo.PaginationVO;
+import com.cm.APL.workbench.domain.Product;
+
+import java.util.HashMap;
 
 public interface ProductService {
-    boolean save(Fproduct fp);
+    boolean save(Product fp);
+
+    PaginationVO<Product> pageList(HashMap<String, Object> map);
+
+    Product getProductById(String pid);
 }

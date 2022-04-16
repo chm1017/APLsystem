@@ -7,6 +7,7 @@
 
     <select id="getMerchantList" resultType="Merchant">
         select mid,mname from merchant
+
     </select>
 
     <insert id="save">

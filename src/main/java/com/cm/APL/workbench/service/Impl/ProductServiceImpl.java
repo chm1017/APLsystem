@@ -1,18 +1,44 @@
 package com.cm.APL.workbench.service.Impl;
 
+import com.bjpowernode.crm.vo.PaginationVO;
+import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.SqlSessionUtil;
-import com.cm.APL.workbench.dao.Product;
-import com.cm.APL.workbench.domain.Fproduct;
+import com.cm.APL.workbench.dao.ProductDao;
+import com.cm.APL.workbench.domain.Product;
 import com.cm.APL.workbench.service.ProductService;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class ProductServiceImpl implements ProductService {
-    private Product projectDao = SqlSessionUtil.getSqlSession().getMapper(Product.class);
+    private ProductDao productDao = SqlSessionUtil.getSqlSession().getMapper(ProductDao.class);
     @Override
-    public boolean save(Fproduct fp) {
-        int i = projectDao.save(fp);
+    public boolean save(Product fp) {
+        int i = productDao.save(fp);
         if (i != 1) {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public PaginationVO<Product> pageList(HashMap<String, Object> map) {
+        int total = productDao.getTotalByCondition(map);
+
+        List<Product> productList= productDao.getProductListByCondition(map);
+
+        System.out.println(productList);
+
+        PaginationVO<Product> vo = new PaginationVO<Product>();
+        vo.setDataList(productList);
+        vo.setTotal(total);
+
+        return vo;
+    }
+
+    @Override
+    public Product getProductById(String pid) {
+        Product p =productDao.getProductById(pid);
+        return p;
     }
 }

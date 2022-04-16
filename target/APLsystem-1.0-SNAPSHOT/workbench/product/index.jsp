@@ -24,22 +24,45 @@
 
 	$(function(){
 
-		$(function(){
+			pageList(1,5);
 
-			// pageList(1,3);
+			$(".time").datetimepicker({
+				minView: "month",
+				language:  'zh-CN',
+				format: 'yyyy-mm-dd',
+				autoclose: true,
+				todayBtn: true,
+				pickerPosition: "bottom-left"
+			});
 
+
+			$.ajax({
+				url : "workbench/product/getMerchantList.do",
+				type : "get",
+				dataType : "json",
+				success : function (data) {
+					var html = "<option></option>";
+					//遍历出来的每一个n，就是每一个user对象
+					$.each(data,function (i,n) {
+
+						html += "<option value='"+n.mid+"'>"+n.mname+"</option>";
+
+					})
+					$("#create-merchant").html(html);
+					$("#search-selectMerchant").html(html);
+
+					//取得当前登录用户的id
+					//在js中使用el表达式，el表达式一定要套用在字符串中
+					<%--var id = "${user.id}";--%>
+					<%--$("#create-createBy").val(id);--%>
+					//所有者下拉框处理完毕后，展现模态窗口
+				}
+			})
 
 			//为创建按钮绑定事件，打开添加操作的模态窗口
 			$("#addBtn").click(function () {
 
-				$(".time").datetimepicker({
-					minView: "month",
-					language:  'zh-CN',
-					format: 'yyyy-mm-dd',
-					autoclose: true,
-					todayBtn: true,
-					pickerPosition: "bottom-left"
-				});
+
 
 				//走后台，目的是为了取得用户信息列表，为所有者下拉框铺值
 				$.ajax({
@@ -65,29 +88,6 @@
 
 					}
 				})
-
-				$.ajax({
-					url : "workbench/product/getMerchantList.do",
-					type : "get",
-					dataType : "json",
-					success : function (data) {
-						var html = "<option></option>";
-						//遍历出来的每一个n，就是每一个user对象
-						$.each(data,function (i,n) {
-
-							html += "<option value='"+n.mid+"'>"+n.mname+"</option>";
-
-						})
-						$("#create-merchant").html(html);
-
-						//取得当前登录用户的id
-						//在js中使用el表达式，el表达式一定要套用在字符串中
-						<%--var id = "${user.id}";--%>
-						<%--$("#create-createBy").val(id);--%>
-						//所有者下拉框处理完毕后，展现模态窗口
-					}
-				})
-
 			})
 			//为保存按钮绑定事件，执行添加操作
 			$("#saveBtn").click(function () {
@@ -113,7 +113,7 @@
 					success : function (data) {
 						if(data.success){
 
-							// pageList(1,$("#merchantPage").bs_pagination('getOption', 'rowsPerPage'));
+							pageList(1,$("#productPage").bs_pagination('getOption', 'rowsPerPage'));
 
 							$("#projectAddForm")[0].reset();
 
@@ -130,26 +130,130 @@
 				})
 
 			})
+		//为查询按钮绑定事件，触发pageList方法
+		$("#searchBtn").click(function () {
+			/*
+				点击查询按钮的时候，我们应该将搜索框中的信息保存起来,保存到隐藏域中
+			 */
+			$("#hidden-pname").val($.trim($("#search-pname").val()));
+			$("#hidden-paddress").val($.trim($("#search-paddress").val()));
+			$("#hidden-selectMerchant").val($.trim($("#search-selectMerchant").val()));
+			$("#hidden-createDate").val($.trim($("#search-createDate").val()));
+			$("#hidden-endDate").val($.trim($("#search-endDate").val()));
 
-			//为全选的复选框绑定事件，触发全选操作
-			$("#qx").click(function () {
+			pageList(1,5);
 
-				$("input[name=xz]").prop("checked",this.checked);
+		})
 
-			})
-			$("#merchantBody").on("click",$("input[name=xz]"),function () {
 
-				$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 
-			})
-		});
+		//为全选的复选框绑定事件，触发全选操作
+		$("#qx").click(function () {
+
+			$("input[name=xz]").prop("checked",this.checked);
+
+		})
+		$("#productBody").on("click",$("input[name=xz]"),function () {
+
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+
+		})
+
 
 		
 	});
+
+
+	function pageList(pageNo,pageSize) {
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+
+		// //查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中
+		$("#search-pname").val($.trim($("#hidden-pname").val()));
+		$("#search-paddress").val($.trim($("#hidden-paddress").val()));
+		$("#search-selectMerchant").val($.trim($("#hidden-selectMerchant").val()));
+		$("#search-createDate").val($.trim($("#hidden-createDate").val()));
+		$("#search-endDate").val($.trim($("#hidden-endDate").val()));
+
+		$.ajax({
+
+			url : "workbench/product/pageList.do",
+			data : {
+
+				"pageNo" : pageNo,
+				"pageSize" : pageSize,
+				"pname" : $.trim($("#search-pname").val()),
+				"paddress" : $.trim($("#search-paddress").val()),
+				"mid" : $.trim($("#search-selectMerchant").val()),
+				"createDate" : $.trim($("#search-createDate").val()),
+				"endDate" : $.trim($("#search-endDate").val())
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data.dataList,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><input type="checkbox" name="xz" value="'+n.pid+'"/></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.mid+'\';">'+n.pname+'</a></td>';
+					html += '<td>'+n.paddress+'</td>';
+					html += '<td>'+n.mid+'</td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.endDate+'</td>';
+					html += '<td>'+n.number+'</td>';
+					html += '<td>'+n.price+'</td>';
+					html += '</tr>';
+
+				})
+				// alert(html);
+
+				$("#productBody").html(html);
+
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#productPage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					//该回调函数时在，点击分页组件的时候触发的
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+			}
+		})
+
+	}
+
+
+
+
 	
 </script>
 </head>
 <body>
+
+<input type="hidden" id="hidden-pname"/>
+<input type="hidden" id="hidden-paddress"/>
+<input type="hidden" id="hidden-selectMerchant"/>
+<input type="hidden" id="hidden-createDate"/>
+<input type="hidden" id="hidden-endDate"/>
+
 
 	<!-- 创建农产品的模态窗口 -->
 	<div class="modal fade" id="createProjectModal" role="dialog">
@@ -226,7 +330,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" id="saveBtn">保存</button>
+					<button type="button" class="btn btn-primary" id="saveBtn">保存</button>
 				</div>
 			</div>
 		</div>
@@ -409,83 +513,45 @@
 				  <div class="form-group">
 				    <div class="input-group">
 				      <div class="input-group-addon">产品名称</div>
-				      <input class="form-control" type="text">
+				      <input class="form-control" type="text" id="search-pname">
 				    </div>
 				  </div>
 				  
 				  <div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon">公司</div>
-				      <input class="form-control" type="text">
+				      <div class="input-group-addon">生产园区</div>
+				      <input class="form-control" type="text" id="search-paddress">
 				    </div>
 				  </div>
 				  
+
+
 				  <div class="form-group">
 				    <div class="input-group">
-				      <div class="input-group-addon">公司座机</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">线索来源</div>
-					  <select class="form-control">
-					  	  <option></option>
-					  	  <option>广告</option>
-						  <option>推销电话</option>
-						  <option>员工介绍</option>
-						  <option>外部介绍</option>
-						  <option>在线商场</option>
-						  <option>合作伙伴</option>
-						  <option>公开媒介</option>
-						  <option>销售邮件</option>
-						  <option>合作伙伴研讨会</option>
-						  <option>内部研讨会</option>
-						  <option>交易会</option>
-						  <option>web下载</option>
-						  <option>web调研</option>
-						  <option>聊天</option>
-					  </select>
-				    </div>
-				  </div>
-				  
-				  <br>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">手机</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">线索状态</div>
-					  <select class="form-control">
-					  	<option></option>
-					  	<option>试图联系</option>
-					  	<option>将来联系</option>
-					  	<option>已联系</option>
-					  	<option>虚假线索</option>
-					  	<option>丢失线索</option>
-					  	<option>未联系</option>
-					  	<option>需要条件</option>
+				      <div class="input-group-addon">所属商户</div>
+					  <select class="form-control" id="search-selectMerchant">
+
 					  </select>
 				    </div>
 				  </div>
 
-				  <button type="submit" class="btn btn-default">查询</button>
-				  
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">生产日期</div>
+							<input class="form-control time" type="text" id="search-createDate">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">结束日期</div>
+							<input class="form-control time" type="text" id="search-endDate">
+						</div>
+					</div>
+
+
+
+				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
 				</form>
 			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 40px;">
@@ -501,74 +567,24 @@
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox"  id="qx"/></td>
 							<td>产品名称</td>
 							<td>生产园区</td>
 							<td>所属商户</td>
 							<td>生产日期</td>
 							<td>到期日期</td>
 							<td>当前批次数量</td>
-							<td>操作人</td>
+							<td>售价</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">李四先生</a></td>
-							<td>动力节点</td>
-							<td>010-84846003</td>
-							<td>12345678901</td>
-							<td>广告</td>
-							<td>zhangsan</td>
-							<td>已联系</td>
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">李四先生</a></td>
-                            <td>动力节点</td>
-                            <td>010-84846003</td>
-                            <td>12345678901</td>
-                            <td>广告</td>
-                            <td>zhangsan</td>
-                            <td>已联系</td>
-                        </tr>
+					<tbody id="productBody">
+
 					</tbody>
 				</table>
 			</div>
 			
-			<div style="height: 50px; position: relative;top: 60px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
+			<div style="height: 50px; position: relative;top: 60px;" id="productPage">
+
 			</div>
 			
 		</div>

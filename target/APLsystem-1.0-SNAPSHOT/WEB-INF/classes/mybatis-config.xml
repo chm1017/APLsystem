@@ -9,7 +9,6 @@
   <typeAliases>
   	<package name="com.cm.APL.settings.domain"/>
   	<package name="com.cm.APL.workbench.domain"/>
-  
   </typeAliases>
   
   <environments default="development">
@@ -29,7 +28,6 @@
    
       <package name="com.cm.APL.settings.dao"/>
       <package name="com.cm.APL.workbench.dao"/>
-
   </mappers>
 </configuration>
 

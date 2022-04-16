@@ -1,18 +1,16 @@
 package com.cm.APL.workbench.domain;
 
-
 public class Fproduct {
-    //这是每次添加产品用的
-               private String pid;
-               private String pname;
-               private String createDate;
-               private String endDate;
-               private String mid;
-               private Integer number;
-               private Double price;
-               private String paddress;
-               private String description;
-               private String createBy;
+    private String pid;
+    private String pname;
+    private String createDate;
+    private String endDate;
+    private String merchant;
+    private Integer number;
+    private Double price;
+    private String paddress;
+    private String description;
+    private String createBy;
 
     @Override
     public String toString() {
@@ -21,21 +19,13 @@ public class Fproduct {
                 ", pname='" + pname + '\'' +
                 ", createDate='" + createDate + '\'' +
                 ", endDate='" + endDate + '\'' +
-                ", mid='" + mid + '\'' +
+                ", merchant='" + merchant + '\'' +
                 ", number=" + number +
                 ", price=" + price +
                 ", paddress='" + paddress + '\'' +
                 ", description='" + description + '\'' +
                 ", createBy='" + createBy + '\'' +
                 '}';
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
     }
 
     public String getPid() {
@@ -70,12 +60,12 @@ public class Fproduct {
         this.endDate = endDate;
     }
 
-    public String getMid() {
-        return mid;
+    public String getMerchant() {
+        return merchant;
     }
 
-    public void setMid(String mid) {
-        this.mid = mid;
+    public void setMerchant(String merchant) {
+        this.merchant = merchant;
     }
 
     public Integer getNumber() {
@@ -108,5 +98,13 @@ public class Fproduct {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 }
