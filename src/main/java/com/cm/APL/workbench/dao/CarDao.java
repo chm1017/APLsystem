@@ -11,4 +11,6 @@ public interface CarDao {
     int getTotal(HashMap<String, Object> map);
 
     List<Car> getCarList(HashMap<String, Object> map);
+
+    List<Car> getCarnameList();
 }

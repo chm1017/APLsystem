@@ -23,6 +23,23 @@
 	
 	$(function(){
 
+
+		$.ajax({
+			url : "workbench/car/getCarList.do",
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+				var html = "<option></option>";
+				//遍历出来的每一个n，就是每一个user对象
+				$.each(data,function (i,n) {
+
+					html += "<option value='"+n.cid+"'>"+n.cname+"</option>";
+
+				})
+				$("#create-carid").html(html);
+			}
+		})
+
 		pageList(1,5);
 		pageList2(1,5);
 
@@ -95,6 +112,54 @@
 		})
 
 
+		$("#jiesuanBtn").click(function () {
+
+			$.ajax({
+
+				url : "workbench/transaction/getSumByOrderId.do",
+				data : {
+
+					"oid" : "${oid.id}"
+				},
+				type : "post",
+				dataType : "json",
+				success : function (data) {
+						$("#create-orderSum").val(data.count);
+
+
+				}
+			})
+		})
+
+		//为保存按钮绑定事件，执行添加操作
+		$("#saveOrderBtn").click(function () {
+			alert("lailma")
+			$.ajax({
+
+				url : "workbench/transaction/saveOrder.do",
+				data : {
+					"name" : $.trim($("#create-ordername").val()),
+					"count" : $.trim($("#create-orderSum").val()),
+					"createBy" : "${user.id}",
+					"paddress" : $.trim($("#create-paddress").val()),
+					"carid" : $.trim($("#create-carid").val()),
+					"stage" : $.trim($("#create-stage").val()),
+					"description" : $.trim($("#create-description").val()),
+					"oid" : "${oid.id}"
+				},
+				type : "post",
+				dataType : "json",
+				success : function (data) {
+					if(data.success){
+						window.location.href = "workbench/transaction/index.jsp";
+					}else{
+						alert("添加失败");
+					}
+
+				}
+			})
+
+		})
 
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
@@ -129,6 +194,8 @@
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
+
+
 
 	});
 
@@ -270,7 +337,7 @@
 
 </head>
 <body>
-<%--<h1>${oid.id}</h1>--%>
+
 	<!-- 往订单里添加产品的模态窗口 -->
 	<div class="modal fade" id="createProductModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
@@ -348,24 +415,17 @@
 		                        <div class="col-sm-10" style="width: 300px;">
 		                             <input type="text" class="form-control" id="create-ordername">
 		                        </div>
-		                        <label for="edit-customerName" class="col-sm-2 control-label">订单金额<span style="font-size: 15px; color: red;">*</span></label>
+		                        <label for="create-orderSum" class="col-sm-2 control-label">订单金额<span style="font-size: 15px; color: red;">*</span></label>
 		                        <div class="col-sm-10" style="width: 300px;">
-		                            <input type="text" class="form-control" id="edit-customerName" >
-									<button type="button" class="btn btn-primary form-control">结算</button>
+		                            <input type="text" class="form-control" id="create-orderSum" >
+									<button type="button" class="btn btn-primary form-control" id="jiesuanBtn">结算</button>
 		                        </div>
 		                    </div>
 							<div class="form-group">
-							    <label for="create-merchant" class="col-sm-2 control-label">分配车辆</label>
+							    <label for="create-carid" class="col-sm-2 control-label">分配车辆</label>
 							    <div class="col-sm-10" style="width: 300px;">
-							    	<select class="form-control" id="create-merchant">
-							    	  <option></option>
-							    	  <option>试图联系</option>
-							    	  <option>将来联系</option>
-							    	  <option>已联系</option>
-							    	  <option>虚假线索</option>
-							    	  <option>丢失线索</option>
-							    	  <option>未联系</option>
-							    	  <option>需要条件</option>
+							    	<select class="form-control" id="create-carid">
+
 							    	</select>
 							    </div>
 								<label for="create-stage" class="col-sm-2 control-label">订单状态</label>
@@ -383,15 +443,16 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="create-description" class="col-sm-2 control-label">产品描述</label>
+								<label for="create-description" class="col-sm-2 control-label">订单描述</label>
 								<div class="col-sm-10" style="width: 81%;">
 									<textarea class="form-control" rows="2" id="create-description"></textarea>
 								</div>
 							</div>
+
 		                </form>		   
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-		                <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+		            <div class="modal-footer" style="position: relative;top:-250px; border: none" >
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" id="saveOrderBtn">保存123</button>
 		            </div>
 		    
 	<!-- 展示订单列表 -->
@@ -399,7 +460,7 @@
 		<div style="position: relative; top: -80px; left: 40px; ">
 			<div class="page-header">
 				<h4>当前订单</h4>
-				 <button type="button" class="btn btn-danger" style="position: relative;left: 800px; top: -40px;" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				 <button type="button" class="btn btn-danger" style="position: relative;left: 800px; top: 0px;" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 			</div>
 
 			<div style="position: relative;top: -20px;">

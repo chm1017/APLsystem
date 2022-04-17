@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cm.APL.workbench.dao.OrderformDao">
+
+    <select id="getOrderList" resultType="Orderform">
+        select
+o.id,
+o.name,
+o.count,
+o.createDate,
+u.name as createBy,
+c.cname as carid,
+o.description,
+o.stage
+        from orderform o
+join car c  on c.cid=o.carid
+join user u on u.id = o.createBy
+order by createDate desc limit #{skipCount} , #{pageSize}
+    </select>
+
+    <select id="getTotalOrderCount" resultType="int">
+        select count(*) from orderform
+    </select>
+
+    <insert id="saveOrder">
+        insert into orderform (
+id,
+name,
+count,
+createDate,
+createBy,
+carid,
+description,
+stage
+ )  values(
+ #{id},
+ #{name},
+ #{count},
+ #{createDate},
+ #{createBy},
+ #{carid},
+ #{description},
+ #{stage}
+)
+    </insert>
+
+
+
+
+</mapper>

@@ -5,6 +5,11 @@
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderDao">
 
+
+    <select id="getSumByOrderId" resultType="Orderform">
+        select sum(totalprice) as count from orderlist where oid =#{oid}
+    </select>
+
     <select id="getTotalById" resultType="int">
         select count(*) from orderList where oid=#{oid}
     </select>

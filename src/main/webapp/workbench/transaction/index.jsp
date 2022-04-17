@@ -16,13 +16,90 @@
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
 <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
 
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
+
 <script type="text/javascript">
 
 	$(function(){
 		
-		
+		pageList(1,3);
+		$("#qx").click(function () {
+
+			$("input[name=xz]").prop("checked",this.checked);
+
+		})
+		$("#orderListBogy").on("click",$("input[name=xz]"),function () {
+
+			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
+
+		})
 		
 	});
+	function pageList(pageNo,pageSize) {
+
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+
+		$.ajax({
+
+			url : "workbench/transaction/orderListPage.do",
+			data : {
+
+				"pageNo" : pageNo,
+				"pageSize" : pageSize
+
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data.dataList,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
+					html += '<td>'+n.name+'</td>';
+					html += '<td>'+n.count+'</td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.carid+'</td>';
+					html += '<td>'+n.stage+'</td>';
+					html += '<td>'+n.createBy+'</td>';
+					html += '</tr>';
+
+				})
+				// alert(html);
+
+				$("#orderListBogy").html(html);
+
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#orderListPage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					//该回调函数时在，点击分页组件的时候触发的
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+			}
+		})
+
+	}
 	
 </script>
 </head>
@@ -144,74 +221,25 @@
 				<table class="table table-hover">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td><input type="checkbox" /></td>
+							<td><input type="checkbox" id="qx"/></td>
 							<td>名称</td>
 							<td>下单金额</td>
 							<td>下单时间</td>
 							<td>订单车辆</td>
 							<td>状态</td>
 							<td>所有者</td>
-						
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><input type="checkbox" /></td>
-							<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点-交易01</a></td>
-							<td>动力节点</td>
-							<td>谈判/复审</td>
-							<td>新业务</td>
-							<td>zhangsan</td>
-							<td>广告</td>
-							
-						</tr>
-                        <tr class="active">
-                            <td><input type="checkbox" /></td>
-                            <td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href='detail.html';">动力节点-交易01</a></td>
-                            <td>动力节点</td>
-                            <td>谈判/复审</td>
-                            <td>新业务</td>
-                            <td>zhangsan</td>
-                            <td>广告</td>
-                            
-                        </tr>
+					<tbody id="orderListBogy">
+
 					</tbody>
 				</table>
 			</div>
 			
-			<div style="height: 50px; position: relative;top: 20px;">
-				<div>
-					<button type="button" class="btn btn-default" style="cursor: default;">共<b>50</b>条记录</button>
-				</div>
-				<div class="btn-group" style="position: relative;top: -34px; left: 110px;">
-					<button type="button" class="btn btn-default" style="cursor: default;">显示</button>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-							10
-							<span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">20</a></li>
-							<li><a href="#">30</a></li>
-						</ul>
-					</div>
-					<button type="button" class="btn btn-default" style="cursor: default;">条/页</button>
-				</div>
-				<div style="position: relative;top: -88px; left: 285px;">
-					<nav>
-						<ul class="pagination">
-							<li class="disabled"><a href="#">首页</a></li>
-							<li class="disabled"><a href="#">上一页</a></li>
-							<li class="active"><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li class="disabled"><a href="#">末页</a></li>
-						</ul>
-					</nav>
-				</div>
+			<div style="height: 50px; position: relative;top: 20px;" id="orderListPage">
+
+
+
 			</div>
 			
 		</div>

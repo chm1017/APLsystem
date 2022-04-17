@@ -1,6 +1,6 @@
 package com.cm.APL.workbench.controller;
 
-import com.bjpowernode.crm.vo.PaginationVO;
+import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.settings.domain.User;
 import com.cm.APL.settings.service.Impl.UserServiceImpl;
 import com.cm.APL.settings.service.UserService;
@@ -43,7 +43,7 @@ public class DriverController extends HttpServlet {
         map.put("skipCount", skipCount);
         map.put("pageSize", pageSize);
         DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
-        PaginationVO<Driver> vo= service.pageList(map);
+        PaginationVO<Driver> vo =service.pageList(map);
         PrintJson.printJsonObj(response, vo);
     }
 

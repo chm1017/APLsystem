@@ -1,7 +1,8 @@
 package com.cm.APL.workbench.service.Impl;
 
-import com.bjpowernode.crm.vo.PaginationVO;
+
 import com.cm.APL.utils.SqlSessionUtil;
+import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.CarDao;
 import com.cm.APL.workbench.domain.Car;
 import com.cm.APL.workbench.service.CarService;
@@ -28,5 +29,12 @@ public class CarServiceImpl implements CarService {
         vo.setDataList(cars);
         vo.setTotal(Count);
         return vo;
+    }
+
+    @Override
+    public List<Car> getCarList() {
+        List<Car> cars = carDao.getCarnameList();
+
+        return cars;
     }
 }

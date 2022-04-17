@@ -25,6 +25,9 @@
         <url-pattern>/workbench/transaction/add.do</url-pattern>
         <url-pattern>/workbench/transaction/addProductToOrder.do</url-pattern>
         <url-pattern>/workbench/transaction/orderProductList.do</url-pattern>
+        <url-pattern>/workbench/transaction/getSumByOrderId.do</url-pattern>
+        <url-pattern>/workbench/transaction/saveOrder.do</url-pattern>
+        <url-pattern>/workbench/transaction/orderListPage.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -36,6 +39,7 @@
         <url-pattern>/workbench/car/getDriverList.do</url-pattern>
         <url-pattern>/workbench/car/save.do</url-pattern>
         <url-pattern>/workbench/car/pageList.do</url-pattern>
+        <url-pattern>/workbench/car/getCarList.do</url-pattern>
     </servlet-mapping>
     
     <servlet>

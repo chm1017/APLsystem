@@ -1,6 +1,6 @@
 package com.cm.APL.workbench.controller;
 
-import com.bjpowernode.crm.vo.PaginationVO;
+import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.utils.UUIDUtil;
@@ -29,8 +29,16 @@ public class CarController extends HttpServlet {
             getDriverList(request, response);
         } else if ("/workbench/car/pageList.do".equals(path)) {
             pageList(request, response);
+        } else if ("/workbench/car/getCarList.do".equals(path)) {
+            getCarList(request, response);
         }
 
+    }
+
+    private void getCarList(HttpServletRequest request, HttpServletResponse response) {
+        CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        List<Car> cars = service.getCarList();
+        PrintJson.printJsonObj(response, cars);
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

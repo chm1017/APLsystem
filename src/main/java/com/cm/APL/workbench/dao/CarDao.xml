@@ -4,7 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.CarDao">
-
+    <select id="getCarnameList" resultType="Car">
+        select cid, cname from car;
+    </select>
 
     <select id="getTotal" resultType="int">
         select count(*) from car
