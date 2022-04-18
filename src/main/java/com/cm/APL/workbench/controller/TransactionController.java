@@ -40,7 +40,17 @@ public class TransactionController extends HttpServlet {
             saveOrder(request, response);
         } else if ("/workbench/transaction/orderListPage.do".equals(path)) {
             orderListPage(request, response);
+        } else if ("/workbench/transaction/detail.do".equals(path)) {
+            detail(request, response);
         }
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        Orderform o = service.detail(id);
+        request.setAttribute("o",o);
+        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request, response);
     }
 
     private void orderListPage(HttpServletRequest request, HttpServletResponse response) {

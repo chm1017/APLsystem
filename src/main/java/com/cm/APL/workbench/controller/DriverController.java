@@ -30,7 +30,17 @@ public class DriverController extends HttpServlet {
             save(request, response);
         } else if ("/workbench/driver/pageList.do".equals(path)) {
             pageList(request, response);
+        } else if ("/workbench/driver/detail.do".equals(path)) {
+            detail(request, response);
         }
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String did = request.getParameter("id");
+        DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
+        Driver d= service.detail(did);
+        request.setAttribute("d", d);
+        request.getRequestDispatcher("/workbench/driver/detail.jsp").forward(request, response);
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

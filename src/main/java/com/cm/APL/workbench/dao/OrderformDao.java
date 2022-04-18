@@ -15,4 +15,6 @@ public interface OrderformDao {
 
 
     List<Orderform> getOrderList(HashMap<String, Object> map);
+
+    Orderform detail(String id);
 }

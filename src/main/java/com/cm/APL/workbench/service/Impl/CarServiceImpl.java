@@ -37,4 +37,10 @@ public class CarServiceImpl implements CarService {
 
         return cars;
     }
+
+    @Override
+    public Car detail(String cid) {
+        Car c= carDao.detail(cid);
+        return c;
+    }
 }

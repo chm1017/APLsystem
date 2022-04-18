@@ -153,7 +153,7 @@
 					html += '<tr class="active">';
 					html += '<td><input type="checkbox" name="xz" value="'+n.cid+'"/></td>';
 					html += '<td>'+n.plateNo+'</td>';
-					html += '<td>'+n.cname+'</td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/car/detail.do?id='+n.cid+'\';">'+n.cname+'</a></td>';
 					html += '<td>'+n.did+'</td>';
 					html += '<td>'+n.cplace+'</td>';
 					html += '<td>'+n.cload+'</td>';

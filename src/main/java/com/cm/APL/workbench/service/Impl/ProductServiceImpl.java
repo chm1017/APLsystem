@@ -41,4 +41,10 @@ public class ProductServiceImpl implements ProductService {
         Product p =productDao.getProductById(pid);
         return p;
     }
+
+    @Override
+    public Product detail(String pid) {
+        Product p =productDao.detail(pid);
+        return p;
+    }
 }

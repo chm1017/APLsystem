@@ -12,4 +12,6 @@ public interface ProductService {
     PaginationVO<Product> pageList(HashMap<String, Object> map);
 
     Product getProductById(String pid);
+
+    Product detail(String pid);
 }

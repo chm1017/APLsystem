@@ -4,6 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.ProductDao">
+    <select id="detail" resultType="Product">
+select
+f.pid,
+    f.pname,
+    f.createDate,
+    f.endDate,
+    m.mname as mid,
+    f.number,
+    f.price,
+    f.paddress,
+    f.description,
+    u.name as createBy
+from fproduct f join user u on u.id=f.createBy
+join merchant m on m.mid = f.mid
+where pid = #{pid}
+
+    </select>
     <select id="getProductById" resultType="Product">
         select p.pname,m.mname as mid,p.createdate,p.paddress,p.price
             from fproduct p join merchant m on p.mid=m.mid where p.pid = #{pid}

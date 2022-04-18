@@ -198,7 +198,7 @@
 				$.each(data.dataList,function (i,n) {
 					html += '<tr class="active">';
 					html += '<td><input type="checkbox" name="xz" value="'+n.pid+'"/></td>';
-					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id='+n.mid+'\';">'+n.pname+'</a></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/product/detail.do?id='+n.pid+'\';">'+n.pname+'</a></td>';
 					html += '<td>'+n.paddress+'</td>';
 					html += '<td>'+n.mid+'</td>';
 					html += '<td>'+n.createDate+'</td>';

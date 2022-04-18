@@ -64,5 +64,11 @@ public class TransactionServiceImpl implements TransactionService {
         return vo;
     }
 
+    @Override
+    public Orderform detail(String id) {
+        Orderform o = orderformDao.detail(id);
+        return o;
+    }
+
 
 }

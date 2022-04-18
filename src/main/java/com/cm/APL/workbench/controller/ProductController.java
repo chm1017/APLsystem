@@ -36,7 +36,17 @@ public class ProductController extends HttpServlet {
             save(request, response);
         } else if ("/workbench/product/pageList.do".equals(path)) {
             pageList(request, response);
+        } else if ("/workbench/product/detail.do".equals(path)) {
+            detail(request, response);
         }
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String pid = request.getParameter("id");
+        ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
+        Product p = service.detail(pid);
+        request.setAttribute("p", p);
+        request.getRequestDispatcher("/workbench/product/detail.jsp").forward(request, response);
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

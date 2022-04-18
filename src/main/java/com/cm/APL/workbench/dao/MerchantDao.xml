@@ -4,6 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.MerchantDao">
+    <select id="detail" resultType="Merchant">
+        select
+            m.mid,
+            m.mname,
+            m.mage,
+            m.maddress,
+            m.memail,
+            m.mphone,
+            m.description,
+            u.name as createBy,
+            m.createDate,
+            m.editBy,
+            m.editDate,
+            m.company
+from merchant m join user u on u.id=m.createBy where m.mid = #{mid}
+
+    </select>
 
     <select id="getMerchantList" resultType="Merchant">
         select mid,mname from merchant
@@ -70,7 +87,7 @@
     </select>
 
     <select id="getMerchantListByCondition" resultType="Merchant">
-        select mname,mphone,maddress,description,createDate from merchant
+        select mid,mname,mphone,maddress,description,createDate from merchant
         <where>
 
             <if test="mname!=null and mname!=''">

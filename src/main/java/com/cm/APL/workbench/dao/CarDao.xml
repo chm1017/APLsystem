@@ -4,6 +4,24 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.CarDao">
+    <select id="detail" resultType="Car">
+        select
+            c.cid,
+            c.plateNo,
+            c.cplace,
+            c.stage,
+            c.company,
+            d.dname as did,
+            c.cload,
+            c.fdjId,
+            c.baoxianId,
+            c.description,
+            c.cname,
+            u.name as createBy
+        from car c join driver d on d.did=c.did
+join user u on u.id=c.createBy where cid=#{cid}
+
+    </select>
     <select id="getCarnameList" resultType="Car">
         select cid, cname from car;
     </select>

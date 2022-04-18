@@ -31,7 +31,18 @@ public class MerchantController extends HttpServlet {
             save(request, response);
         } else if ("/workbench/merchant/pageList.do".equals(path)) {
             pageList(request, response);
+        } else if ("/workbench/merchant/detail.do".equals(path)) {
+            detail(request, response);
         }
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String mid = request.getParameter("id");
+        MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
+        Merchant m = service.detail(mid);
+        request.setAttribute("m",m);
+        request.getRequestDispatcher("/workbench/merchant/detail.jsp").forward(request, response);
+
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {

@@ -13,4 +13,6 @@ public interface MerchantService {
     PaginationVO<Merchant> pageList(HashMap<String, Object> map);
 
     List<Merchant> getMerchantList();
+
+    Merchant detail(String mid);
 }

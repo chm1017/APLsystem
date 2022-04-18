@@ -37,4 +37,10 @@ public class DriverServiceImpl implements DriverService {
         List<Driver> drivers = driverDao.getDriver();
         return drivers;
     }
+
+    @Override
+    public Driver detail(String did) {
+        Driver d= driverDao.detail(did);
+        return d;
+    }
 }

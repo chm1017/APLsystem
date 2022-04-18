@@ -31,7 +31,18 @@ public class CarController extends HttpServlet {
             pageList(request, response);
         } else if ("/workbench/car/getCarList.do".equals(path)) {
             getCarList(request, response);
+        } else if ("/workbench/car/detail.do".equals(path)) {
+            detail(request, response);
         }
+
+    }
+
+    private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String cid = request.getParameter("id");
+        CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        Car c = service.detail(cid);
+        request.setAttribute("c", c);
+        request.getRequestDispatcher("/workbench/car/detail.jsp").forward(request, response);
 
     }
 

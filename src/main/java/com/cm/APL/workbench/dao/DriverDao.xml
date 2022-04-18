@@ -4,6 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.DriverDao">
+    <select id="detail" resultType="Driver">
+    select
+    d.did,
+        d.dname,
+        d.dage,
+        d.dphone,
+        d.daddress,
+        d.dplace,
+       d.idNumber,
+        d.driveId,
+        d.stage,
+        u.name as createBy
+from driver d join user u on u.id = d.createBy
+where did=#{did}
+    </select>
     <select id="getDriver" resultType="Driver">
         select did , dname from driver
     </select>

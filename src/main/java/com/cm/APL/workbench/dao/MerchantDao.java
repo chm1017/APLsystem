@@ -13,4 +13,6 @@ public interface MerchantDao {
     List<Merchant> getMerchantListByCondition(HashMap<String, Object> map);
 
     List<Merchant> getMerchantList();
+
+    Merchant detail(String mid);
 }

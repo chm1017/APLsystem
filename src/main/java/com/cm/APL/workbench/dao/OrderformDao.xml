@@ -4,6 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderformDao">
+    <select id="detail" resultType="Orderform">
+        select
+o.id,
+            o.name,
+o.count,
+o.createDate,
+o.createBy,
+c.cname as carid,
+o.description,
+o.stage
+        from orderform o join car c on c.cid=o.carid
+where id=#{id}
+
+    </select>
 
     <select id="getOrderList" resultType="Orderform">
         select

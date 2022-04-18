@@ -13,4 +13,6 @@ public interface ProductDao {
     List<Product> getProductListByCondition(HashMap<String, Object> map);
 
     Product getProductById(String pid);
+
+    Product detail(String pid);
 }

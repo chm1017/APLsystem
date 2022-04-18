@@ -13,4 +13,6 @@ public interface CarDao {
     List<Car> getCarList(HashMap<String, Object> map);
 
     List<Car> getCarnameList();
+
+    Car detail(String cid);
 }

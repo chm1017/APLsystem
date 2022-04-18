@@ -38,4 +38,10 @@ public class MerchantServiceImpl implements MerchantService {
         List<Merchant> merchantList = merchantDao.getMerchantList();
         return merchantList;
     }
+
+    @Override
+    public Merchant detail(String mid) {
+        Merchant m = merchantDao.detail(mid);
+        return m;
+    }
 }

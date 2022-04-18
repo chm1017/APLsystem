@@ -170,7 +170,7 @@
 				<li class="liClass"><a href="workbench/product/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 产品信息</a></li>
 				<li class="liClass"><a href="workbench/driver/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 司机档案</a></li>
 				<li class="liClass"><a href="workbench/car/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 车辆档案</a></li>
-				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 订单管理</a></li>
+				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 订单中心</a></li>
 				<!-- <li class="liClass"><a href="visit/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-phone-alt"></span> 售后回访</a></li> -->
 				<li class="liClass">
 					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 统计图表</a>

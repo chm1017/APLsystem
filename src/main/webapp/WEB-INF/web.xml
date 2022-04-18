@@ -28,6 +28,7 @@
         <url-pattern>/workbench/transaction/getSumByOrderId.do</url-pattern>
         <url-pattern>/workbench/transaction/saveOrder.do</url-pattern>
         <url-pattern>/workbench/transaction/orderListPage.do</url-pattern>
+        <url-pattern>/workbench/transaction/detail.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -40,6 +41,7 @@
         <url-pattern>/workbench/car/save.do</url-pattern>
         <url-pattern>/workbench/car/pageList.do</url-pattern>
         <url-pattern>/workbench/car/getCarList.do</url-pattern>
+        <url-pattern>/workbench/car/detail.do</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -51,6 +53,7 @@
         <url-pattern>/workbench/driver/getUserList.do</url-pattern>
         <url-pattern>/workbench/driver/save.do</url-pattern>
         <url-pattern>/workbench/driver/pageList.do</url-pattern>
+        <url-pattern>/workbench/driver/detail.do</url-pattern>
     </servlet-mapping>
 
 <servlet>
@@ -64,6 +67,7 @@
         <url-pattern>/workbench/project/save.do</url-pattern>
         <url-pattern>/workbench/product/pageList.do</url-pattern>
         <url-pattern>/workbench/product/getProductById.do</url-pattern>
+        <url-pattern>/workbench/product/detail.do</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -75,6 +79,7 @@
         <url-pattern>/workbench/merchant/getUserList.do</url-pattern>
         <url-pattern>/workbench/merchant/save.do</url-pattern>
         <url-pattern>/workbench/merchant/pageList.do</url-pattern>
+        <url-pattern>/workbench/merchant/detail.do</url-pattern>
     </servlet-mapping>
     
 

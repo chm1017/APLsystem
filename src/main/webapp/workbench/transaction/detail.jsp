@@ -1,9 +1,18 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+%>
 <!DOCTYPE html>
 <html>
 <head>
+	<base href="<%=basePath%>">
 <meta charset="UTF-8">
 
-<link href="../../jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
 
 <style type="text/css">
 .mystage{

@@ -406,7 +406,7 @@
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
-			<h3>动力节点</h3>
+			<h3>订单中心</h3>
 		</div>
 	</div>
 		                <form class="form-horizontal" role="form">

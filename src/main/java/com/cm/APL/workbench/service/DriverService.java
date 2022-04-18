@@ -13,4 +13,6 @@ public interface DriverService {
     PaginationVO<Driver> pageList(HashMap<String, Object> map);
 
     List<Driver> getDriverList();
+
+    Driver detail(String did);
 }

@@ -18,4 +18,6 @@ public interface TransactionService {
     boolean saveOrder(Orderform o);
 
     PaginationVO<Orderform> orderListPage(HashMap<String, Object> map);
+
+    Orderform detail(String id);
 }

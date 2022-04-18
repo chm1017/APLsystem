@@ -13,4 +13,6 @@ public interface CarService {
     PaginationVO<Car> pageList(HashMap<String, Object> map);
 
     List<Car> getCarList();
+
+    Car detail(String cid);
 }

@@ -15,4 +15,6 @@ public interface DriverDao {
     List<Driver> getDriverList(HashMap<String, Object> map);
 
     List<Driver> getDriver();
+
+    Driver detail(String did);
 }
