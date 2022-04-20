@@ -8,7 +8,7 @@ public class Product {
                private String createDate;
                private String endDate;
                private String mid;
-               private Integer number;
+               private Integer repertory;
                private Double price;
                private String paddress;
                private String description;
@@ -22,7 +22,7 @@ public class Product {
                 ", createDate='" + createDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", mid='" + mid + '\'' +
-                ", number=" + number +
+                ", repertory=" + repertory +
                 ", price=" + price +
                 ", paddress='" + paddress + '\'' +
                 ", description='" + description + '\'' +
@@ -62,20 +62,20 @@ public class Product {
         this.endDate = endDate;
     }
 
-    public String getMerchant() {
+    public String getMid() {
         return mid;
     }
 
-    public void setMerchant(String mid) {
+    public void setMid(String mid) {
         this.mid = mid;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getRepertory() {
+        return repertory;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setRepertory(Integer repertory) {
+        this.repertory = repertory;
     }
 
     public Double getPrice() {
@@ -88,14 +88,6 @@ public class Product {
 
     public String getPaddress() {
         return paddress;
-    }
-
-    public String getMid() {
-        return mid;
-    }
-
-    public void setMid(String mid) {
-        this.mid = mid;
     }
 
     public void setPaddress(String paddress) {

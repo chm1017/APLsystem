@@ -49,7 +49,7 @@
 
 			if($xz.length==0 || $xz.length>1){
 
-				alert("请选择需要删除的记录或者只能选一条");
+				alert("请选择只能选一条");
 
 				//肯定选了，而且有可能是1条，有可能是多条
 			}else{
@@ -67,7 +67,7 @@
 						$("#create-createDate").val(data.createDate);
 						$("#create-paddress").val(data.paddress);
 						$("#create-price").val(data.price);
-
+						$("#create-number").val(data.repertory);
 						//所有者下拉框处理完毕后，展现模态窗口
 						$("#createProductModal").modal("show");
 					}
@@ -77,11 +77,15 @@
 
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+			var pid = $($xz[0]).val();
 
 			$.ajax({
 
 				url : "workbench/transaction/addProductToOrder.do",
 				data : {
+					"pid" : pid,
+					"number" : $.trim($("#create-number").val()),
 					"pname" : $.trim($("#create-pname").val()),
 					"mname" : $.trim($("#create-mname").val()),
 					"price" : $.trim($("#create-price").val()),
@@ -101,6 +105,7 @@
 
 						//关闭添加操作的模态窗口
 						$("#createProductModal").modal("hide");
+						pageList(1,5);
 
 					}else{
 						alert("添加失败");
@@ -124,7 +129,7 @@
 				type : "post",
 				dataType : "json",
 				success : function (data) {
-						$("#create-orderSum").val(data.count);
+						$("#create-orderSum").val(data.totalprice);
 
 
 				}
@@ -133,13 +138,13 @@
 
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveOrderBtn").click(function () {
-			alert("lailma")
+
 			$.ajax({
 
 				url : "workbench/transaction/saveOrder.do",
 				data : {
 					"name" : $.trim($("#create-ordername").val()),
-					"count" : $.trim($("#create-orderSum").val()),
+					"totalprice" : $.trim($("#create-orderSum").val()),
 					"createBy" : "${user.id}",
 					"paddress" : $.trim($("#create-paddress").val()),
 					"carid" : $.trim($("#create-carid").val()),
@@ -202,7 +207,6 @@
 
 
 	function pageList2(pageNo,pageSize) {
-
 		//将全选的复选框的√干掉
 		$("#qx2").prop("checked",false);
 
@@ -296,7 +300,7 @@
 					html += '<td>'+n.mid+'</td>';
 					html += '<td>'+n.createDate+'</td>';
 					html += '<td>'+n.endDate+'</td>';
-					html += '<td>'+n.number+'</td>';
+					html += '<td>'+n.repertory+'</td>';
 					html += '<td>'+n.price+'</td>';
 					html += '</tr>';
 
@@ -384,7 +388,14 @@
 						    <div class="col-sm-10" style="width: 300px;">
 						        <input type="text" class="form-control" id="create-count">
 						    </div>
-							
+						</div>
+						<div class="form-group">
+
+							<label for="create-number" class="col-sm-2 control-label">库存</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="create-number">
+							</div>
+
 						</div>
 					</form>
 					
@@ -411,10 +422,11 @@
 	</div>
 		                <form class="form-horizontal" role="form">
 		                    <div class="form-group">
-		                        <label for="create-ordername" class="col-sm-2 control-label">订单名称<span style="font-size: 15px; color: red;">*</span></label>
-		                        <div class="col-sm-10" style="width: 300px;">
-		                             <input type="text" class="form-control" id="create-ordername">
-		                        </div>
+								<label for="create-ordername" class="col-sm-2 control-label">订单名称<span style="font-size: 15px; color: red;">*</span></label>
+								<div class="col-sm-10" style="width: 300px;">
+									<input type="text" class="form-control" id="create-ordername" >
+
+								</div>
 		                        <label for="create-orderSum" class="col-sm-2 control-label">订单金额<span style="font-size: 15px; color: red;">*</span></label>
 		                        <div class="col-sm-10" style="width: 300px;">
 		                            <input type="text" class="form-control" id="create-orderSum" >
@@ -450,7 +462,7 @@
 							</div>
 
 		                </form>		   
-		            <div class="modal-footer" style="position: relative;top:-250px; border: none" >
+		            <div class="modal-footer" style="width:500px;position: relative;top:-250px;left:900px; border: none" >
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" id="saveOrderBtn">保存123</button>
 		            </div>

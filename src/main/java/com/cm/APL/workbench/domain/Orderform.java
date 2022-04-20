@@ -6,7 +6,7 @@ package com.cm.APL.workbench.domain;
 public class Orderform {
             private String id;
             private String name;
-            private Double count;
+            private Double totalprice;
             private String createDate;
             private String createBy;;
             private String carid;
@@ -18,7 +18,7 @@ public class Orderform {
         return "Orderform{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", count=" + count +
+                ", totalprice=" + totalprice +
                 ", createDate='" + createDate + '\'' +
                 ", createBy='" + createBy + '\'' +
                 ", carid='" + carid + '\'' +
@@ -43,12 +43,12 @@ public class Orderform {
         this.name = name;
     }
 
-    public Double getCount() {
-        return count;
+    public Double getTotalprice() {
+        return totalprice;
     }
 
-    public void setCount(Double count) {
-        this.count = count;
+    public void setTotalprice(Double totalprice) {
+        this.totalprice = totalprice;
     }
 
     public String getCreateDate() {

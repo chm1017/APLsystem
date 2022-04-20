@@ -72,7 +72,7 @@ public class TransactionController extends HttpServlet {
         System.out.println("jinlail ");
         String createDate = DateTimeUtil.getSysTime();
         String name = request.getParameter("name");
-        String countStr = request.getParameter("count");
+        String countStr = request.getParameter("totalprice");
         double count = Double.parseDouble(countStr);
         String createBy = request.getParameter("createBy");
         System.out.println(createBy);
@@ -83,7 +83,7 @@ public class TransactionController extends HttpServlet {
         Orderform o = new Orderform();
         o.setId(id);
         o.setName(name);
-        o.setCount(count);
+        o.setTotalprice(count);
         o.setCreateBy(createBy);
         o.setCreateDate(createDate);
         o.setCarid(carid);
@@ -122,8 +122,9 @@ public class TransactionController extends HttpServlet {
 
     private void addProductToOrder(HttpServletRequest request, HttpServletResponse response) {
         String id = UUIDUtil.getUUID();
+        String pid = request.getParameter("pid");
         String pname = request.getParameter("pname");
-        System.out.println(pname);
+
         String mname = request.getParameter("mname");
         String priceStr = request.getParameter("price");
         String createDate = request.getParameter("createDate");
@@ -143,8 +144,23 @@ public class TransactionController extends HttpServlet {
         o.setPrice(price);
         o.setCount(count);
         o.setTotalprice(totalprice);
+        o.setPid(pid);
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
-        Boolean flag = service.addProductToOrder(o);
+        Boolean flag = true;
+        if (service.addProductToOrder(o) != 1) {
+            flag = false;
+        }
+
+        System.out.println("pid:"+pid);
+        String numberStr = request.getParameter("number");
+        int total = Integer.parseInt(numberStr);
+        Integer repertory = total - count;
+        System.out.println("kucun======"+repertory);
+
+        ProductService service1 = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
+        if(service1.updateProductNumberById(repertory,pid)!=1){
+            flag = false;
+        }
         PrintJson.printJsonFlag(response, flag);
     }
 

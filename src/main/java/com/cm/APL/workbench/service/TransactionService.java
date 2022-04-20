@@ -8,7 +8,7 @@ import com.cm.APL.workbench.domain.Orderform;
 import java.util.HashMap;
 
 public interface TransactionService {
-    Boolean addProductToOrder(Order o);
+    Integer addProductToOrder(Order o);
 
     PaginationVO<Order> orderProductList(HashMap<String, Object> map);
 

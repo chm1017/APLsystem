@@ -7,8 +7,8 @@
     <select id="detail" resultType="Orderform">
         select
 o.id,
-            o.name,
-o.count,
+o.name,
+o.totalprice,
 o.createDate,
 o.createBy,
 c.cname as carid,
@@ -23,15 +23,15 @@ where id=#{id}
         select
 o.id,
 o.name,
-o.count,
+o.totalprice,
 o.createDate,
-u.name as createBy,
+
 c.cname as carid,
 o.description,
 o.stage
         from orderform o
 join car c  on c.cid=o.carid
-join user u on u.id = o.createBy
+
 order by createDate desc limit #{skipCount} , #{pageSize}
     </select>
 
@@ -43,18 +43,18 @@ order by createDate desc limit #{skipCount} , #{pageSize}
         insert into orderform (
 id,
 name,
-count,
+totalprice,
 createDate,
-createBy,
+
 carid,
 description,
 stage
  )  values(
  #{id},
  #{name},
- #{count},
+ #{totalprice},
  #{createDate},
- #{createBy},
+
  #{carid},
  #{description},
  #{stage}

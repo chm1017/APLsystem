@@ -10,6 +10,15 @@ public class Order {
             private Double totalprice;
             private String mname;
             private String paddress;
+            private String pid;
+
+    public String getPid() {
+        return pid;
+    }
+
+    public void setPid(String pid) {
+        this.pid = pid;
+    }
 
     @Override
     public String toString() {
@@ -23,6 +32,7 @@ public class Order {
                 ", totalprice=" + totalprice +
                 ", mname='" + mname + '\'' +
                 ", paddress='" + paddress + '\'' +
+                ", pid='" + pid + '\'' +
                 '}';
     }
 

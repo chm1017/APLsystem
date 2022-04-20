@@ -14,4 +14,6 @@ public interface ProductService {
     Product getProductById(String pid);
 
     Product detail(String pid);
+
+    int updateProductNumberById(Integer repertory,String pid );
 }

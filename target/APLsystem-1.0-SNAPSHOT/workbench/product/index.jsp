@@ -203,7 +203,7 @@
 					html += '<td>'+n.mid+'</td>';
 					html += '<td>'+n.createDate+'</td>';
 					html += '<td>'+n.endDate+'</td>';
-					html += '<td>'+n.number+'</td>';
+					html += '<td>'+n.repertory+'</td>';
 					html += '<td>'+n.price+'</td>';
 					html += '</tr>';
 

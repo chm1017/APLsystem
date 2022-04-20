@@ -1,6 +1,7 @@
 package com.cm.APL.workbench.dao;
 
 import com.cm.APL.workbench.domain.Product;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -15,4 +16,7 @@ public interface ProductDao {
     Product getProductById(String pid);
 
     Product detail(String pid);
+
+
+    int updateProductNumberById(@Param("repertory") Integer repertory, @Param("pid") String pid);
 }

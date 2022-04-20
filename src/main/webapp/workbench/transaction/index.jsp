@@ -61,11 +61,11 @@
 					html += '<tr class="active">';
 					html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>';
 					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
-					html += '<td>'+n.count+'</td>';
+					html += '<td>'+n.totalprice+'</td>';
 					html += '<td>'+n.createDate+'</td>';
 					html += '<td>'+n.carid+'</td>';
 					html += '<td>'+n.stage+'</td>';
-					html += '<td>'+n.createBy+'</td>';
+
 					html += '</tr>';
 
 				})
@@ -141,7 +141,6 @@
 							<td>下单时间</td>
 							<td>订单车辆</td>
 							<td>状态</td>
-							<td>所有者</td>
 						</tr>
 					</thead>
 					<tbody id="orderListBogy">

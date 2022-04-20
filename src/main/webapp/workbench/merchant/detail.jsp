@@ -223,51 +223,80 @@
 			<div style="height: 1px; width: 850px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
 	</div>
-	
-	<!-- 备注 -->
-	<div style="position: relative; top: 30px; left: 40px;">
-		<div class="page-header">
-			<h4>备注</h4>
-		</div>
-		
-		<!-- 备注1 -->
-		<div class="remarkDiv" style="height: 60px;">
-			<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">
-			<div style="position: relative; top: -40px; left: 40px;" >
-				<h5>哎呦！</h5>
-				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:10:10 由zhangsan</small>
-				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
+
+	<div style="position: relative; top: 0px; left: 0px; width: 100%; height: 100%;">
+		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
+
+			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
+				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
+
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">名称</div>
+							<input class="form-control" type="text" id="search-name">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">所有者</div>
+							<input class="form-control" type="text" id="search-owner">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">开始日期</div>
+							<input class="form-control" type="text" id="search-startDate" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="input-group">
+							<div class="input-group-addon">结束日期</div>
+							<input class="form-control" type="text" id="search-endDate">
+						</div>
+					</div>
+
+					<button type="button" class="btn btn-default" id="searchBtn">查询</button>
+
+				</form>
+			</div>
+			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
+				<div class="btn-group" style="position: relative; top: 18%;">
+					<button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
+					<button type="button" class="btn btn-default" id="editBtn" ><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+					<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus" ></span> 删除</button>
+				</div>
+
+			</div>
+			<div style="position: relative;top: 10px;">
+				<table class="table table-hover">
+					<thead>
+					<tr style="color: #B3B3B3;">
+						<td><input type="checkbox"  id="qx"/></td>
+						<td>名称</td>
+						<td>所有者</td>
+						<td>开始日期</td>
+						<td>结束日期</td>
+					</tr>
+					</thead>
+					<tbody id="activityBody">
+
+					</tbody>
+				</table>
+			</div>
+
+			<div style="height: 50px; position: relative;top: 30px;">
+				<div id="activityPage">
+
 				</div>
 			</div>
+
 		</div>
-		
-		<!-- 备注2 -->
-		<div class="remarkDiv" style="height: 60px;">
-			<img title="zhangsan" src="../../image/user-thumbnail.png" style="width: 30px; height:30px;">
-			<div style="position: relative; top: -40px; left: 40px;" >
-				<h5>呵呵！</h5>
-				<font color="gray">市场活动</font> <font color="gray">-</font> <b>发传单</b> <small style="color: gray;"> 2017-01-22 10:20:10 由zhangsan</small>
-				<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #E6E6E6;"></span></a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
-					<a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #E6E6E6;"></span></a>
-				</div>
-			</div>
-		</div>
-		
-		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
-			<form role="form" style="position: relative;top: 10px; left: 10px;">
-				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
-				<p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
-					<button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-					<button type="button" class="btn btn-primary">保存</button>
-				</p>
-			</form>
-		</div>
+
 	</div>
-	<div style="height: 200px;"></div>
+
+
 </body>
 </html>

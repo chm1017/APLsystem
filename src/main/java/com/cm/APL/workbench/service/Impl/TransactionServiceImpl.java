@@ -16,12 +16,9 @@ public class TransactionServiceImpl implements TransactionService {
     private OrderDao orderDao = SqlSessionUtil.getSqlSession().getMapper(OrderDao.class);
     private OrderformDao orderformDao =  SqlSessionUtil.getSqlSession().getMapper(OrderformDao.class);
     @Override
-    public Boolean addProductToOrder(Order o) {
+    public Integer addProductToOrder(Order o) {
         int i = orderDao.addProductToOrder(o);
-        if (i != 1) {
-            return false;
-        }
-        return true;
+        return i;
     }
 
     @Override
@@ -40,7 +37,6 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Orderform getSumByOrderId(String oid) {
         Orderform orderform = orderDao.getSumByOrderId(oid);
-        System.out.println(orderform.getCount());
         return orderform;
     }
 

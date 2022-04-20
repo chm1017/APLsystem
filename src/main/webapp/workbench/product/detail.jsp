@@ -307,7 +307,7 @@
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
 			<div style="width: 300px; color: gray;">当前库存</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${p.number}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${p.repertory}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">产品售价</div>
 			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${p.price}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>

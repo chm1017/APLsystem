@@ -6,7 +6,7 @@ public class Fproduct {
     private String createDate;
     private String endDate;
     private String merchant;
-    private Integer number;
+    private Integer repertory;
     private Double price;
     private String paddress;
     private String description;
@@ -20,7 +20,7 @@ public class Fproduct {
                 ", createDate='" + createDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", merchant='" + merchant + '\'' +
-                ", number=" + number +
+                ", repertory=" + repertory +
                 ", price=" + price +
                 ", paddress='" + paddress + '\'' +
                 ", description='" + description + '\'' +
@@ -68,12 +68,12 @@ public class Fproduct {
         this.merchant = merchant;
     }
 
-    public Integer getNumber() {
-        return number;
+    public Integer getRepertory() {
+        return repertory;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
+    public void setRepertory(Integer repertory) {
+        this.repertory = repertory;
     }
 
     public Double getPrice() {

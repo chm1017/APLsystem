@@ -47,4 +47,10 @@ public class ProductServiceImpl implements ProductService {
         Product p =productDao.detail(pid);
         return p;
     }
+
+    @Override
+    public int updateProductNumberById( Integer repertory,String pid) {
+        int i =productDao.updateProductNumberById(repertory,pid);
+        return i;
+    }
 }

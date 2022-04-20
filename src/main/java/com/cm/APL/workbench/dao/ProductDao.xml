@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.ProductDao">
+
+    <update id="updateProductNumberById" parameterType="com.cm.APL.workbench.domain.Product">
+        update fproduct set repertory = #{repertory} where pid = #{pid}
+    </update>
+
     <select id="detail" resultType="Product">
 select
 f.pid,
@@ -11,7 +16,7 @@ f.pid,
     f.createDate,
     f.endDate,
     m.mname as mid,
-    f.number,
+    f.repertory,
     f.price,
     f.paddress,
     f.description,
@@ -22,7 +27,7 @@ where pid = #{pid}
 
     </select>
     <select id="getProductById" resultType="Product">
-        select p.pname,m.mname as mid,p.createdate,p.paddress,p.price
+        select p.pname,m.mname as mid,p.createdate,p.paddress,p.price,p.repertory
             from fproduct p join merchant m on p.mid=m.mid where p.pid = #{pid}
     </select>
 
@@ -73,7 +78,7 @@ where pid = #{pid}
             f.createDate,
             f.endDate,
             m.mname as mid,
-            f.number,
+            f.repertory,
             f.price,
             f.paddress
         from fproduct f
@@ -126,7 +131,7 @@ where pid = #{pid}
             endDate,
             paddress,
             price,
-            number,
+            repertory,
             mid,
             description,
             createBy
@@ -139,7 +144,7 @@ where pid = #{pid}
 #{endDate},
 #{paddress},
 #{price},
-#{number},
+#{repertory},
 #{mid},
 #{description},
 #{createBy}

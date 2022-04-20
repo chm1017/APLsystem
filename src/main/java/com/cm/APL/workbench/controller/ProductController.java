@@ -82,7 +82,7 @@ public class ProductController extends HttpServlet {
         String priceStr = request.getParameter("price");
         double price = Double.parseDouble(priceStr);
         String numberStr = request.getParameter("number");
-        int number = Integer.parseInt(numberStr);
+        int repertory = Integer.parseInt(numberStr);
         String mid = request.getParameter("mid");
         String description = request.getParameter("description");
         String createBy = request.getParameter("createBy");
@@ -93,7 +93,7 @@ public class ProductController extends HttpServlet {
         fp.setEndDate(endDate);
         fp.setPaddress(paddress);
         fp.setPrice(price);
-        fp.setNumber(number);
+        fp.setRepertory(repertory);
         fp.setMid(mid);
         fp.setDescription(description);
         fp.setCreateBy(createBy);

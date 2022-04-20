@@ -7,7 +7,7 @@
 
 
     <select id="getSumByOrderId" resultType="Orderform">
-        select sum(totalprice) as count from orderlist where oid =#{oid}
+        select sum(totalprice) as totalprice from orderlist where oid =#{oid}
     </select>
 
     <select id="getTotalById" resultType="int">
