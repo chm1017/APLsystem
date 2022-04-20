@@ -55,36 +55,18 @@
 			}else{
 				var pid = $($xz[0]).val();
 
-				$.ajax({
-					url : "workbench/transaction/getProductById.do",
-					data : {"pid" : pid},
-					type : "get",
-					dataType : "json",
-					success : function (data) {
 
-						$("#create-pname").val(data.pname);
-						$("#create-mname").val(data.mid);
-						$("#create-createDate").val(data.createDate);
-						$("#create-paddress").val(data.paddress);
-						$("#create-price").val(data.price);
-						$("#create-number").val(data.repertory);
-						//所有者下拉框处理完毕后，展现模态窗口
-						$("#createProductModal").modal("show");
-					}
-				})
 			}
 		})
 
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveBtn").click(function () {
-			var $xz = $("input[name=xz]:checked");
-			var pid = $($xz[0]).val();
 
 			$.ajax({
 
 				url : "workbench/transaction/addProductToOrder.do",
 				data : {
-					"pid" : pid,
+					"pid" : $.trim($("#create-pid").val()),
 					"number" : $.trim($("#create-number").val()),
 					"pname" : $.trim($("#create-pname").val()),
 					"mname" : $.trim($("#create-mname").val()),
@@ -135,6 +117,7 @@
 				}
 			})
 		})
+
 
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveOrderBtn").click(function () {
@@ -202,7 +185,29 @@
 
 
 
+
+
 	});
+
+	function addProductBtn1(e) {
+		$.ajax({
+			url : "workbench/transaction/getProductById.do",
+			data : {"pid" : e},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+				$("#create-pid").val(e);
+				$("#create-pname").val(data.pname);
+				$("#create-mname").val(data.mid);
+				$("#create-createDate").val(data.createDate);
+				$("#create-paddress").val(data.paddress);
+				$("#create-price").val(data.price);
+				$("#create-number").val(data.repertory);
+				//所有者下拉框处理完毕后，展现模态窗口
+				$("#createProductModal").modal("show");
+			}
+		})
+	}
 
 
 
@@ -292,6 +297,7 @@
 
 				var html = "";
 				//每一个n就是每一个市场活动对象
+				//农产品列表
 				$.each(data.dataList,function (i,n) {
 					html += '<tr class="active">';
 					html += '<td><input type="checkbox" name="xz" value="'+n.pid+'"/></td>';
@@ -302,6 +308,7 @@
 					html += '<td>'+n.endDate+'</td>';
 					html += '<td>'+n.repertory+'</td>';
 					html += '<td>'+n.price+'</td>';
+					html += '<td><button type="button" class="btn btn-danger" value="'+n.pid+'" onclick="addProductBtn1(this.value)"><span class="glyphicon glyphicon-minus"></span>创建</button></td>';
 					html += '</tr>';
 
 				})
@@ -341,7 +348,7 @@
 
 </head>
 <body>
-
+<input type="hidden" id="create-pid">
 	<!-- 往订单里添加产品的模态窗口 -->
 	<div class="modal fade" id="createProductModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
@@ -462,7 +469,7 @@
 							</div>
 
 		                </form>		   
-		            <div class="modal-footer" style="width:500px;position: relative;top:-250px;left:900px; border: none" >
+		            <div class="modal-footer" style="width:500px;position: relative;top:-250px;left:700px; border: none" >
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" id="saveOrderBtn">保存123</button>
 		            </div>
@@ -508,7 +515,7 @@
 		<div style="position: relative; top: 20px; left: 40px;">
 			<div class="page-header">
 				<h4>产品列表</h4>
-				<button type="button" class="btn btn-danger" style="position: relative;left: 800px; top: -40px;" id="addProductBtn"><span class="glyphicon glyphicon-minus"></span>创建</button>
+				<button type="button" class="btn btn-danger" style="position: relative;left: 800px; top: -40px;" id="addProductBtn"><span class="glyphicon glyphicon-minus"></span>创建111</button>
 			</div>
 			<div style="position: relative;top: 0px;">
 				<table id="activityTable" class="table table-hover" style="width: 900px;">
@@ -522,6 +529,8 @@
 							<td>到期日期</td>
 							<td>当前批次数量</td>
 							<td>售价</td>
+							<td>添加</td>
+
 						</tr>
 					</thead>
 					<tbody id="productBody">
