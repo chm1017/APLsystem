@@ -5,6 +5,13 @@
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderDao">
 
+   <select id="getProductHistory" resultType="OrderHistoryVo">
+       select of.createDate as createDate , of.stage as stage  , of.name as oname , oc.count as pnumber ,oc.oid as oid
+       from orderform of
+       join (select oid,count from orderlist where pid = #{pid}) oc
+       on oc.oid=of.id
+   </select>
+
 
     <select id="getSumByOrderId" resultType="Orderform">
         select sum(totalprice) as totalprice from orderlist where oid =#{oid}
@@ -26,7 +33,8 @@ count,
 oid,
 totalprice,
 mname,
-paddress
+paddress,
+  pid
  )  values(
 #{id},
 #{pname},
@@ -36,7 +44,8 @@ paddress
 #{oid},
 #{totalprice},
 #{mname},
-#{paddress}
+#{paddress},
+           #{pid}
 )
     </insert>
 

@@ -12,7 +12,12 @@
 <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
 <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
 
-<script type="text/javascript">
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
+
+
+	<script type="text/javascript">
 
 	//默认情况下取消和保存按钮是隐藏的
 	var cancelAndSaveBtnDefault = true;
@@ -51,7 +56,69 @@
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
+		pageList(1,3)
 	});
+
+	function pageList(pageNo,pageSize) {
+		//将全选的复选框的√干掉
+		$("#qx").prop("checked",false);
+		$.ajax({
+
+			url : "workbench/product/pageList.do",
+			data : {
+
+				"pageNo" : pageNo,
+				"pageSize" : pageSize,
+				"mid" : "${m.mid}"
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data.dataList,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><input type="checkbox" name="xz" value="'+n.pid+'"/></td>';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/product/detail.do?id='+n.pid+'\';">'+n.pname+'</a></td>';
+					html += '<td>'+n.paddress+'</td>';
+					html += '<td>'+n.mid+'</td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.endDate+'</td>';
+					html += '<td>'+n.repertory+'</td>';
+					html += '<td>'+n.price+'</td>';
+					html += '</tr>';
+
+				})
+
+				$("#productBody").html(html);
+				//计算总页数
+				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
+				//数据处理完毕后，结合分页查询，对前端展现分页信息
+				$("#productPage").bs_pagination({
+					currentPage: pageNo, // 页码
+					rowsPerPage: pageSize, // 每页显示的记录条数
+					maxRowsPerPage: 20, // 每页最多显示的记录条数
+					totalPages: totalPages, // 总页数
+					totalRows: data.total, // 总记录条数
+
+					visiblePageLinks: 3, // 显示几个卡片
+
+					showGoToPage: true,
+					showRowsPerPage: true,
+					showRowsInfo: true,
+					showRowsDefaultInfo: true,
+
+					//该回调函数时在，点击分页组件的时候触发的
+					onChangePage : function(event, data){
+						pageList(data.currentPage , data.rowsPerPage);
+					}
+				});
+
+			}
+		})
+
+	}
 	
 </script>
 
@@ -96,7 +163,7 @@
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">修改市场活动</h4>
+                    <h4 class="modal-title" id="">修改市场活动</h4>
                 </div>
                 <div class="modal-body">
 
@@ -227,41 +294,6 @@
 	<div style="position: relative; top: 0px; left: 0px; width: 100%; height: 100%;">
 		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
 
-			<div class="btn-toolbar" role="toolbar" style="height: 80px;">
-				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">名称</div>
-							<input class="form-control" type="text" id="search-name">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">所有者</div>
-							<input class="form-control" type="text" id="search-owner">
-						</div>
-					</div>
-
-
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">开始日期</div>
-							<input class="form-control" type="text" id="search-startDate" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="input-group">
-							<div class="input-group-addon">结束日期</div>
-							<input class="form-control" type="text" id="search-endDate">
-						</div>
-					</div>
-
-					<button type="button" class="btn btn-default" id="searchBtn">查询</button>
-
-				</form>
-			</div>
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 					<button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
@@ -275,20 +307,23 @@
 					<thead>
 					<tr style="color: #B3B3B3;">
 						<td><input type="checkbox"  id="qx"/></td>
-						<td>名称</td>
-						<td>所有者</td>
-						<td>开始日期</td>
-						<td>结束日期</td>
+						<td>产品名称</td>
+						<td>生产园区</td>
+						<td>所属商户</td>
+						<td>生产日期</td>
+						<td>到期日期</td>
+						<td>当前批次数量</td>
+						<td>售价</td>
 					</tr>
 					</thead>
-					<tbody id="activityBody">
+					<tbody id="productBody">
 
 					</tbody>
 				</table>
 			</div>
 
 			<div style="height: 50px; position: relative;top: 30px;">
-				<div id="activityPage">
+				<div id="productPage">
 
 				</div>
 			</div>

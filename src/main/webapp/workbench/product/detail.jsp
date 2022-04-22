@@ -8,9 +8,17 @@
 	<base href="<%=basePath%>">
 <meta charset="UTF-8">
 
-<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
-<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+	<link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
+
+	<script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+	<script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+
+	<link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
+	<script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
+	<script type="text/javascript" src="jquery/bs_pagination/en.js"></script>
 
 <script type="text/javascript">
 
@@ -18,6 +26,56 @@
 	var cancelAndSaveBtnDefault = true;
 	
 	$(function(){
+
+
+		<%--$.ajax({--%>
+		<%--	url : "workbench/product/getProductHistory.do",--%>
+		<%--	type : "get",--%>
+		<%--	dataType : "json",--%>
+		<%--	success : function (data) {--%>
+		<%--		var html = "<option></option>";--%>
+		<%--		//遍历出来的每一个n，就是每一个user对象--%>
+		<%--		$.each(data,function (i,n) {--%>
+
+		<%--			html += "<option value='"+n.mid+"'>"+n.mname+"</option>";--%>
+
+		<%--		})--%>
+		<%--		$("#create-merchant").html(html);--%>
+		<%--		$("#search-selectMerchant").html(html);--%>
+
+		<%--		//取得当前登录用户的id--%>
+		<%--		//在js中使用el表达式，el表达式一定要套用在字符串中--%>
+		<%--		&lt;%&ndash;var id = "${user.id}";&ndash;%&gt;--%>
+		<%--		&lt;%&ndash;$("#create-createBy").val(id);&ndash;%&gt;--%>
+		<%--		//所有者下拉框处理完毕后，展现模态窗口--%>
+		<%--	}--%>
+		<%--})--%>
+
+
+		$.ajax({
+			url : "workbench/product/getProductHistory.do",
+			data : {
+				"pid" : "${p.pid}"
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/product/detail.do?id='+n.oid+'\';">'+n.oname+'</a></td>';
+					html += '<td>'+n.pnumber+'</td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.stage+'</td>';
+					html += '</tr>';
+				})
+
+				$("#productHistoryBody").html(html);
+			}
+		})
+
+
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
 				//设置remarkDiv的高度为130px
@@ -51,6 +109,8 @@
 		$(".myHref").mouseout(function(){
 			$(this).children("span").css("color","#E6E6E6");
 		});
+
+
 	});
 	
 </script>
@@ -59,216 +119,216 @@
 <body>
 
 	<!-- 关联市场活动的模态窗口 -->
-	<div class="modal fade" id="bundModal" role="dialog">
-		<div class="modal-dialog" role="document" style="width: 80%;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">×</span>
-					</button>
-					<h4 class="modal-title">关联市场活动</h4>
-				</div>
-				<div class="modal-body">
-					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
-						<form class="form-inline" role="form">
-						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
-						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-						  </div>
-						</form>
-					</div>
-					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
-						<thead>
-							<tr style="color: #B3B3B3;">
-								<td><input type="checkbox"/></td>
-								<td>名称</td>
-								<td>开始日期</td>
-								<td>结束日期</td>
-								<td>所有者</td>
-								<td></td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>
-				</div>
-			</div>
-		</div>
-	</div>
+<%--	<div class="modal fade" id="bundModal" role="dialog">--%>
+<%--		<div class="modal-dialog" role="document" style="width: 80%;">--%>
+<%--			<div class="modal-content">--%>
+<%--				<div class="modal-header">--%>
+<%--					<button type="button" class="close" data-dismiss="modal">--%>
+<%--						<span aria-hidden="true">×</span>--%>
+<%--					</button>--%>
+<%--					<h4 class="modal-title">关联市场活动</h4>--%>
+<%--				</div>--%>
+<%--				<div class="modal-body">--%>
+<%--					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">--%>
+<%--						<form class="form-inline" role="form">--%>
+<%--						  <div class="form-group has-feedback">--%>
+<%--						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">--%>
+<%--						    <span class="glyphicon glyphicon-search form-control-feedback"></span>--%>
+<%--						  </div>--%>
+<%--						</form>--%>
+<%--					</div>--%>
+<%--					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">--%>
+<%--						<thead>--%>
+<%--							<tr style="color: #B3B3B3;">--%>
+<%--								<td><input type="checkbox"/></td>--%>
+<%--								<td>名称</td>--%>
+<%--								<td>开始日期</td>--%>
+<%--								<td>结束日期</td>--%>
+<%--								<td>所有者</td>--%>
+<%--								<td></td>--%>
+<%--							</tr>--%>
+<%--						</thead>--%>
+<%--						<tbody>--%>
+<%--							<tr>--%>
+<%--								<td><input type="checkbox"/></td>--%>
+<%--								<td>发传单</td>--%>
+<%--								<td>2020-10-10</td>--%>
+<%--								<td>2020-10-20</td>--%>
+<%--								<td>zhangsan</td>--%>
+<%--							</tr>--%>
+<%--							<tr>--%>
+<%--								<td><input type="checkbox"/></td>--%>
+<%--								<td>发传单</td>--%>
+<%--								<td>2020-10-10</td>--%>
+<%--								<td>2020-10-20</td>--%>
+<%--								<td>zhangsan</td>--%>
+<%--							</tr>--%>
+<%--						</tbody>--%>
+<%--					</table>--%>
+<%--				</div>--%>
+<%--				<div class="modal-footer">--%>
+<%--					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>--%>
+<%--					<button type="button" class="btn btn-primary" data-dismiss="modal">关联</button>--%>
+<%--				</div>--%>
+<%--			</div>--%>
+<%--		</div>--%>
+<%--	</div>--%>
 
     <!-- 修改线索的模态窗口 -->
-    <div class="modal fade" id="editClueModal" role="dialog">
-        <div class="modal-dialog" role="document" style="width: 90%;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">修改线索</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" role="form">
+<%--    <div class="modal fade" id="editClueModal" role="dialog">--%>
+<%--        <div class="modal-dialog" role="document" style="width: 90%;">--%>
+<%--            <div class="modal-content">--%>
+<%--                <div class="modal-header">--%>
+<%--                    <button type="button" class="close" data-dismiss="modal">--%>
+<%--                        <span aria-hidden="true">×</span>--%>
+<%--                    </button>--%>
+<%--                    <h4 class="modal-title" id="myModalLabel">修改线索</h4>--%>
+<%--                </div>--%>
+<%--                <div class="modal-body">--%>
+<%--                    <form class="form-horizontal" role="form">--%>
 
-                        <div class="form-group">
-                            <label for="edit-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-clueOwner">
-                                    <option>zhangsan</option>
-                                    <option>lisi</option>
-                                    <option>wangwu</option>
-                                </select>
-                            </div>
-                            <label for="edit-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-company" value="动力节点">
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-clueOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <select class="form-control" id="edit-clueOwner">--%>
+<%--                                    <option>zhangsan</option>--%>
+<%--                                    <option>lisi</option>--%>
+<%--                                    <option>wangwu</option>--%>
+<%--                                </select>--%>
+<%--                            </div>--%>
+<%--                            <label for="edit-company" class="col-sm-2 control-label">公司<span style="font-size: 15px; color: red;">*</span></label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-company" value="动力节点">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-call" class="col-sm-2 control-label">称呼</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-call">
-                                    <option></option>
-                                    <option selected>先生</option>
-                                    <option>夫人</option>
-                                    <option>女士</option>
-                                    <option>博士</option>
-                                    <option>教授</option>
-                                </select>
-                            </div>
-                            <label for="edit-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-surname" value="李四">
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-call" class="col-sm-2 control-label">称呼</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <select class="form-control" id="edit-call">--%>
+<%--                                    <option></option>--%>
+<%--                                    <option selected>先生</option>--%>
+<%--                                    <option>夫人</option>--%>
+<%--                                    <option>女士</option>--%>
+<%--                                    <option>博士</option>--%>
+<%--                                    <option>教授</option>--%>
+<%--                                </select>--%>
+<%--                            </div>--%>
+<%--                            <label for="edit-surname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-surname" value="李四">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-job" class="col-sm-2 control-label">职位</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-job" value="CTO">
-                            </div>
-                            <label for="edit-email" class="col-sm-2 control-label">邮箱</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-email" value="lisi@bjpowernode.com">
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-job" class="col-sm-2 control-label">职位</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-job" value="CTO">--%>
+<%--                            </div>--%>
+<%--                            <label for="edit-email" class="col-sm-2 control-label">邮箱</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-email" value="lisi@bjpowernode.com">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-phone" class="col-sm-2 control-label">公司座机</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-phone" value="010-84846003">
-                            </div>
-                            <label for="edit-website" class="col-sm-2 control-label">公司网站</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-phone" class="col-sm-2 control-label">公司座机</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-phone" value="010-84846003">--%>
+<%--                            </div>--%>
+<%--                            <label for="edit-website" class="col-sm-2 control-label">公司网站</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-mphone" class="col-sm-2 control-label">手机</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-mphone" value="12345678901">
-                            </div>
-                            <label for="edit-status" class="col-sm-2 control-label">线索状态</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-status">
-                                    <option></option>
-                                    <option>试图联系</option>
-                                    <option>将来联系</option>
-                                    <option selected>已联系</option>
-                                    <option>虚假线索</option>
-                                    <option>丢失线索</option>
-                                    <option>未联系</option>
-                                    <option>需要条件</option>
-                                </select>
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-mphone" class="col-sm-2 control-label">手机</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <input type="text" class="form-control" id="edit-mphone" value="12345678901">--%>
+<%--                            </div>--%>
+<%--                            <label for="edit-status" class="col-sm-2 control-label">线索状态</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <select class="form-control" id="edit-status">--%>
+<%--                                    <option></option>--%>
+<%--                                    <option>试图联系</option>--%>
+<%--                                    <option>将来联系</option>--%>
+<%--                                    <option selected>已联系</option>--%>
+<%--                                    <option>虚假线索</option>--%>
+<%--                                    <option>丢失线索</option>--%>
+<%--                                    <option>未联系</option>--%>
+<%--                                    <option>需要条件</option>--%>
+<%--                                </select>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-source" class="col-sm-2 control-label">线索来源</label>
-                            <div class="col-sm-10" style="width: 300px;">
-                                <select class="form-control" id="edit-source">
-                                    <option></option>
-                                    <option selected>广告</option>
-                                    <option>推销电话</option>
-                                    <option>员工介绍</option>
-                                    <option>外部介绍</option>
-                                    <option>在线商场</option>
-                                    <option>合作伙伴</option>
-                                    <option>公开媒介</option>
-                                    <option>销售邮件</option>
-                                    <option>合作伙伴研讨会</option>
-                                    <option>内部研讨会</option>
-                                    <option>交易会</option>
-                                    <option>web下载</option>
-                                    <option>web调研</option>
-                                    <option>聊天</option>
-                                </select>
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-source" class="col-sm-2 control-label">线索来源</label>--%>
+<%--                            <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                <select class="form-control" id="edit-source">--%>
+<%--                                    <option></option>--%>
+<%--                                    <option selected>广告</option>--%>
+<%--                                    <option>推销电话</option>--%>
+<%--                                    <option>员工介绍</option>--%>
+<%--                                    <option>外部介绍</option>--%>
+<%--                                    <option>在线商场</option>--%>
+<%--                                    <option>合作伙伴</option>--%>
+<%--                                    <option>公开媒介</option>--%>
+<%--                                    <option>销售邮件</option>--%>
+<%--                                    <option>合作伙伴研讨会</option>--%>
+<%--                                    <option>内部研讨会</option>--%>
+<%--                                    <option>交易会</option>--%>
+<%--                                    <option>web下载</option>--%>
+<%--                                    <option>web调研</option>--%>
+<%--                                    <option>聊天</option>--%>
+<%--                                </select>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div class="form-group">
-                            <label for="edit-describe" class="col-sm-2 control-label">描述</label>
-                            <div class="col-sm-10" style="width: 81%;">
-                                <textarea class="form-control" rows="3" id="edit-describe">这是一条线索的描述信息</textarea>
-                            </div>
-                        </div>
+<%--                        <div class="form-group">--%>
+<%--                            <label for="edit-describe" class="col-sm-2 control-label">描述</label>--%>
+<%--                            <div class="col-sm-10" style="width: 81%;">--%>
+<%--                                <textarea class="form-control" rows="3" id="edit-describe">这是一条线索的描述信息</textarea>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
+<%--                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>--%>
 
-                        <div style="position: relative;top: 15px;">
-                            <div class="form-group">
-                                <label for="edit-contactSummary" class="col-sm-2 control-label">联系纪要</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="edit-contactSummary">这个线索即将被转换</textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
-                                <div class="col-sm-10" style="width: 300px;">
-                                    <input type="text" class="form-control" id="edit-nextContactTime" value="2017-05-01">
-                                </div>
-                            </div>
-                        </div>
+<%--                        <div style="position: relative;top: 15px;">--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="edit-contactSummary" class="col-sm-2 control-label">联系纪要</label>--%>
+<%--                                <div class="col-sm-10" style="width: 81%;">--%>
+<%--                                    <textarea class="form-control" rows="3" id="edit-contactSummary">这个线索即将被转换</textarea>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>--%>
+<%--                                <div class="col-sm-10" style="width: 300px;">--%>
+<%--                                    <input type="text" class="form-control" id="edit-nextContactTime" value="2017-05-01">--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
 
-                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative; top : 10px;"></div>
+<%--                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative; top : 10px;"></div>--%>
 
-                        <div style="position: relative;top: 20px;">
-                            <div class="form-group">
-                                <label for="edit-address" class="col-sm-2 control-label">详细地址</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="edit-address">北京大兴区大族企业湾</textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+<%--                        <div style="position: relative;top: 20px;">--%>
+<%--                            <div class="form-group">--%>
+<%--                                <label for="edit-address" class="col-sm-2 control-label">详细地址</label>--%>
+<%--                                <div class="col-sm-10" style="width: 81%;">--%>
+<%--                                    <textarea class="form-control" rows="1" id="edit-address">北京大兴区大族企业湾</textarea>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </form>--%>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<%--                </div>--%>
+<%--                <div class="modal-footer">--%>
+<%--                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--%>
+<%--                    <button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
 	<!-- 返回按钮 -->
 	<div style="position: relative; top: 35px; left: 10px;">
@@ -386,34 +446,20 @@
 	<div>
 		<div style="position: relative; top: 60px; left: 40px;">
 			<div class="page-header">
-				<h4>市场活动</h4>
+				<h4>下单历史</h4>
 			</div>
 			<div style="position: relative;top: 0px;">
 				<table class="table table-hover" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td>名称</td>
-							<td>开始日期</td>
-							<td>结束日期</td>
-							<td>所有者</td>
-							<td></td>
+							<td>订单名称</td>
+							<td>下单数量</td>
+							<td>下单日期</td>
+							<td>订单状态</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td>发传单</td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-							<td>zhangsan</td>
-							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-						</tr>
-						<tr>
-							<td>发传单</td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-							<td>zhangsan</td>
-							<td><a href="javascript:void(0);"  style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-						</tr>
+					<tbody id="productHistoryBody">
+
 					</tbody>
 				</table>
 			</div>

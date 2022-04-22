@@ -3,9 +3,20 @@ package com.cm.APL.workbench.domain;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test {
     public static void main(String[] args) throws IOException {
+
+
+        Long i = null;
+
+        List<Long> list = new ArrayList<>();
+        list.add(i);
+        System.out.println(list);
+
+
 
             //定义两个字符串
             String OneStr = "ckkccbacadkabckebfkabkskabcabc";

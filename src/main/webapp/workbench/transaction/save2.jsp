@@ -208,9 +208,6 @@
 			}
 		})
 	}
-
-
-
 	function pageList2(pageNo,pageSize) {
 		//将全选的复选框的√干掉
 		$("#qx2").prop("checked",false);
@@ -469,7 +466,7 @@
 							</div>
 
 		                </form>		   
-		            <div class="modal-footer" style="width:500px;position: relative;top:-250px;left:700px; border: none" >
+		            <div class="modal-footer" style="width:500px;position: relative;top:-250px;left:800px; border: none" >
 						<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						<button type="button" class="btn btn-primary" id="saveOrderBtn">保存123</button>
 		            </div>
@@ -530,7 +527,6 @@
 							<td>当前批次数量</td>
 							<td>售价</td>
 							<td>添加</td>
-
 						</tr>
 					</thead>
 					<tbody id="productBody">
@@ -539,7 +535,7 @@
 				</table>
 			</div>
 			
-			<div style="height: 50px; position: relative;top: 20px;" id="productPage">
+			<div style="width:100%;height: 50px; position: relative;top: 20px;" id="productPage">
 
 
 			</div>
@@ -548,6 +544,6 @@
 		</div>
 	</div>
 	
-	<div style="height: 200px;"></div>
+
 </body>
 </html>

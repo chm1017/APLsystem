@@ -68,6 +68,7 @@
         <url-pattern>/workbench/product/pageList.do</url-pattern>
         <url-pattern>/workbench/product/getProductById.do</url-pattern>
         <url-pattern>/workbench/product/detail.do</url-pattern>
+        <url-pattern>/workbench/product/getProductHistory.do</url-pattern>
     </servlet-mapping>
     
     <servlet>

@@ -1,5 +1,6 @@
 package com.cm.APL.workbench.dao;
 
+import com.cm.APL.workbench.domain.OrderHistoryVo;
 import com.cm.APL.workbench.domain.Order;
 import com.cm.APL.workbench.domain.Orderform;
 
@@ -15,4 +16,7 @@ public interface OrderDao {
     List<Order> getProductListByOrderId(HashMap<String, Object> map);
 
     Orderform getSumByOrderId(String oid);
+
+
+    List<OrderHistoryVo> getProductHistory(String pid);
 }

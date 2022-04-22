@@ -8,6 +8,7 @@ import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.utils.UUIDUtil;
 
+import com.cm.APL.workbench.domain.OrderHistoryVo;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.domain.Product;
 import com.cm.APL.workbench.domain.Merchant;
@@ -38,7 +39,16 @@ public class ProductController extends HttpServlet {
             pageList(request, response);
         } else if ("/workbench/product/detail.do".equals(path)) {
             detail(request, response);
+        } else if (("/workbench/product/getProductHistory.do").equals(path)) {
+            getProductHistory(request, response);
         }
+    }
+
+    private void getProductHistory(HttpServletRequest request, HttpServletResponse response) {
+        String pid = request.getParameter("pid");
+        ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
+        List<OrderHistoryVo> dataList= service.getProductHistory(pid);
+        PrintJson.printJsonObj(response, dataList);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
