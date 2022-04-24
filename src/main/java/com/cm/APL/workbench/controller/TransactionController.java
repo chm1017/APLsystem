@@ -20,7 +20,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class TransactionController extends HttpServlet {
     @Override
@@ -42,7 +44,16 @@ public class TransactionController extends HttpServlet {
             orderListPage(request, response);
         } else if ("/workbench/transaction/detail.do".equals(path)) {
             detail(request, response);
+        } else if ("/workbench/transaction/getorderListById.do".equals(path)) {
+            getOrderListById(request, response);
         }
+    }
+
+    private void getOrderListById(HttpServletRequest request, HttpServletResponse response) {
+        String oid = request.getParameter("oid");
+        TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        List<Order> orderList = service.getOrderListById(oid);
+        PrintJson.printJsonObj(response, orderList);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -75,7 +86,7 @@ public class TransactionController extends HttpServlet {
         String countStr = request.getParameter("totalprice");
         double count = Double.parseDouble(countStr);
         String createBy = request.getParameter("createBy");
-        System.out.println(createBy);
+
         String carid = request.getParameter("carid");
         String description = request.getParameter("description");
         String id = request.getParameter("oid");

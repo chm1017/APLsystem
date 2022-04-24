@@ -5,18 +5,20 @@
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderformDao">
     <select id="detail" resultType="Orderform">
-        select
-o.id,
-o.name,
-o.totalprice,
-o.createDate,
-o.createBy,
-c.cname as carid,
-o.description,
-o.stage
-        from orderform o join car c on c.cid=o.carid
-where id=#{id}
-
+select
+    s.id,s.name,s.description,s.totalprice,s.createDate,s.carid,s.stage,d.dname as did
+    from (select
+              o.id,
+              o.name,
+              o.totalprice,
+              o.createDate,
+              c.cname as carid,
+              c.did,
+              o.description,
+              o.stage
+          from orderform o join car c on c.cid=o.carid
+          where id=#{id} ) as s
+join driver d on s.did=d.did
     </select>
 
     <select id="getOrderList" resultType="Orderform">

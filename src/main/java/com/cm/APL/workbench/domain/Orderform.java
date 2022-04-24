@@ -1,9 +1,11 @@
 package com.cm.APL.workbench.domain;
 
 
-
+import java.util.Date;
 
 public class Orderform {
+
+
             private String id;
             private String name;
             private Double totalprice;
@@ -12,6 +14,15 @@ public class Orderform {
             private String carid;
             private String description;
             private String stage;
+            private String did;
+
+    public String getDid() {
+        return did;
+    }
+
+    public void setDid(String did) {
+        this.did = did;
+    }
 
     @Override
     public String toString() {
@@ -24,8 +35,10 @@ public class Orderform {
                 ", carid='" + carid + '\'' +
                 ", description='" + description + '\'' +
                 ", stage='" + stage + '\'' +
+                ", did='" + did + '\'' +
                 '}';
     }
+
 
     public String getId() {
         return id;

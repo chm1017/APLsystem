@@ -4,6 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderDao">
+    <select id="getProductSailNumber" resultType="ProductSailNumber">
+        select sum(count) as tol,f.pname as name
+        from orderList o join fproduct f on o.pid=f.pid group by o.pid
+    </select>
+
+    <select id="getProductType" resultType="int">
+        select count(distinct pid) from orderlist
+    </select>
+
+    <select id="getOrderListById" resultType="Order">
+        select * from orderList where oid = #{oid}
+    </select>
 
    <select id="getProductHistory" resultType="OrderHistoryVo">
        select of.createDate as createDate , of.stage as stage  , of.name as oname , oc.count as pnumber ,oc.oid as oid
@@ -12,7 +24,6 @@
        on oc.oid=of.id
    </select>
 
-
     <select id="getSumByOrderId" resultType="Orderform">
         select sum(totalprice) as totalprice from orderlist where oid =#{oid}
     </select>
@@ -20,6 +31,7 @@
     <select id="getTotalById" resultType="int">
         select count(*) from orderList where oid=#{oid}
     </select>
+
     <select id="getProductListByOrderId" resultType="Order">
         select * from orderList where oid = #{oid}
     </select>
@@ -48,8 +60,5 @@ paddress,
            #{pid}
 )
     </insert>
-
-
-
 
 </mapper>

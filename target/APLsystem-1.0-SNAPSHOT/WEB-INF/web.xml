@@ -16,6 +16,16 @@
     </filter-mapping>
 
     <servlet>
+        <servlet-name>ChartController</servlet-name>
+        <servlet-class>com.cm.APL.workbench.controller.ChartController</servlet-class>
+
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChartController</servlet-name>
+        <url-pattern>/workbench/chart/getProductNumber.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>TransactionController</servlet-name>
         <servlet-class>com.cm.APL.workbench.controller.TransactionController</servlet-class>
     </servlet>
@@ -29,6 +39,7 @@
         <url-pattern>/workbench/transaction/saveOrder.do</url-pattern>
         <url-pattern>/workbench/transaction/orderListPage.do</url-pattern>
         <url-pattern>/workbench/transaction/detail.do</url-pattern>
+        <url-pattern>/workbench/transaction/getorderListById.do</url-pattern>
     </servlet-mapping>
 
     <servlet>

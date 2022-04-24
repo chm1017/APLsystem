@@ -66,5 +66,9 @@ public class TransactionServiceImpl implements TransactionService {
         return o;
     }
 
-
+    @Override
+    public List<Order> getOrderListById(String oid) {
+        List<Order> orders = orderDao.getOrderListById(oid);
+        return orders;
+    }
 }

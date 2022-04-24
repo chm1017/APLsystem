@@ -6,6 +6,7 @@ import com.cm.APL.workbench.domain.Order;
 import com.cm.APL.workbench.domain.Orderform;
 
 import java.util.HashMap;
+import java.util.List;
 
 public interface TransactionService {
     Integer addProductToOrder(Order o);
@@ -20,4 +21,6 @@ public interface TransactionService {
     PaginationVO<Orderform> orderListPage(HashMap<String, Object> map);
 
     Orderform detail(String id);
+
+    List<Order> getOrderListById(String oid);
 }
