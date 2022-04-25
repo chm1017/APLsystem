@@ -4,9 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderDao">
+    <select id="getMPBoss" resultType="MPBoss">
+        select s.tol,s.pname,m.mname from
+            (
+                select sum(count) as tol,f.pname as pname,f.mid
+                from orderList o
+                         join fproduct f on o.pid=f.pid group by o.pid
+            ) s join merchant m on m.mid=s.mid
+    </select>
     <select id="getProductSailNumber" resultType="ProductSailNumber">
         select sum(count) as tol,f.pname as name
-        from orderList o join fproduct f on o.pid=f.pid group by o.pid
+        from orderList o
+         join fproduct f on o.pid=f.pid group by o.pid
     </select>
 
     <select id="getProductType" resultType="int">

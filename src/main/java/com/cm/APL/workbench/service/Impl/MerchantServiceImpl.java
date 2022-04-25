@@ -1,6 +1,8 @@
 package com.cm.APL.workbench.service.Impl;
 
 
+import com.cm.APL.settings.dao.UserDao;
+import com.cm.APL.settings.domain.User;
 import com.cm.APL.utils.SqlSessionUtil;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.MerchantDao;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class MerchantServiceImpl implements MerchantService {
     private MerchantDao merchantDao = SqlSessionUtil.getSqlSession().getMapper(MerchantDao.class);
+    private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
     @Override
     public boolean save(Merchant merchant) {
 
@@ -43,5 +46,24 @@ public class MerchantServiceImpl implements MerchantService {
     public Merchant detail(String mid) {
         Merchant m = merchantDao.detail(mid);
         return m;
+    }
+
+    @Override
+    public HashMap<String, Object> getMerchantById(String mid) {
+        List<User> userList = userDao.getUserList();
+        Merchant merchant = merchantDao.getMerchantById(mid);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("a", merchant);
+        map.put("uList", userList);
+        return map;
+    }
+
+    @Override
+    public boolean update(Merchant m) {
+        int i = merchantDao.update(m);
+        if (i != 1) {
+            return false;
+        }
+        return true;
     }
 }

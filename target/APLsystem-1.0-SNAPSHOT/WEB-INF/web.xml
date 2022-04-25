@@ -23,6 +23,7 @@
     <servlet-mapping>
         <servlet-name>ChartController</servlet-name>
         <url-pattern>/workbench/chart/getProductNumber.do</url-pattern>
+        <url-pattern>/workbench/chart/getMPBoss.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -65,6 +66,8 @@
         <url-pattern>/workbench/driver/save.do</url-pattern>
         <url-pattern>/workbench/driver/pageList.do</url-pattern>
         <url-pattern>/workbench/driver/detail.do</url-pattern>
+        <url-pattern>/workbench/driver/getDriverById.do</url-pattern>
+        <url-pattern>/workbench/driver/update.do</url-pattern>
     </servlet-mapping>
 
 <servlet>
@@ -92,6 +95,8 @@
         <url-pattern>/workbench/merchant/save.do</url-pattern>
         <url-pattern>/workbench/merchant/pageList.do</url-pattern>
         <url-pattern>/workbench/merchant/detail.do</url-pattern>
+        <url-pattern>/workbench/merhchant/getMerchantById.do</url-pattern>
+        <url-pattern>/workbench/merchant/update.do</url-pattern>
     </servlet-mapping>
     
 

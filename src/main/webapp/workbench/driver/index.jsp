@@ -106,6 +106,98 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 
 		})
+		$("#editBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+
+			if($xz.length==0){
+
+				alert("请选择需要修改的记录");
+
+			}else if($xz.length>1){
+
+				alert("只能选择一条记录进行修改");
+
+				//肯定只选了一条
+			}else{
+
+				var id = $xz.val();
+
+				$.ajax({
+
+					url : "workbench/driver/getDriverById.do",
+					data : {
+						"did" : id
+					},
+					type : "get",
+					dataType : "json",
+					success : function (data) {
+
+						//处理所有者下拉框
+						var html = "<option></option>";
+
+						$.each(data.uList,function (i,n) {
+
+							html += "<option value='"+n.id+"'>"+n.name+"</option>";
+
+						})
+						$("#edit-createBy").html(html);
+						$("#edit-did").val(data.a.did);
+						$("#edit-createBy").val(data.a.createBy);
+						//处理单条activity
+						$("#edit-dname").val(data.a.dname);
+						$("#edit-dage").val(data.a.dage);
+						$("#edit-daddress").val(data.a.daddress);
+						$("#edit-idNumber").val(data.a.idNumber);
+						$("#edit-dphone").val(data.a.dphone);
+						$("#edit-dplace").val(data.a.dplace);
+						$("#edit-driveId").val(data.a.driveId);
+						$("#edit-stage").val(data.a.stage);
+						//所有的值都填写好之后，打开修改操作的模态窗口
+						$("#editDriverModal").modal("show");
+					}
+				})
+			}
+		})
+		//为保存按钮绑定事件，执行添加操作
+		$("#updateBtn").click(function () {
+
+			$.ajax({
+
+				url : "workbench/driver/update.do",
+				data : {
+					"did" : $.trim($("#edit-did").val()),
+					"createBy" : $.trim($("#edit-createBy").val()),
+					"dname" : $.trim($("#edit-dname").val()),
+					"dage" : $.trim($("#edit-dage").val()),
+					"daddress" : $.trim($("#edit-daddress").val()),
+					"dphone" : $.trim($("#edit-dphone").val()),
+					"idNumber" : $.trim($("#edit-idNumber").val()),
+					"dplace" : $.trim($("#edit-dplace").val()),
+					"driveId" : $.trim($("#edit-driveId").val()),
+					"stage" : $.trim($("#edit-stage").val())
+				},
+				type : "post",
+				dataType : "json",
+				success : function (data) {
+					if(data.success){
+
+						pageList(1,$("#driverPage").bs_pagination('getOption', 'rowsPerPage'));
+
+
+
+						//关闭添加操作的模态窗口
+						$("#editDriverModal").modal("hide");
+						// alert("添加陈工")
+
+
+					}else{
+						alert("修改司机信息失败");
+					}
+
+				}
+			})
+
+		})
 
 	});
 	function pageList(pageNo,pageSize) {
@@ -176,6 +268,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 </script>
 </head>
 <body>
+<input type="hidden" id="edit-did">
 
 	<!-- 创建司机的模态窗口 -->
 	<div class="modal fade" id="createDriverModal" role="dialog">
@@ -264,7 +357,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	</div>
 	
 	<!-- 修改客户的模态窗口 -->
-	<div class="modal fade" id="editCustomerModal" role="dialog">
+	<div class="modal fade" id="editDriverModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -277,71 +370,69 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					<form class="form-horizontal" role="form">
 					
 						<div class="form-group">
-							<label for="edit-customerOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-createBy" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<select class="form-control" id="edit-customerOwner">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+								<select class="form-control" id="edit-createBy">
+
 								</select>
 							</div>
-							<label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
+							<label for="edit-dname" class="col-sm-2 control-label">司机名称<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-customerName" value="动力节点">
+								<input type="text" class="form-control" id="edit-dname" >
 							</div>
 						</div>
 						
 						<div class="form-group">
-                            <label for="edit-website" class="col-sm-2 control-label">公司网站</label>
+                            <label for="edit-dage" class="col-sm-2 control-label">年龄</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-website" value="http://www.bjpowernode.com">
+                                <input type="text" class="form-control" id="edit-dage" >
                             </div>
-							<label for="edit-phone" class="col-sm-2 control-label">公司座机</label>
+							<label for="edit-dphone" class="col-sm-2 control-label">电话</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-phone" value="010-84846003">
+								<input type="text" class="form-control" id="edit-dphone" >
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="edit-daddress" class="col-sm-2 control-label">住址</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="edit-daddress">
+							</div>
+							<label for="edit-idNumber" class="col-sm-2 control-label">身份证号</label>
+							<div class="col-sm-10" style="width: 300px;">
+								<input type="text" class="form-control" id="edit-idNumber" >
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
+							<label for="edit-dplace" class="col-sm-2 control-label">所属网点</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="edit-describe"></textarea>
+								<textarea class="form-control" rows="3" id="edit-dplace"></textarea>
 							</div>
 						</div>
-						
 						<div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative;"></div>
 
                         <div style="position: relative;top: 15px;">
+
                             <div class="form-group">
-                                <label for="create-contactSummary1" class="col-sm-2 control-label">联系纪要</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="3" id="create-contactSummary1"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="create-nextContactTime2" class="col-sm-2 control-label">下次联系时间</label>
+                                <label for="edit-driveId" class="col-sm-2 control-label">驾驶证号</label>
                                 <div class="col-sm-10" style="width: 300px;">
-                                    <input type="text" class="form-control" id="create-nextContactTime2">
+                                    <input type="text" class="form-control" id="edit-driveId">
                                 </div>
+								<label for="edit-stage" class="col-sm-2 control-label">状态</label>
+								<div class="col-sm-10" style="width: 300px;">
+									<select class="form-control" id="edit-stage">
+
+									</select>
+								</div>
                             </div>
                         </div>
 
-                        <div style="height: 1px; width: 103%; background-color: #D5D5D5; left: -13px; position: relative; top : 10px;"></div>
-
-                        <div style="position: relative;top: 20px;">
-                            <div class="form-group">
-                                <label for="create-address" class="col-sm-2 control-label">详细地址</label>
-                                <div class="col-sm-10" style="width: 81%;">
-                                    <textarea class="form-control" rows="1" id="create-address">北京大兴大族企业湾</textarea>
-                                </div>
-                            </div>
-                        </div>
 					</form>
 					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="updateBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -361,47 +452,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 	<div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
 	
 		<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
-		
-	
-			<!-- <div class="btn-toolbar" role="toolbar" style="height: 80px;">
-				<form class="form-inline" role="form" style="position: relative;top: 8%; left: 5px;">
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">名称</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">所有者</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司座机</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <div class="form-group">
-				    <div class="input-group">
-				      <div class="input-group-addon">公司网站</div>
-				      <input class="form-control" type="text">
-				    </div>
-				  </div>
-				  
-				  <button type="submit" class="btn btn-default">查询</button>
-				  
-				</form>
-			</div> -->
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				

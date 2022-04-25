@@ -118,6 +118,102 @@
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
 
 		})
+
+		$("#editBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+
+			if($xz.length==0){
+
+				alert("请选择需要修改的记录");
+
+			}else if($xz.length>1){
+
+				alert("只能选择一条记录进行修改");
+
+				//肯定只选了一条
+			}else{
+
+				var id = $xz.val();
+
+				$.ajax({
+
+					url : "workbench/merhchant/getMerchantById.do",
+					data : {
+						"mid" : id
+					},
+					type : "get",
+					dataType : "json",
+					success : function (data) {
+
+						//处理所有者下拉框
+						var html = "<option></option>";
+
+						$.each(data.uList,function (i,n) {
+
+							html += "<option value='"+n.id+"'>"+n.name+"</option>";
+
+						})
+
+						$("#edit-createBy").html(html);
+						$("#edit-mid").val(data.a.mid);
+						$("#edit-createBy").val(data.a.createBy);
+						//处理单条activity
+						$("#edit-mname").val(data.a.mname);
+						$("#edit-mage").val(data.a.mage);
+						$("#edit-maddress").val(data.a.maddress);
+						$("#edit-memail").val(data.a.memail);
+						$("#edit-mphone").val(data.a.mphone);
+						$("#edit-company").val(data.a.company);
+						$("#edit-description").val(data.a.description);
+
+						//所有的值都填写好之后，打开修改操作的模态窗口
+						$("#editMerchantModal").modal("show");
+					}
+				})
+			}
+		})
+		//为保存按钮绑定事件，执行添加操作
+		$("#updateBtn").click(function () {
+
+			$.ajax({
+
+				url : "workbench/merchant/update.do",
+				data : {
+					"mid" : $.trim($("#edit-mid").val()),
+					"createBy" : $.trim($("#edit-createBy").val()),
+					"mname" : $.trim($("#edit-mname").val()),
+					"mage" : $.trim($("#edit-mage").val()),
+					"madress" : $.trim($("#edit-maddress").val()),
+					"memail" : $.trim($("#edit-memail").val()),
+					"mphone" : $.trim($("#edit-mphone").val()),
+					"company" : $.trim($("#edit-company").val()),
+					"description" : $.trim($("#edit-description").val())
+
+				},
+				type : "post",
+				dataType : "json",
+				success : function (data) {
+					if(data.success){
+
+						pageList(1,$("#merchantPage").bs_pagination('getOption', 'rowsPerPage'));
+
+
+
+						//关闭添加操作的模态窗口
+						$("#editMerchantModal").modal("hide");
+						// alert("添加陈工")
+
+
+					}else{
+						alert("修改商户信息失败");
+					}
+
+				}
+			})
+
+		})
+
+
 	});
 	function pageList(pageNo,pageSize) {
 
@@ -201,6 +297,7 @@
 <input type="hidden" id="hidden-mphone"/>
 <input type="hidden" id="hidden-maddress"/>
 <input type="hidden" id="hidden-description"/>
+<input type="hidden" id="edit-mid"/>
 
 
 
@@ -305,50 +402,48 @@
 							<label for="edit-createBy" class="col-sm-2 control-label">创建者<span style="font-size: 15px; color: red;">*</span></label>
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="edit-createBy">
-								  <option>zhangsan</option>
-								  <option>lisi</option>
-								  <option>wangwu</option>
+
 								</select>
 							</div>
-                            <label for="edit-mname" class="col-sm-2 control-label">姓名<span style="font-size: 15px; color: red;">*</span></label>
+                            <label for="edit-mname" class="col-sm-2 control-label">商户姓名<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-mname" value="发传单">
+                                <input type="text" class="form-control" id="edit-mname">
                             </div>
 						</div>
 
 						<div class="form-group">
 							<label for="edit-mage" class="col-sm-2 control-label">年龄</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-mage" value="2020-10-10">
+								<input type="text" class="form-control" id="edit-mage" >
 							</div>
 							<label for="edit-maddress" class="col-sm-2 control-label">园区地址</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-maddress" value="2020-10-20">
+								<input type="text" class="form-control" id="edit-maddress" >
 							</div>
 						</div>
 						
 						<div class="form-group">
 							<label for="edit-memail" class="col-sm-2 control-label">邮件</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-memail" value="5,000">
+								<input type="text" class="form-control" id="edit-memail" >
 							</div>
 							<label for="edit-mphone" class="col-sm-2 control-label">电话</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-mphone" value="5,000">
+								<input type="text" class="form-control" id="edit-mphone">
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="edit-company" class="col-sm-2 control-label">公司</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control" id="edit-company" value="5,000">
+								<input type="text" class="form-control" id="edit-company">
 							</div>
 							
 						</div>
 						
 						<div class="form-group">
-							<label for="edit-describe" class="col-sm-2 control-label">描述</label>
+							<label for="edit-description" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
-								<textarea class="form-control" rows="3" id="edit-describe">市场活动Marketing，是指品牌主办或参与的展览会议与公关市场活动，包括自行主办的各类研讨会、客户交流会、演示会、新产品发布会、体验会、答谢会、年会和出席参加并布展或演讲的展览会、研讨会、行业交流会、颁奖典礼等</textarea>
+								<textarea class="form-control" rows="3" id="edit-description"></textarea>
 							</div>
 						</div>
 						
@@ -357,7 +452,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal">更新</button>
+					<button type="button" class="btn btn-primary" id="updateBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -414,7 +509,7 @@
 			<div class="btn-toolbar" role="toolbar" style="background-color: #F7F7F7; height: 50px; position: relative;top: 5px;">
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary"  id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editMerchantModal"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
+				  <button type="button" class="btn btn-default" data-toggle="modal" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
 				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				

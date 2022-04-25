@@ -4,6 +4,7 @@ import com.cm.APL.workbench.domain.OrderHistoryVo;
 import com.cm.APL.workbench.domain.Order;
 import com.cm.APL.workbench.domain.Orderform;
 import com.cm.APL.workbench.domain.Product;
+import com.cm.APL.workbench.domain.charts.MPBoss;
 import com.cm.APL.workbench.domain.charts.ProductSailNumber;
 
 import java.util.HashMap;
@@ -28,4 +29,6 @@ public interface OrderDao {
     int getProductType();
 
     List<ProductSailNumber> getProductSailNumber();
+
+    List<MPBoss> getMPBoss();
 }

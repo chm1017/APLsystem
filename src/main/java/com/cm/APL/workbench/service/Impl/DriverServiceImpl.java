@@ -1,6 +1,8 @@
 package com.cm.APL.workbench.service.Impl;
 
 
+import com.cm.APL.settings.dao.UserDao;
+import com.cm.APL.settings.domain.User;
 import com.cm.APL.utils.SqlSessionUtil;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.DriverDao;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class DriverServiceImpl implements DriverService {
     private DriverDao driverDao = SqlSessionUtil.getSqlSession().getMapper(DriverDao.class);
+    private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
     @Override
     public boolean save(Driver driver) {
         int i = driverDao.save(driver);
@@ -42,5 +45,24 @@ public class DriverServiceImpl implements DriverService {
     public Driver detail(String did) {
         Driver d= driverDao.detail(did);
         return d;
+    }
+
+    @Override
+    public HashMap<String, Object> getDriverById(String did) {
+        List<User> userList = userDao.getUserList();
+        Driver driver = driverDao.getDriverById(did);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("a", driver);
+        map.put("uList", userList);
+        return map;
+    }
+
+    @Override
+    public boolean update(Driver driver) {
+        int i =driverDao.update(driver);
+        if (i!=1){
+            return false;
+        }
+        return true;
     }
 }

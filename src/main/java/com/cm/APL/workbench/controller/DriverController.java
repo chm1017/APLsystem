@@ -1,5 +1,6 @@
 package com.cm.APL.workbench.controller;
 
+import com.cm.APL.utils.DateTimeUtil;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.settings.domain.User;
 import com.cm.APL.settings.service.Impl.UserServiceImpl;
@@ -32,7 +33,49 @@ public class DriverController extends HttpServlet {
             pageList(request, response);
         } else if ("/workbench/driver/detail.do".equals(path)) {
             detail(request, response);
+        } else if ("/workbench/driver/getDriverById.do".equals(path)) {
+            getDriverById(request, response);
+        } else if ("/workbench/driver/update.do".equals(path)) {
+            update(request, response);
         }
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+        String did = request.getParameter("did");
+        String dname = request.getParameter("dname");
+        String dage = request.getParameter("dage");
+        String dphone = request.getParameter("dphone");
+        String daddress = request.getParameter("daddress");
+        String dplace = request.getParameter("dplace");
+        String idNumber = request.getParameter("idNumber");
+        String driveId = request.getParameter("driveId");
+        String stage = request.getParameter("stage");
+        String createBy = request.getParameter("createBy");
+        Driver driver = new Driver();
+        driver.setDid(did);
+        driver.setDname(dname);
+        driver.setDage(dage);
+        driver.setDaddress(daddress);
+        driver.setDphone(dphone);
+        driver.setDplace(dplace);
+        driver.setIdNumber(idNumber);
+        driver.setDriveId(driveId);
+        driver.setStage(stage);
+        driver.setCreateBy(createBy);
+
+
+        DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
+        boolean flag = service.update(driver);
+        PrintJson.printJsonFlag(response,flag);
+
+
+    }
+
+    private void getDriverById(HttpServletRequest request, HttpServletResponse response) {
+        String did = request.getParameter("did");
+        DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
+        HashMap<String , Object> map = service.getDriverById(did);
+        PrintJson.printJsonObj(response, map);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,4 +15,8 @@ public interface MerchantDao {
     List<Merchant> getMerchantList();
 
     Merchant detail(String mid);
+
+    Merchant getMerchantById(String mid);
+
+    int update(Merchant m);
 }

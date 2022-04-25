@@ -15,4 +15,8 @@ public interface DriverService {
     List<Driver> getDriverList();
 
     Driver detail(String did);
+
+    HashMap<String, Object> getDriverById(String did);
+
+    boolean update(Driver driver);
 }

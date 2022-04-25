@@ -20,7 +20,15 @@ public class ChartController extends HttpServlet {
         String path = request.getServletPath();
         if ("/workbench/chart/getProductNumber.do".equals(path)) {
             getProductNumber(request, response);
+        } else if ("/workbench/chart/getMPBoss.do".equals(path)) {
+            getMPBoss(request, response);
         }
+    }
+
+    private void getMPBoss(HttpServletRequest request, HttpServletResponse response) {
+        ChartService service = (ChartService) ServiceFactory.getService(new ChartServiceImpl());
+        boolean flag = service.getMPBoss();
+        PrintJson.printJsonFlag(response, true);
     }
 
     private void getProductNumber(HttpServletRequest request, HttpServletResponse response) {
@@ -28,4 +36,6 @@ public class ChartController extends HttpServlet {
         PaginationVO<ProductSailNumber> vo= service.getProductNumber();
         PrintJson.printJsonObj(response, vo);
     }
+
+
 }

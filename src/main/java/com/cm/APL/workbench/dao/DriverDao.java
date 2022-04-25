@@ -17,4 +17,8 @@ public interface DriverDao {
     List<Driver> getDriver();
 
     Driver detail(String did);
+
+    Driver getDriverById(String did);
+
+    int update(Driver driver);
 }

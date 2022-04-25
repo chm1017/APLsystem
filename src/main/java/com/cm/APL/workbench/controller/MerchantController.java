@@ -4,6 +4,7 @@ package com.cm.APL.workbench.controller;
 import com.cm.APL.settings.domain.User;
 import com.cm.APL.settings.service.Impl.UserServiceImpl;
 import com.cm.APL.settings.service.UserService;
+import com.cm.APL.utils.DateTimeUtil;
 import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.utils.UUIDUtil;
@@ -33,7 +34,46 @@ public class MerchantController extends HttpServlet {
             pageList(request, response);
         } else if ("/workbench/merchant/detail.do".equals(path)) {
             detail(request, response);
+        } else if ("/workbench/merhchant/getMerchantById.do".equals(path)) {
+            getMerchantById(request, response);
+        } else if ("/workbench/merchant/update.do".equals(path)) {
+            update(request, response);
         }
+    }
+
+    private void update(HttpServletRequest request, HttpServletResponse response) {
+        String createBy = request.getParameter("createBy");
+        String mid = request.getParameter("mid");
+        String mname = request.getParameter("mname");
+        String mage = request.getParameter("mage");
+        String madress = request.getParameter("madress");
+        String memail = request.getParameter("memail");
+        String mphone = request.getParameter("mphone");
+        String company = request.getParameter("company");
+        String description = request.getParameter("description");
+        String editDate = DateTimeUtil.getSysTime();
+        Merchant m = new Merchant();
+        m.setMid(mid);
+        m.setCreateBy(createBy);
+        m.setMname(mname);
+        m.setMage(mage);
+        m.setMaddress(madress);
+        m.setMemail(memail);
+        m.setMphone(mphone);
+        m.setCompany(company);
+        m.setEditDate(editDate);
+        m.setDescription(description);
+        MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
+        boolean flag = service.update(m);
+        PrintJson.printJsonFlag(response,flag);
+
+    }
+
+    private void getMerchantById(HttpServletRequest request, HttpServletResponse response) {
+        String mid = request.getParameter("mid");
+        MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
+        HashMap < String, Object> map= service.getMerchantById(mid);
+        PrintJson.printJsonObj(response, map);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

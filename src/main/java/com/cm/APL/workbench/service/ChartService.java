@@ -6,4 +6,6 @@ import com.cm.APL.workbench.domain.charts.ProductSailNumber;
 
 public interface ChartService {
     PaginationVO<ProductSailNumber> getProductNumber();
+
+    boolean getMPBoss();
 }

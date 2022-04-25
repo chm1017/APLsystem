@@ -15,4 +15,8 @@ public interface MerchantService {
     List<Merchant> getMerchantList();
 
     Merchant detail(String mid);
+
+    HashMap<String, Object> getMerchantById(String mid);
+
+    boolean update(Merchant m);
 }
