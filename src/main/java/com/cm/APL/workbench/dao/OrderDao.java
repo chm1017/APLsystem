@@ -31,4 +31,8 @@ public interface OrderDao {
     List<ProductSailNumber> getProductSailNumber();
 
     List<MPBoss> getMPBoss();
+
+    List<MPBoss> getMaxProduct();
+
+    List<MPBoss> getMaxMerchant();
 }

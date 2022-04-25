@@ -4,6 +4,8 @@ import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.domain.Product;
+import com.cm.APL.workbench.domain.charts.MPBoss;
+import com.cm.APL.workbench.domain.charts.MPvo;
 import com.cm.APL.workbench.domain.charts.ProductSailNumber;
 import com.cm.APL.workbench.service.ChartService;
 import com.cm.APL.workbench.service.Impl.ChartServiceImpl;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class ChartController extends HttpServlet {
     @Override
@@ -27,8 +30,8 @@ public class ChartController extends HttpServlet {
 
     private void getMPBoss(HttpServletRequest request, HttpServletResponse response) {
         ChartService service = (ChartService) ServiceFactory.getService(new ChartServiceImpl());
-        boolean flag = service.getMPBoss();
-        PrintJson.printJsonFlag(response, true);
+        MPvo vo = service.getMPBoss();
+        PrintJson.printJsonObj(response, vo);
     }
 
     private void getProductNumber(HttpServletRequest request, HttpServletResponse response) {

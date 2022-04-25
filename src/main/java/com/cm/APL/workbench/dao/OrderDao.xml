@@ -4,13 +4,28 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderDao">
+    <select id="getMaxMerchant" resultType="MPBoss">
+        select distinct m.mname from orderlist o join fproduct f  on f.pid = o.pid
+                                                 join merchant m on m.mid=f.mid
+
+    </select>
+    <select id="getMaxProduct" resultType="MPBoss">
+        select distinct  vv.pname as pname from
+            (select  f.mid,f.pname
+             from orderlist o join fproduct f on f.pid = o.pid
+                              join  (select max(ss.type) ,ss.mid from (
+                                                                          select  count(distinct a.pname) as type ,a.mid from
+                                                                              (select o.pid , f.pname,f.mid from orderlist o join fproduct f on o.pid=f.pid ) a  group by mid) as ss) as sss on sss.mid=f.mid) as vv
+    </select>
+
+
     <select id="getMPBoss" resultType="MPBoss">
-        select s.tol,s.pname,m.mname from
-            (
-                select sum(count) as tol,f.pname as pname,f.mid
-                from orderList o
-                         join fproduct f on o.pid=f.pid group by o.pid
-            ) s join merchant m on m.mid=s.mid
+        select ss.tol,ss.pname,m.mname   from (
+                                                  select sum(a.tol) as tol, a.pname,a.mid from (
+                                                                                                   select sum(count) as tol,f.pname as pname,f.mid
+                                                                                                   from orderList o
+                                                                                                            join fproduct f on o.pid=f.pid group by o.pid) a
+                                                  group by a.mid,a.pname ) as ss join merchant m  on ss.mid=m.mid
     </select>
     <select id="getProductSailNumber" resultType="ProductSailNumber">
         select sum(count) as tol,f.pname as name

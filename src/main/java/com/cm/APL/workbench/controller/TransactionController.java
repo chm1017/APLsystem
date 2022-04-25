@@ -80,7 +80,7 @@ public class TransactionController extends HttpServlet {
     }
 
     private void saveOrder(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("jinlail ");
+
         String createDate = DateTimeUtil.getSysTime();
         String name = request.getParameter("name");
         String countStr = request.getParameter("totalprice");

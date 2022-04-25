@@ -5,6 +5,7 @@ import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.OrderDao;
 import com.cm.APL.workbench.domain.Product;
 import com.cm.APL.workbench.domain.charts.MPBoss;
+import com.cm.APL.workbench.domain.charts.MPvo;
 import com.cm.APL.workbench.domain.charts.ProductSailNumber;
 import com.cm.APL.workbench.service.ChartService;
 
@@ -23,25 +24,46 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public boolean getMPBoss() {
-        List<MPBoss> lists = orderDao.getMPBoss();
+    public MPvo getMPBoss() {
+        List<MPBoss> MPlist = orderDao.getMPBoss();
+        List<MPBoss> plist= orderDao.getMaxProduct();
+        List<MPBoss> mlist = orderDao.getMaxMerchant();
 
-        Set<String> ptype = new HashSet<>();
-        Set<String> mtype = new HashSet<>();
-        for(int i =0 ; i<lists.size();i++){
-            MPBoss m = lists.get(i);
-            mtype.add(m.getMname());
-            ptype.add(m.getPname());
+        String[] p = new String[plist.size()];
+        String[] m = new String[mlist.size()];
+        for (int i = 0; i < plist.size(); i++) {
+            p[i] = plist.get(i).getPname();
         }
-        int i = 0;
-        HashMap<String, String> map = new HashMap<String, String>();
-        for (String s : ptype) {
-            System.out.println(s);
-            i++;
-            System.out.println(map.get(s));
+        for (int i = 0; i < mlist.size(); i++) {
+            m[i] = mlist.get(i).getMname();
         }
+        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+        for (int i = 0; i < plist.size(); i++) {
+            for (int j = 0 ; j <mlist.size();j++) {
+                String pname = plist.get(i).getPname();
+                String mname = mlist.get(j).getMname();
+                for (int k = 0; k < MPlist.size(); k++) {
+                    String mname1 = MPlist.get(k).getMname();
+                    String pname1 = MPlist.get(k).getPname();
+                    ArrayList<Integer> list = new ArrayList<>();
+                    list.add(i);
+                    list.add(j);
+                    if (pname.equals(pname1) && mname.equals(mname1)) {
+                        list.add(MPlist.get(k).getTol());
+                    } else {
+                        list.add(0);
+                    }
+                    data.add(list);
+                }
+            }
+        }
+        System.out.println(data);
 
-        return true;
+        MPvo vo = new MPvo();
+        vo.setData(data);
+        vo.setM(m);
+        vo.setP(p);
+        return vo;
     }
 
 }
