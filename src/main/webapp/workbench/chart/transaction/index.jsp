@@ -39,10 +39,10 @@
                 var option;
 
                 // X轴 产品
-                var hours=data.p;
+                var hours=data.m;
 // prettier-ignore
                 //Y轴商户
-                var days = data.m;
+                var days = data.p;
                 var data1 = data.data;
 //                 var hours = ['12a', '1a', '2a', '3a', '4a', '5a', '6a',
 //                     '7a', '8a', '9a', '10a', '11a',
