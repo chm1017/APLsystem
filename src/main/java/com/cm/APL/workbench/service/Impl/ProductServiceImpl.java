@@ -64,5 +64,14 @@ public class ProductServiceImpl implements ProductService {
         return orderHistoryVos;
     }
 
+    @Override
+    public boolean delete(String[] ids) {
+        int i = productDao.delete(ids);
+        if (i != ids.length) {
+            return false;
+        }
+        return true;
+    }
+
 
 }

@@ -19,4 +19,6 @@ public interface ProductDao {
 
 
     int updateProductNumberById(@Param("repertory") Integer repertory, @Param("pid") String pid);
+
+    int delete(String[] ids);
 }

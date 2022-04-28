@@ -41,7 +41,16 @@ public class ProductController extends HttpServlet {
             detail(request, response);
         } else if (("/workbench/product/getProductHistory.do").equals(path)) {
             getProductHistory(request, response);
+        }else if ("/workbench/product/delete.do".equals(path)) {
+            delete(request, response);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        String[] ids = request.getParameterValues("id");
+        ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
+        boolean flag = service.delete(ids);
+        PrintJson.printJsonFlag(response, flag);
     }
 
     private void getProductHistory(HttpServletRequest request, HttpServletResponse response) {
@@ -107,10 +116,7 @@ public class ProductController extends HttpServlet {
         fp.setMid(mid);
         fp.setDescription(description);
         fp.setCreateBy(createBy);
-
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
-
-
         boolean flag =service.save(fp);
         PrintJson.printJsonFlag(response, flag);
 

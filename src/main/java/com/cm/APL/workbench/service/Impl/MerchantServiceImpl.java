@@ -66,4 +66,13 @@ public class MerchantServiceImpl implements MerchantService {
         }
         return true;
     }
+
+    @Override
+    public boolean delete(String[] ids) {
+        int i =merchantDao.delete(ids);
+        if (i != ids.length) {
+            return false;
+        }
+        return true;
+    }
 }

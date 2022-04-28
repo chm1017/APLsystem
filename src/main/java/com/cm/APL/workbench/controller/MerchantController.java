@@ -38,7 +38,16 @@ public class MerchantController extends HttpServlet {
             getMerchantById(request, response);
         } else if ("/workbench/merchant/update.do".equals(path)) {
             update(request, response);
+        } else if ("/workbench/merchant/delete.do".equals(path)) {
+            delete(request, response);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        String[] ids = request.getParameterValues("id");
+        MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
+        boolean flag = service.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {

@@ -21,4 +21,6 @@ public interface DriverDao {
     Driver getDriverById(String did);
 
     int update(Driver driver);
+
+    int delete(String[] ids);
 }

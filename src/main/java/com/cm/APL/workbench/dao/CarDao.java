@@ -15,4 +15,6 @@ public interface CarDao {
     List<Car> getCarnameList();
 
     Car detail(String cid);
+
+    int delete(String[] ids);
 }

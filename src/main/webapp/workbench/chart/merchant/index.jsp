@@ -68,7 +68,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
         });
 
         function genData(list) {
-            alert(list);
             const legendData = [];
             const seriesData = [];
             for (var i = 0; i < list.length; i++) {

@@ -15,6 +15,10 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
+    <listener>
+        <listener-class>com.cm.APL.web.listener.SysInitListener</listener-class>
+    </listener>
+
     <servlet>
         <servlet-name>ChartController</servlet-name>
         <servlet-class>com.cm.APL.workbench.controller.ChartController</servlet-class>
@@ -41,6 +45,7 @@
         <url-pattern>/workbench/transaction/orderListPage.do</url-pattern>
         <url-pattern>/workbench/transaction/detail.do</url-pattern>
         <url-pattern>/workbench/transaction/getorderListById.do</url-pattern>
+        <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -54,6 +59,7 @@
         <url-pattern>/workbench/car/pageList.do</url-pattern>
         <url-pattern>/workbench/car/getCarList.do</url-pattern>
         <url-pattern>/workbench/car/detail.do</url-pattern>
+        <url-pattern>/workbench/car/delete.do</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -68,6 +74,7 @@
         <url-pattern>/workbench/driver/detail.do</url-pattern>
         <url-pattern>/workbench/driver/getDriverById.do</url-pattern>
         <url-pattern>/workbench/driver/update.do</url-pattern>
+        <url-pattern>/workbench/driver/delete.do</url-pattern>
     </servlet-mapping>
 
 <servlet>
@@ -83,6 +90,7 @@
         <url-pattern>/workbench/product/getProductById.do</url-pattern>
         <url-pattern>/workbench/product/detail.do</url-pattern>
         <url-pattern>/workbench/product/getProductHistory.do</url-pattern>
+        <url-pattern>/workbench/product/delete.do</url-pattern>
     </servlet-mapping>
     
     <servlet>
@@ -97,6 +105,7 @@
         <url-pattern>/workbench/merchant/detail.do</url-pattern>
         <url-pattern>/workbench/merhchant/getMerchantById.do</url-pattern>
         <url-pattern>/workbench/merchant/update.do</url-pattern>
+        <url-pattern>/workbench/merchant/delete.do</url-pattern>
     </servlet-mapping>
     
 

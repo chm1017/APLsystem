@@ -37,7 +37,17 @@ public class DriverController extends HttpServlet {
             getDriverById(request, response);
         } else if ("/workbench/driver/update.do".equals(path)) {
             update(request, response);
+        } else if ("/workbench/driver/delete.do".equals(path)) {
+            delete(request, response);
         }
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        String[] ids = request.getParameterValues("id");
+        DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
+        boolean flag = service.delete(ids);
+        PrintJson.printJsonFlag(response,flag);
+
     }
 
     private void update(HttpServletRequest request, HttpServletResponse response) {

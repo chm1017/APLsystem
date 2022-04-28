@@ -71,4 +71,13 @@ public class TransactionServiceImpl implements TransactionService {
         List<Order> orders = orderDao.getOrderListById(oid);
         return orders;
     }
+
+    @Override
+    public boolean changeStage(HashMap<String, String> map) {
+        int i = orderformDao.changeStage(map);
+        if (i != 1) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -448,13 +448,13 @@
 								<div class="col-sm-10" style="width: 300px;">
 									<select class="form-control" id="create-stage">
 									  <option></option>
-									  <option>试图联系</option>
-									  <option>将来联系</option>
-									  <option>已联系</option>
-									  <option>虚假线索</option>
-									  <option>丢失线索</option>
-									  <option>未联系</option>
-									  <option>需要条件</option>
+									  <option>待付款</option>
+									  <option>待发货</option>
+									  <option>运输中</option>
+									  <option>派送中</option>
+									  <option>待收件</option>
+									  <option>已签收</option>
+									  <option>车辆空闲</option>
 									</select>
 								</div>
 							</div>

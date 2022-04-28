@@ -19,4 +19,6 @@ public interface MerchantDao {
     Merchant getMerchantById(String mid);
 
     int update(Merchant m);
+
+    int delete(String[] ids);
 }

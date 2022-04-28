@@ -21,4 +21,6 @@ public interface ProductService {
 
 
     List<OrderHistoryVo> getProductHistory(String pid);
+
+    boolean delete(String[] ids);
 }

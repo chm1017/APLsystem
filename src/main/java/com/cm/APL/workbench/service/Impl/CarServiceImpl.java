@@ -43,4 +43,14 @@ public class CarServiceImpl implements CarService {
         Car c= carDao.detail(cid);
         return c;
     }
+
+    @Override
+    public boolean delete(String[] ids) {
+        int i = carDao.delete(ids);
+        if (i != ids.length) {
+            return false;
+        }
+        return true;
+    }
+
 }

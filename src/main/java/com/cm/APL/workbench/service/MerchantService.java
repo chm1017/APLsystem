@@ -19,4 +19,6 @@ public interface MerchantService {
     HashMap<String, Object> getMerchantById(String mid);
 
     boolean update(Merchant m);
+
+    boolean delete(String[] ids);
 }

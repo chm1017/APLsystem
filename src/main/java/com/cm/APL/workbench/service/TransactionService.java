@@ -23,4 +23,6 @@ public interface TransactionService {
     Orderform detail(String id);
 
     List<Order> getOrderListById(String oid);
+
+    boolean changeStage(HashMap<String, String> map);
 }

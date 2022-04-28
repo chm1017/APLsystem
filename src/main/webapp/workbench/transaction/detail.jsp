@@ -1,7 +1,12 @@
+<%@ page import="com.cm.APL.workbench.domain.Orderform" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.cm.APL.settings.domain.DicType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/";
+	List<DicType> dicTypeList = (List<DicType>) application.getAttribute("dic");
 %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -124,6 +129,51 @@
 		})
 
 	}
+
+	function changeStage(stage, i) {
+		$.ajax({
+
+			url : "workbench/transaction/changeStage.do",
+			data : {
+
+				"id" : "${o.id}",
+				"stage" : stage
+			},
+			type : "post",
+			dataType : "json",
+			success : function (data) {
+				$("#create-stage").html(stage);
+				changeIcon(stage, i);
+			}
+		})
+	}
+
+	function changeIcon(stage, index1) {
+		var currentStage = stage;
+		var index = index1;
+		for (var i = 0; i <<%=dicTypeList.size()%>; i++) {
+			if (i == index) {
+				//绿色标记--------------------------
+				$("#"+i).removeClass();
+				$("#"+i).addClass("glyphicon glyphicon-map-marker mystage");
+				$("#"+i).css("color","#90F790");
+			}else if (i < index) {
+				//绿圈------------------------------
+				$("#" + i).removeClass();
+				$("#" + i).addClass("glyphicon glyphicon-ok-circle mystage");
+				$("#" + i).css("color", "#90F790");
+			} else {
+				//黑圈-------------------------------
+				$("#"+i).removeClass();
+				$("#"+i).addClass("glyphicon glyphicon-record mystage");
+				$("#"+i).css("color","#000000");
+
+			}
+		}
+
+
+
+	}
 	
 	
 	
@@ -151,25 +201,60 @@
 	<!-- 阶段状态 -->
 	<div style="position: relative; left: 40px; top: -50px;">
 		阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<span class="glyphicon glyphicon-ok-circle mystage" data-toggle="popover" data-placement="bottom" data-content="资质审查" style="color: #90F790;"></span>
+		<%
+
+			//准备当前阶段
+			Orderform t = (Orderform)request.getAttribute("o");
+			String currentStage = t.getStage();
+			int index = 0;
+			for (int i = 0; i <dicTypeList.size(); i++) {
+				DicType dicType =dicTypeList.get(i);
+				String stage = dicType.getType();
+				if (stage.equals(currentStage)) {
+					index = i;
+					break;
+				}
+			}
+
+			for (int i = 0; i <dicTypeList.size(); i++) {
+				DicType dicType =dicTypeList.get(i);
+				int k  = dicType.getId();
+				String stage = dicType.getType();
+				if (k == index) {
+		%>
+
+		<span id="<%=i%>" onclick="changeStage('<%=stage%>','<%=i%>')"
+			  class="glyphicon glyphicon-map-marker mystage"
+			  data-toggle="popover" data-placement="bottom"
+			  data-content="<%=dicType.getText()%>" style="color: #90F790;"></span>
 		-----------
-		<span class="glyphicon glyphicon-ok-circle mystage" data-toggle="popover" data-placement="bottom" data-content="需求分析" style="color: #90F790;"></span>
+
+		<%
+				} else if (i < index) {
+
+		%>
+
+		<span id="<%=i%>" onclick="changeStage('<%=stage%>','<%=i%>')"
+			  class="glyphicon glyphicon-ok-circle mystage"
+			  data-toggle="popover" data-placement="bottom"
+			  data-content="<%=dicType.getText()%>" style="color: #90F790;"></span>
 		-----------
-		<span class="glyphicon glyphicon-ok-circle mystage" data-toggle="popover" data-placement="bottom" data-content="价值建议" style="color: #90F790;"></span>
+
+		<%
+			}else {
+		%>
+
+		<span id="<%=i%>" onclick="changeStage('<%=stage%>','<%=i%>')"
+			  class="glyphicon glyphicon-record mystage"
+			  data-toggle="popover" data-placement="bottom"
+			  data-content="<%=dicType.getText()%>" style="color: #000000;"></span>
 		-----------
-		<span class="glyphicon glyphicon-ok-circle mystage" data-toggle="popover" data-placement="bottom" data-content="确定决策者" style="color: #90F790;"></span>
-		-----------
-		<span class="glyphicon glyphicon-map-marker mystage" data-toggle="popover" data-placement="bottom" data-content="提案/报价" style="color: #90F790;"></span>
-		-----------
-		<span class="glyphicon glyphicon-record mystage" data-toggle="popover" data-placement="bottom" data-content="谈判/复审"></span>
-		-----------
-		<span class="glyphicon glyphicon-record mystage" data-toggle="popover" data-placement="bottom" data-content="成交"></span>
-		-----------
-		<span class="glyphicon glyphicon-record mystage" data-toggle="popover" data-placement="bottom" data-content="丢失的线索"></span>
-		-----------
-		<span class="glyphicon glyphicon-record mystage" data-toggle="popover" data-placement="bottom" data-content="因竞争丢失关闭"></span>
-		-----------
-		<span class="closingDate">2010-10-10</span>
+		<%
+			}
+			}
+
+		%>
+
 	</div>
 	
 	<!-- 详细信息 -->
@@ -187,7 +272,7 @@
 			<div style="width: 300px; color: gray;">车辆名称</div>
 			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${o.carid}</b></div>
 			<div style="width: 300px;position: relative; left: 450px; top: -40px; color: gray;">阶段</div>
-			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b>${o.stage}</b></div>
+			<div style="width: 300px;position: relative; left: 650px; top: -60px;"><b id="create-stage">${o.stage}</b></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; top: -60px; left: 450px;"></div>
 		</div>

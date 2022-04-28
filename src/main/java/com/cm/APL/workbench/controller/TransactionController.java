@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionController extends HttpServlet {
     @Override
@@ -46,7 +47,22 @@ public class TransactionController extends HttpServlet {
             detail(request, response);
         } else if ("/workbench/transaction/getorderListById.do".equals(path)) {
             getOrderListById(request, response);
+        } else if ("/workbench/transaction/changeStage.do".equals(path)) {
+            changeStage(request, response);
         }
+    }
+
+    private void changeStage(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
+        String stage = request.getParameter("stage");
+        TransactionService ts = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        HashMap<String, String> map = new HashMap<>();
+        map.put("id", id);
+        map.put("stage", stage);
+        boolean flag = ts.changeStage(map);
+        PrintJson.printJsonFlag(response, flag);
+
+
     }
 
     private void getOrderListById(HttpServletRequest request, HttpServletResponse response) {

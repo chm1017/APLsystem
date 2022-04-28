@@ -19,4 +19,6 @@ public interface DriverService {
     HashMap<String, Object> getDriverById(String did);
 
     boolean update(Driver driver);
+
+    boolean delete(String[] ids);
 }

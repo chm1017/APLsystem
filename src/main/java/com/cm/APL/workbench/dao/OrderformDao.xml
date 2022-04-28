@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderformDao">
+
+    <update id="changeStage">
+        update orderform set stage = #{stage} where id =#{id}
+    </update>
+
     <select id="detail" resultType="Orderform">
 select
     s.id,s.name,s.description,s.totalprice,s.createDate,s.carid,s.stage,d.dname as did

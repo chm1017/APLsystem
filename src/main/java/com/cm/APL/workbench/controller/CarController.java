@@ -33,8 +33,17 @@ public class CarController extends HttpServlet {
             getCarList(request, response);
         } else if ("/workbench/car/detail.do".equals(path)) {
             detail(request, response);
+        } else if ("/workbench/car/delete.do".equals(path)) {
+            delete(request, response);
         }
 
+    }
+
+    private void delete(HttpServletRequest request, HttpServletResponse response) {
+        String[] ids = request.getParameterValues("id");
+        CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        boolean flag = service.delete(ids);
+        PrintJson.printJsonFlag(response, flag);
     }
 
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

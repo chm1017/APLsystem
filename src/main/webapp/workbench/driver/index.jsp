@@ -198,6 +198,35 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 			})
 
 		})
+		$("#deleteBtn").click(function () {
+			var $xz = $("input[name=xz]:checked");
+			if($xz.length==0){
+				alert("请选择需要删除的记录");
+			}else{
+				if(confirm("确定删除所选中的记录吗？")){
+					var param = "";
+					for(var i=0;i<$xz.length;i++){
+						param += "id="+$($xz[i]).val();
+						if(i<$xz.length-1){
+							param += "&";
+						}
+					}
+					$.ajax({
+						url : "workbench/driver/delete.do",
+						data : param,
+						type : "post",
+						dataType : "json",
+						success : function (data) {
+							if(data.success){
+								pageList(1,$("#driverPage").bs_pagination('getOption', 'rowsPerPage'));
+							}else{
+								alert("删除市场活动失败");
+							}
+						}
+					})
+				}
+			}
+		})
 
 	});
 	function pageList(pageNo,pageSize) {
@@ -456,7 +485,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 				<div class="btn-group" style="position: relative; top: 18%;">
 				  <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
 				  <button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				  <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				  <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 				</div>
 				
 			</div>

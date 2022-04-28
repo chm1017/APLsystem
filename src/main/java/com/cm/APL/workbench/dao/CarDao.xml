@@ -4,6 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.CarDao">
+    <delete id="delete">
+        delete from car where cid in
+        <foreach collection="array" separator="," item="id" open="(" close=")">#{id}</foreach>
+    </delete>
     <select id="detail" resultType="Car">
         select
             c.cid,

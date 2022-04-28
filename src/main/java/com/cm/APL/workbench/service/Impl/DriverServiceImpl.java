@@ -65,4 +65,13 @@ public class DriverServiceImpl implements DriverService {
         }
         return true;
     }
+
+    @Override
+    public boolean delete(String[] ids) {
+        int i = driverDao.delete(ids);
+        if (i != ids.length) {
+            return false;
+        }
+        return true;
+    }
 }
