@@ -256,7 +256,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 					html += '<td>'+n.dage+'</td>';
 					html += '<td>'+n.dphone+'</td>';
 					html += '<td>'+n.daddress+'</td>';
-					html += '<td>'+n.stage+'</td>';
 					html += '<td>'+n.dplace+'</td>';
 					html += '</tr>';
 
@@ -498,8 +497,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 							<td>年龄</td>
 							<td>电话</td>
 							<td>地址</td>
-
-							<td>状态</td>
 							<td>司机所属网点</td>
 						</tr>
 					</thead>

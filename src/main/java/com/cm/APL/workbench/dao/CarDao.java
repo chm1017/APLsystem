@@ -17,4 +17,6 @@ public interface CarDao {
     Car detail(String cid);
 
     int delete(String[] ids);
+
+    int updateCarStage(Car car);
 }

@@ -100,7 +100,6 @@
 
 	function pageList() {
 		//将全选的复选框的√干掉
-
 		$.ajax({
 
 			url : "workbench/transaction/getorderListById.do",
@@ -135,7 +134,7 @@
 
 			url : "workbench/transaction/changeStage.do",
 			data : {
-
+				"cname" : ${o.carid},
 				"id" : "${o.id}",
 				"stage" : stage
 			},

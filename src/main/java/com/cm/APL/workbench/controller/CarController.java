@@ -6,6 +6,7 @@ import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.utils.UUIDUtil;
 import com.cm.APL.workbench.domain.Car;
 import com.cm.APL.workbench.domain.Driver;
+import com.cm.APL.workbench.domain.Orderform;
 import com.cm.APL.workbench.service.CarService;
 import com.cm.APL.workbench.service.DriverService;
 import com.cm.APL.workbench.service.Impl.CarServiceImpl;
@@ -35,8 +36,28 @@ public class CarController extends HttpServlet {
             detail(request, response);
         } else if ("/workbench/car/delete.do".equals(path)) {
             delete(request, response);
+        } else if ("/workbench/car/transHistory.do".equals(path)) {
+            transHistory(request, response);
+        } else if ("/workbench/car/isTrans.do".equals(path)) {
+            isTrans(request, response);
         }
 
+    }
+
+    private void isTrans(HttpServletRequest request, HttpServletResponse response) {
+        String cid = request.getParameter("cid");
+        CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        List<Orderform> orderformList = service.isTrans(cid);
+        System.out.println(orderformList);
+
+        PrintJson.printJsonObj(response, orderformList);
+    }
+
+    private void transHistory(HttpServletRequest request, HttpServletResponse response) {
+        String cid = request.getParameter("cid");
+        CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        List<Orderform> orderformList = service.transHistory(cid);
+        PrintJson.printJsonObj(response, orderformList);
     }
 
     private void delete(HttpServletRequest request, HttpServletResponse response) {

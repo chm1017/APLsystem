@@ -6,10 +6,9 @@ import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
 import com.cm.APL.utils.UUIDUtil;
 import com.cm.APL.vo.PaginationVO;
-import com.cm.APL.workbench.domain.Order;
-import com.cm.APL.workbench.domain.OrderId;
-import com.cm.APL.workbench.domain.Orderform;
-import com.cm.APL.workbench.domain.Product;
+import com.cm.APL.workbench.domain.*;
+import com.cm.APL.workbench.service.CarService;
+import com.cm.APL.workbench.service.Impl.CarServiceImpl;
 import com.cm.APL.workbench.service.Impl.ProductServiceImpl;
 import com.cm.APL.workbench.service.Impl.TransactionServiceImpl;
 import com.cm.APL.workbench.service.ProductService;
@@ -55,11 +54,24 @@ public class TransactionController extends HttpServlet {
     private void changeStage(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
         String stage = request.getParameter("stage");
+        String cname = request.getParameter("cname");
+        boolean flag = true;
+
+        CarService carService = (CarService) ServiceFactory.getService(new CarServiceImpl());
+        Car car = new Car();
+        car.setStage(stage);
+        car.setCname(cname);
+        if (1 != carService.updateCarStage(car)) {
+            flag = false;
+        }
+
         TransactionService ts = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         HashMap<String, String> map = new HashMap<>();
         map.put("id", id);
         map.put("stage", stage);
-        boolean flag = ts.changeStage(map);
+        if (1 != ts.changeStage(map)) {
+            flag = false;
+        }
         PrintJson.printJsonFlag(response, flag);
 
 

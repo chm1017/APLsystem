@@ -4,6 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.cm.APL.workbench.dao.OrderformDao">
+    <select id="isTrans" resultType="Orderform">
+        select id,name,createDate,totalprice,description from orderform where carid=#{cid} and stage!="车辆空闲"
+    </select>
+    <select id="transHistory" resultType="Orderform">
+        select id,name,createDate,totalprice,description from orderform where carid=#{cid}
+    </select>
 
     <update id="changeStage">
         update orderform set stage = #{stage} where id =#{id}

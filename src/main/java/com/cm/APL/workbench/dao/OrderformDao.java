@@ -19,4 +19,8 @@ public interface OrderformDao {
     Orderform detail(String id);
 
     int changeStage(HashMap<String, String> map);
+
+    List<Orderform> transHistory(String cid);
+
+    List<Orderform> isTrans(String cid);
 }

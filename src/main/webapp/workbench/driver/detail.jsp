@@ -370,11 +370,6 @@
 			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${d.driveId}</b></div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
 		</div>
-		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
-			<div style="width: 300px; color: gray;">司机当前状态</div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${d.stage}</b></div>
-			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; top: -20px;"></div>
-		</div>
 
         <div style="position: relative; left: 40px; height: 30px; top: 50px;">
             <div style="width: 300px; color: gray;">创建人</div>

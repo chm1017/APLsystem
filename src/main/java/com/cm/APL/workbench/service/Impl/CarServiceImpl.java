@@ -4,7 +4,9 @@ package com.cm.APL.workbench.service.Impl;
 import com.cm.APL.utils.SqlSessionUtil;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.CarDao;
+import com.cm.APL.workbench.dao.OrderformDao;
 import com.cm.APL.workbench.domain.Car;
+import com.cm.APL.workbench.domain.Orderform;
 import com.cm.APL.workbench.service.CarService;
 
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.List;
 
 public class CarServiceImpl implements CarService {
     private CarDao carDao = SqlSessionUtil.getSqlSession().getMapper(CarDao.class);
+    private OrderformDao orderformDao = SqlSessionUtil.getSqlSession().getMapper(OrderformDao.class);
     @Override
     public boolean save(Car c) {
         int i = carDao.save(c);
@@ -51,6 +54,24 @@ public class CarServiceImpl implements CarService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int updateCarStage(Car car) {
+        int i =carDao.updateCarStage(car);
+        return i;
+    }
+
+    @Override
+    public List<Orderform> transHistory(String cid) {
+        List<Orderform> list = orderformDao.transHistory(cid);
+        return list;
+    }
+
+    @Override
+    public List<Orderform> isTrans(String cid) {
+        List<Orderform> list = orderformDao.isTrans(cid);
+        return list;
     }
 
 }

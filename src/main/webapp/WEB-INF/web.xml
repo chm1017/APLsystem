@@ -60,6 +60,8 @@
         <url-pattern>/workbench/car/getCarList.do</url-pattern>
         <url-pattern>/workbench/car/detail.do</url-pattern>
         <url-pattern>/workbench/car/delete.do</url-pattern>
+        <url-pattern>/workbench/car/transHistory.do</url-pattern>
+        <url-pattern>/workbench/car/idTrans.do</url-pattern>
     </servlet-mapping>
     
     <servlet>

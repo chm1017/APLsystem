@@ -24,5 +24,5 @@ public interface TransactionService {
 
     List<Order> getOrderListById(String oid);
 
-    boolean changeStage(HashMap<String, String> map);
+    int changeStage(HashMap<String, String> map);
 }

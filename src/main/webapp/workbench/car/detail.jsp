@@ -18,6 +18,9 @@
 	var cancelAndSaveBtnDefault = true;
 	
 	$(function(){
+		pageList();
+		pageList2();
+
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
 				//设置remarkDiv的高度为130px
@@ -52,6 +55,55 @@
 			$(this).children("span").css("color","#E6E6E6");
 		});
 	});
+	function pageList() {
+		$.ajax({
+			url : "workbench/car/transHistory.do",
+			data : {
+				"cid" : "${c.cid}"
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.totalprice+'</td>';
+					html += '<td>'+n.description+'</td>';
+					html += '</tr>';
+				})
+
+				$("#transHistoryBody").html(html);
+			}
+		})
+	}
+	function pageList2() {
+		alert("1")
+		$.ajax({
+			url : "workbench/car/idTrans.do",
+			data : {
+				"cid" : "${c.cid}"
+			},
+			type : "get",
+			dataType : "json",
+			success : function (data) {
+				var html = "";
+				//每一个n就是每一个市场活动对象
+				$.each(data,function (i,n) {
+					html += '<tr class="active">';
+					html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id='+n.id+'\';">'+n.name+'</a></td>';
+					html += '<td>'+n.createDate+'</td>';
+					html += '<td>'+n.totalprice+'</td>';
+					html += '<td>'+n.description+'</td>';
+					html += '</tr>';
+				})
+
+				$("#isTrans").html(html);
+			}
+		})
+	}
 	
 </script>
 
@@ -396,73 +448,50 @@
 	<div>
 		<div style="position: relative; top: 20px; left: 40px;">
 			<div class="page-header">
-				<h4>交易</h4>
+				<h4>交易中</h4>
 			</div>
 			<div style="position: relative;top: 0px;">
 				<table id="activityTable3" class="table table-hover" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td>名称</td>
-							<td>金额</td>
-							<td>阶段</td>
-							<td>可能性</td>
-							<td>预计成交日期</td>
-							<td>类型</td>
-							<td></td>
+							<td>订单名称</td>
+							<td>开始日期</td>
+							<td>订单价格</td>
+							<td>描述</td>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><a href="../transaction/detail.jsp" style="text-decoration: none;">动力节点-交易01</a></td>
-							<td>5,000</td>
-							<td>谈判/复审</td>
-							<td>90</td>
-							<td>2017-02-07</td>
-							<td>新业务</td>
-							<td><a href="javascript:void(0);" data-toggle="modal" data-target="#unbundModal" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>删除</a></td>
-						</tr>
+					<tbody id="isTrans">
+
 					</tbody>
 				</table>
 			</div>
-			
-			<div>
-				<a href="../transaction/save.jsp" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建交易</a>
-			</div>
+
 		</div>
 	</div>
 	
-	<!-- 市场活动 -->
+	<!-- 运输历史 -->
 	<div>
 		<div style="position: relative; top: 60px; left: 40px;">
 			<div class="page-header">
-				<h4>市场活动</h4>
+				<h4>运输历史</h4>
 			</div>
 			<div style="position: relative;top: 0px;">
 				<table id="activityTable" class="table table-hover" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
-							<td>名称</td>
+							<td>订单名称</td>
 							<td>开始日期</td>
-							<td>结束日期</td>
-							<td>所有者</td>
-							<td></td>
+							<td>订单价格</td>
+							<td>描述</td>
+
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<td><a href="../activity/detail.html" style="text-decoration: none;">发传单</a></td>
-							<td>2020-10-10</td>
-							<td>2020-10-20</td>
-							<td>zhangsan</td>
-							<td><a href="javascript:void(0);" data-toggle="modal" data-target="#unbundActivityModal" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>
-						</tr>
+					<tbody id="transHistoryBody">
+
 					</tbody>
 				</table>
 			</div>
-			
-			<div>
-				<a href="javascript:void(0);" data-toggle="modal" data-target="#bundActivityModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联市场活动</a>
-			</div>
+
 		</div>
 	</div>
 	
