@@ -4,8 +4,10 @@ package com.cm.APL.workbench.service.Impl;
 import com.cm.APL.utils.SqlSessionUtil;
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.dao.OrderDao;
+import com.cm.APL.workbench.dao.OrderFormRemarkDao;
 import com.cm.APL.workbench.dao.OrderformDao;
 import com.cm.APL.workbench.domain.Order;
+import com.cm.APL.workbench.domain.OrderFormRemark;
 import com.cm.APL.workbench.domain.Orderform;
 import com.cm.APL.workbench.service.TransactionService;
 
@@ -13,8 +15,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TransactionServiceImpl implements TransactionService {
-    private OrderDao orderDao = SqlSessionUtil.getSqlSession().getMapper(OrderDao.class);
+    private final OrderDao orderDao = SqlSessionUtil.getSqlSession().getMapper(OrderDao.class);
     private OrderformDao orderformDao =  SqlSessionUtil.getSqlSession().getMapper(OrderformDao.class);
+    private OrderFormRemarkDao orderFormRemarkDao = SqlSessionUtil.getSqlSession().getMapper(OrderFormRemarkDao.class);
+
     @Override
     public Integer addProductToOrder(Order o) {
         int i = orderDao.addProductToOrder(o);
@@ -76,5 +80,31 @@ public class TransactionServiceImpl implements TransactionService {
     public int changeStage(HashMap<String, String> map) {
         int i = orderformDao.changeStage(map);
         return i;
+    }
+
+    @Override
+    public List<OrderFormRemark> getRemarkListById(String orderFormId) {
+        List<OrderFormRemark> remarkList = orderFormRemarkDao.getRemarkListById(orderFormId);
+        return remarkList;
+    }
+
+    @Override
+    public boolean saveRemark(OrderFormRemark or) {
+        int i = orderFormRemarkDao.saveRemark(or);
+        if (i != 1) {
+
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+        int i = orderFormRemarkDao.deleteRemark(id);
+        if (i != 1) {
+
+            return false;
+        }
+        return true;
     }
 }

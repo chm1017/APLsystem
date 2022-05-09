@@ -3,6 +3,7 @@ package com.cm.APL.workbench.service;
 
 import com.cm.APL.vo.PaginationVO;
 import com.cm.APL.workbench.domain.Order;
+import com.cm.APL.workbench.domain.OrderFormRemark;
 import com.cm.APL.workbench.domain.Orderform;
 
 import java.util.HashMap;
@@ -25,4 +26,11 @@ public interface TransactionService {
     List<Order> getOrderListById(String oid);
 
     int changeStage(HashMap<String, String> map);
+
+
+    List<OrderFormRemark> getRemarkListById(String orderFormId);
+
+    boolean saveRemark(OrderFormRemark or);
+
+    boolean deleteRemark(String id);
 }

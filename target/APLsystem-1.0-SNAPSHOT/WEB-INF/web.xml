@@ -46,6 +46,9 @@
         <url-pattern>/workbench/transaction/detail.do</url-pattern>
         <url-pattern>/workbench/transaction/getorderListById.do</url-pattern>
         <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
+        <url-pattern>/workbench/transaction/getRemarkListById.do</url-pattern>
+        <url-pattern>/workbench/transaction/saveRemark.do</url-pattern>
+        <url-pattern>/workbench/transaction/deleteRemark.do</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -60,6 +63,8 @@
         <url-pattern>/workbench/car/getCarList.do</url-pattern>
         <url-pattern>/workbench/car/detail.do</url-pattern>
         <url-pattern>/workbench/car/delete.do</url-pattern>
+        <url-pattern>/workbench/car/transHistory.do</url-pattern>
+        <url-pattern>/workbench/car/isTrans.do</url-pattern>
     </servlet-mapping>
     
     <servlet>

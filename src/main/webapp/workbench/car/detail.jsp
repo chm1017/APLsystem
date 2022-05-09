@@ -80,9 +80,9 @@
 		})
 	}
 	function pageList2() {
-		alert("1")
+
 		$.ajax({
-			url : "workbench/car/idTrans.do",
+			url : "workbench/car/isTrans.do",
 			data : {
 				"cid" : "${c.cid}"
 			},

@@ -48,7 +48,49 @@ public class TransactionController extends HttpServlet {
             getOrderListById(request, response);
         } else if ("/workbench/transaction/changeStage.do".equals(path)) {
             changeStage(request, response);
+        } else if ("/workbench/transaction/getRemarkListById.do".equals(path)) {
+            getRemarkListById(request, response);
+        } else if ("/workbench/transaction/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        } else if ("/workbench/transaction/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
         }
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
+        TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        boolean flag = service.deleteRemark(id);
+        PrintJson.printJsonFlag(response, flag);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        String id = UUIDUtil.getUUID();
+        String noteContent = request.getParameter("noteContent");
+        String createDate = DateTimeUtil.getSysTime();
+        String orderFormId = request.getParameter("orderFormId");
+        String createBy = request.getParameter("createBy");
+        System.out.println(createBy);
+        OrderFormRemark or = new OrderFormRemark();
+        or.setCreateBy(createBy);
+        or.setOrderFormId(orderFormId);
+        or.setId(id);
+        or.setNoteContent(noteContent);
+        or.setCreateDate(createDate);
+        TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        boolean flag = service.saveRemark(or);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("success", flag);
+        map.put("or", or);
+        PrintJson.printJsonObj(response, map);
+
+    }
+
+    private void getRemarkListById(HttpServletRequest request, HttpServletResponse response) {
+        String orderFormId = request.getParameter("id");
+        TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
+        List<OrderFormRemark> remarks = service.getRemarkListById(orderFormId);
+        PrintJson.printJsonObj(response, remarks);
     }
 
     private void changeStage(HttpServletRequest request, HttpServletResponse response) {

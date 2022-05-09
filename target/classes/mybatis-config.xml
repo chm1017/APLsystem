@@ -3,8 +3,6 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	
-
   
   <typeAliases>
   	<package name="com.cm.APL.settings.domain"/>
@@ -22,10 +20,8 @@
       </dataSource>
     </environment>
   </environments>
-  
- 
+
   <mappers>
-   
       <package name="com.cm.APL.settings.dao"/>
       <package name="com.cm.APL.workbench.dao"/>
   </mappers>
