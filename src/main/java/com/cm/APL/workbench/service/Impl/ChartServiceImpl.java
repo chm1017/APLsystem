@@ -23,25 +23,68 @@ public class ChartServiceImpl implements ChartService {
         return vo;
     }
 
-    @Override
+//    @Override
+//    public MPvo getMPBoss() {
+//        List<MPBoss> MPlist = orderDao.getMPBoss();
+//        List<MPBoss> plist= orderDao.getMaxProduct();
+//        List<MPBoss> mlist = orderDao.getMaxMerchant();
+//
+//        String[] p = new String[plist.size()];
+//        String[] m = new String[mlist.size()];
+//        for (int i = 0; i < plist.size(); i++) {
+//            p[i] = plist.get(i).getPname();
+//        }
+//        for (int i = 0; i < mlist.size(); i++) {
+//            m[i] = mlist.get(i).getMname();
+//        }
+//        ArrayList<ArrayList<Integer>> data = new ArrayList<>();
+//        for (int i = 0; i < plist.size(); i++) {
+//            for (int j = 0 ; j <mlist.size();j++) {
+//                String pname = plist.get(i).getPname();
+//                String mname = mlist.get(j).getMname();
+//                for (int k = 0; k < MPlist.size(); k++) {
+//                    String mname1 = MPlist.get(k).getMname();
+//                    String pname1 = MPlist.get(k).getPname();
+//                    ArrayList<Integer> list = new ArrayList<>();
+//                    list.add(i);
+//                    list.add(j);
+//                    if (pname.equals(pname1) && mname.equals(mname1)) {
+//                        list.add(MPlist.get(k).getTol());
+//                    } else {
+//                        list.add(0);
+//                    }
+//                    data.add(list);
+//                }
+//            }
+//        }
+//        System.out.println(data);
+//
+//        MPvo vo = new MPvo();
+//        vo.setData(data);
+//        vo.setM(m);
+//        vo.setP(p);
+//        return vo;
+//    }
     public MPvo getMPBoss() {
         List<MPBoss> MPlist = orderDao.getMPBoss();
-        List<MPBoss> plist= orderDao.getMaxProduct();
-        List<MPBoss> mlist = orderDao.getMaxMerchant();
 
-        String[] p = new String[plist.size()];
-        String[] m = new String[mlist.size()];
-        for (int i = 0; i < plist.size(); i++) {
-            p[i] = plist.get(i).getPname();
-        }
-        for (int i = 0; i < mlist.size(); i++) {
-            m[i] = mlist.get(i).getMname();
-        }
+        HashSet<String> pset = new HashSet<>();
+        HashSet<String> mset = new HashSet<>();
+        MPlist.forEach(mpBoss -> pset.add(mpBoss.getPname())
+        );
+        MPlist.forEach(mpBoss -> mset.add(mpBoss.getMname())
+        );
+        int pl = pset.size();
+        int ml = mset.size();
+        List<String> mlist = new ArrayList<>();
+        mlist.addAll(mset);
+        ArrayList<String> plist = new ArrayList<>();
+        plist.addAll(pset);
         ArrayList<ArrayList<Integer>> data = new ArrayList<>();
         for (int i = 0; i < plist.size(); i++) {
             for (int j = 0 ; j <mlist.size();j++) {
-                String pname = plist.get(i).getPname();
-                String mname = mlist.get(j).getMname();
+                String pname = plist.get(i);
+                String mname = mlist.get(j);
                 for (int k = 0; k < MPlist.size(); k++) {
                     String mname1 = MPlist.get(k).getMname();
                     String pname1 = MPlist.get(k).getPname();
@@ -57,13 +100,13 @@ public class ChartServiceImpl implements ChartService {
                 }
             }
         }
-        System.out.println(data);
-
         MPvo vo = new MPvo();
         vo.setData(data);
-        vo.setM(m);
-        vo.setP(p);
+        vo.setM(mlist);
+        vo.setP(plist);
         return vo;
+
     }
+
 
 }

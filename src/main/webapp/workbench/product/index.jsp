@@ -93,7 +93,6 @@
 			$("#saveBtn").click(function () {
 
 				$.ajax({
-
 					url : "workbench/project/save.do",
 					data : {
 
@@ -106,7 +105,6 @@
 						"number" : $.trim($("#create-number").val()),
 						"mid" : $.trim($("#create-merchant").val()),
 						"description" : $.trim($("#create-description").val())
-
 					},
 					type : "post",
 					dataType : "json",

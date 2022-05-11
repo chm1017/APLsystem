@@ -14,6 +14,10 @@
 
 	//页面加载完毕
 	$(function(){
+		$("#updatePwdBtn").click(function () {
+			update();
+			// onclick="window.location.href='login.jsp';"
+		});
 		
 		//导航中所有文本颜色为黑色
 		$(".liClass > a").css("color" , "black");
@@ -37,8 +41,54 @@
 		});
 
 		window.open("workbench/main/index.jsp","workareaFrame");
-		
+
+		function update() {
+			var newPwd = $.trim($("#newPwd").val());
+			console.log(oldPwd);
+			var confirmPwd = $.trim($("#confirmPwd").val());
+			console.log(confirmPwd);
+			if (newPwd == confirmPwd) {
+				$.ajax({
+					url:"settings/user/eqPwd.do",
+					data : {
+						"loginPwd" : "${user.loginPwd}",
+						"oldPwd" : $.trim($("#oldPwd").val())
+					},
+					type: "post",
+					dataType : "json",
+					success : function (data) {
+						if (data.success){
+							$.ajax({
+								url:"settings/user/updatePwd.do",
+								data : {
+									"id" : "${user.id}",
+									"confirmPwd" : $.trim($("#confirmPwd").val())
+								},
+								type: "post",
+								dataType : "json",
+								success : function (data) {
+									if (data.success){
+										$("#editPwdModal").modal("hide");
+										window.location.href='login.jsp';
+									} else{
+										alert("修改密码错误");
+									}
+								}
+							})
+						} else{
+							alert("旧密码错误");
+						}
+					}
+				})
+
+			} else {
+				alert("新密码值不一样")
+				return false;
+			}
+		}
 	});
+
+
 	
 </script>
 
@@ -57,12 +107,11 @@
 				</div>
 				<div class="modal-body">
 					<div style="position: relative; left: 40px;">
-						姓名：<b>张三</b><br><br>
-						登录帐号：<b>zhangsan</b><br><br>
-						组织机构：<b>1005，市场部，二级部门</b><br><br>
-						邮箱：<b>zhangsan@bjpowernode.com</b><br><br>
-						失效时间：<b>2017-02-14 10:10:10</b><br><br>
-						允许访问IP：<b>127.0.0.1,192.168.100.2</b>
+						姓名：<b>${user.name}</b><br><br>
+						登录帐号：<b>${user.loginAct}</b><br><br>
+						邮箱：<b>${user.email}</b><br><br>
+						失效时间：<b>${user.expireTime}</b><br><br>
+						允许访问IP：<b>${user.allowIps}</b>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -108,7 +157,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='../login.jsp';">更新</button>
+					<button type="button" class="btn btn-primary" id="updatePwdBtn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -129,7 +178,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='../login.jsp';">确定</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="window.location.href='login.jsp';">确定</button>
 				</div>
 			</div>
 		</div>
@@ -138,7 +187,7 @@
 	<!-- 顶部 -->
 	<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
 		<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">农产品物流基础信息管理 &nbsp;<span style="font-size: 12px;">&copy;2022&nbsp;CM</span></div>
-		<div style="position: absolute; top: 15px; right: 15px;">
+		<div style="position: absolute; top: 15px; right: 100px;">
 			<ul>
 				<li class="dropdown user-dropdown">
 					<a href="javascript:void(0)" style="text-decoration: none; color: white;" class="dropdown-toggle" data-toggle="dropdown">
@@ -176,17 +225,11 @@
 					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 统计图表</a>
 					<ul id="no2" class="nav nav-pills nav-stacked collapse">
 						<li class="liClass"><a href="workbench/chart/merchant/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 市场活动统计图表</a></li>
-						<li class="liClass"><a href="workbench/chart/clue/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 线索统计图表</a></li>
 						<li class="liClass"><a href="workbench/chart/customerAndContacts/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 客户和联系人统计图表</a></li>
 						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 交易统计图表</a></li>
 					</ul>
 				</li>
-				<!-- <li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-file"></span> 报表</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-shopping-cart"></span> 销售订单</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-send"></span> 发货单</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 跟进</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-leaf"></span> 产品</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 报价</a></li> -->
+
 			</ul>
 			
 			<!-- 分割线 -->

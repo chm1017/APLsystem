@@ -15,6 +15,17 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.cm.APL.web.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>*.do</url-pattern>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+
+
     <listener>
         <listener-class>com.cm.APL.web.listener.SysInitListener</listener-class>
     </listener>
@@ -121,6 +132,8 @@
     <servlet-mapping>
         <servlet-name>UserController</servlet-name>
         <url-pattern>/settings/user/login.do</url-pattern>
+        <url-pattern>/settings/user/eqPwd.do</url-pattern>
+        <url-pattern>/settings/user/updatePwd.do</url-pattern>
     </servlet-mapping>
     
 

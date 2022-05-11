@@ -31,4 +31,13 @@ public class UserServiceImpl implements UserService {
         List<User> userList = userDao.getUserList();
         return userList;
     }
+
+    @Override
+    public boolean updatePwd(User user) {
+        int i = userDao.updatePwd(user);
+        if (i != 1) {
+            return false;
+        }
+        return true;
+    }
 }

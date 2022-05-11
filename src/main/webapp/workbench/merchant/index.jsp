@@ -49,7 +49,7 @@
 					//遍历出来的每一个n，就是每一个user对象
 					$.each(data,function (i,n) {
 
-						html += "<option value='"+n.id+"'>"+0+"</option>";
+						html += "<option value='"+n.id+"'>"+n.name+"</option>";
 
 					})
 					$("#create-createBy").html(html);

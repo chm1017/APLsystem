@@ -21,8 +21,37 @@ public class UserController extends HttpServlet {
         String path = request.getServletPath();
         if ("/settings/user/login.do".equals(path)) {
             login(request, response);
+        } else if ("/settings/user/eqPwd.do".equals(path)) {
+            eqPwd(request, response);
+        } else if ("/settings/user/updatePwd.do".equals(path)) {
+            updatePwd(request, response);
         }
 
+    }
+
+    private void updatePwd(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("id");
+        String loginPwd = request.getParameter("confirmPwd");
+        String md5 = MD5Util.getMD5(loginPwd);
+        UserService service = (UserService) ServiceFactory.getService(new UserServiceImpl());
+        User user = new User();
+        user.setId(id);
+        user.setLoginPwd(md5);
+
+        boolean flag = service.updatePwd(user);
+        PrintJson.printJsonFlag(response, flag);
+
+    }
+
+    private void eqPwd(HttpServletRequest request, HttpServletResponse response) {
+        String loginPwd = request.getParameter("loginPwd");
+        String oldPwd = request.getParameter("oldPwd");
+        String md5 = MD5Util.getMD5(oldPwd);
+        boolean flag = false;
+        if (md5.equals(loginPwd)) {
+            flag = true;
+        }
+        PrintJson.printJsonFlag(response, flag);
     }
 
     private void login(HttpServletRequest request, HttpServletResponse response) {
@@ -31,11 +60,9 @@ public class UserController extends HttpServlet {
         String md5 = MD5Util.getMD5(loginPwd);
         String ip = request.getRemoteAddr();
         UserService service = (UserService) ServiceFactory.getService(new UserServiceImpl());
-
         try {
-            User user = service.login(loginAct, loginPwd, ip);
+            User user = service.login(loginAct, md5, ip);
             request.getSession().setAttribute("user",user);
-
             PrintJson.printJsonFlag(response,true);
         } catch (Exception e) {
             e.printStackTrace();
