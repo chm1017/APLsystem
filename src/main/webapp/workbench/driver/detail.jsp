@@ -261,7 +261,7 @@
                             </div>
                             <label for="edit-customerName" class="col-sm-2 control-label">名称<span style="font-size: 15px; color: red;">*</span></label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control" id="edit-customerName" value="动力节点">
+                                <input type="text" class="form-control" id="edit-customerName" value="">
                             </div>
                         </div>
 
