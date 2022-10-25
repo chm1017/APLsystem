@@ -18,12 +18,9 @@ public class CarServiceImpl implements CarService {
     @Override
     public boolean save(Car c) {
         int i = carDao.save(c);
-        if (i != 1) {
-            return false;
-        }
+        if (i != 1) {return false;}
         return true;
     }
-
     @Override
     public PaginationVO<Car> pageList(HashMap<String, Object> map) {
         int Count = carDao.getTotal(map);
@@ -33,41 +30,32 @@ public class CarServiceImpl implements CarService {
         vo.setTotal(Count);
         return vo;
     }
-
     @Override
     public List<Car> getCarList() {
         List<Car> cars = carDao.getCarnameList();
-
         return cars;
     }
-
     @Override
     public Car detail(String cid) {
         Car c= carDao.detail(cid);
         return c;
     }
-
     @Override
     public boolean delete(String[] ids) {
         int i = carDao.delete(ids);
-        if (i != ids.length) {
-            return false;
-        }
+        if (i != ids.length) {return false;}
         return true;
     }
-
     @Override
     public int updateCarStage(Car car) {
         int i =carDao.updateCarStage(car);
         return i;
     }
-
     @Override
     public List<Orderform> transHistory(String cid) {
         List<Orderform> list = orderformDao.transHistory(cid);
         return list;
     }
-
     @Override
     public List<Orderform> isTrans(String cid) {
         List<Orderform> list = orderformDao.isTrans(cid);

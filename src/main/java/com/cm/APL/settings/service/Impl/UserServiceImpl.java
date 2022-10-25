@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class UserServiceImpl implements UserService {
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
-
     @Override
     public User login(String loginAct, String loginPwd, String ip) throws LoginException {
         Map<String , String> map = new HashMap<String, String>();
@@ -25,13 +24,11 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
     @Override
     public List<User> getUserList() {
         List<User> userList = userDao.getUserList();
         return userList;
     }
-
     @Override
     public boolean updatePwd(User user) {
         int i = userDao.updatePwd(user);

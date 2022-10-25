@@ -23,38 +23,26 @@
 <script type="text/javascript">
 
 	$(function(){
-		
 		pageList(1,3);
 		$("#qx").click(function () {
-
 			$("input[name=xz]").prop("checked",this.checked);
-
 		})
 		$("#orderListBogy").on("click",$("input[name=xz]"),function () {
-
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
-
 		})
-		
 	});
 	function pageList(pageNo,pageSize) {
-
 		//将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
-
 		$.ajax({
-
 			url : "workbench/transaction/orderListPage.do",
 			data : {
-
 				"pageNo" : pageNo,
 				"pageSize" : pageSize
-
 			},
 			type : "get",
 			dataType : "json",
 			success : function (data) {
-
 				var html = "";
 				//每一个n就是每一个市场活动对象
 				$.each(data.dataList,function (i,n) {
@@ -65,14 +53,10 @@
 					html += '<td>'+n.createDate+'</td>';
 					html += '<td>'+n.carid+'</td>';
 					html += '<td>'+n.stage+'</td>';
-
 					html += '</tr>';
-
 				})
 				// alert(html);
-
 				$("#orderListBogy").html(html);
-
 				//计算总页数
 				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
 				//数据处理完毕后，结合分页查询，对前端展现分页信息
@@ -82,14 +66,11 @@
 					maxRowsPerPage: 20, // 每页最多显示的记录条数
 					totalPages: totalPages, // 总页数
 					totalRows: data.total, // 总记录条数
-
 					visiblePageLinks: 3, // 显示几个卡片
-
 					showGoToPage: true,
 					showRowsPerPage: true,
 					showRowsInfo: true,
 					showRowsDefaultInfo: true,
-
 					//该回调函数时在，点击分页组件的时候触发的
 					onChangePage : function(event, data){
 						pageList(data.currentPage , data.rowsPerPage);

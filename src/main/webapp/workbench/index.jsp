@@ -16,12 +16,9 @@
 	$(function(){
 		$("#updatePwdBtn").click(function () {
 			update();
-			// onclick="window.location.href='login.jsp';"
 		});
-		
 		//导航中所有文本颜色为黑色
 		$(".liClass > a").css("color" , "black");
-		
 		//默认选中导航菜单中的第一个菜单项
 		$(".liClass:first").addClass("active");
 		
@@ -80,16 +77,12 @@
 						}
 					}
 				})
-
 			} else {
 				alert("新密码值不一样")
 				return false;
 			}
 		}
 	});
-
-
-	
 </script>
 
 </head>
@@ -120,7 +113,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!-- 修改密码的模态窗口 -->
 	<div class="modal fade" id="editPwdModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 70%;">
@@ -139,14 +131,12 @@
 								<input type="text" class="form-control" id="oldPwd" style="width: 200%;">
 							</div>
 						</div>
-						
 						<div class="form-group">
 							<label for="newPwd" class="col-sm-2 control-label">新密码</label>
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control" id="newPwd" style="width: 200%;">
 							</div>
 						</div>
-						
 						<div class="form-group">
 							<label for="confirmPwd" class="col-sm-2 control-label">确认密码</label>
 							<div class="col-sm-10" style="width: 300px;">
@@ -162,7 +152,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<!-- 退出系统的模态窗口 -->
 	<div class="modal fade" id="exitModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 30%;">
@@ -183,7 +172,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<!-- 顶部 -->
 	<div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
 		<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">农产品物流基础信息管理 &nbsp;<span style="font-size: 12px;">&copy;2022&nbsp;CM</span></div>
@@ -203,39 +191,29 @@
 			</ul>
 		</div>
 	</div>
-	
 	<!-- 中间 -->
 	<div id="center" style="position: absolute;top: 50px; bottom: 30px; left: 0px; right: 0px;">
-	
 		<!-- 导航 -->
 		<div id="navigation" style="left: 0px; width: 18%; position: relative; height: 100%; overflow:auto;">
-		
 			<ul id="no1" class="nav nav-pills nav-stacked">
 				<li class="liClass"><a href="workbench/main/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-home"></span> 工作台</a></li>
-				<!-- <li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-tag"></span> 动态</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-time"></span> 审批</a></li>
-				<li class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 客户公海</a></li> -->
 				<li class="liClass"><a href="workbench/merchant/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-play-circle"></span> 商户资料</a></li>
 				<li class="liClass"><a href="workbench/product/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-search"></span> 产品信息</a></li>
 				<li class="liClass"><a href="workbench/driver/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-user"></span> 司机档案</a></li>
 				<li class="liClass"><a href="workbench/car/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 车辆档案</a></li>
 				<li class="liClass"><a href="workbench/transaction/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 订单中心</a></li>
-				<!-- <li class="liClass"><a href="visit/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-phone-alt"></span> 售后回访</a></li> -->
 				<li class="liClass">
 					<a href="#no2" class="collapsed" data-toggle="collapse"><span class="glyphicon glyphicon-stats"></span> 统计图表</a>
 					<ul id="no2" class="nav nav-pills nav-stacked collapse">
-						<li class="liClass"><a href="workbench/chart/merchant/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 市场活动统计图表</a></li>
-						<li class="liClass"><a href="workbench/chart/customerAndContacts/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 客户和联系人统计图表</a></li>
+						<li class="liClass"><a href="workbench/chart/merchant/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span>产品销量统计图表</a></li>
+						<li class="liClass"><a href="workbench/chart/customerAndContacts/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 商户统计图表</a></li>
 						<li class="liClass"><a href="workbench/chart/transaction/index.jsp" target="workareaFrame">&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-chevron-right"></span> 交易统计图表</a></li>
 					</ul>
 				</li>
-
 			</ul>
-			
 			<!-- 分割线 -->
 			<div id="divider1" style="position: absolute; top : 0px; right: 0px; width: 1px; height: 100% ; background-color: #B3B3B3;"></div>
 		</div>
-		
 		<!-- 工作区 -->
 		<div id="workarea" style="position: absolute; top : 0px; left: 18%; width: 82%; height: 100%;">
 			<iframe style="border-width: 0px; width: 100%; height: 100%;" name="workareaFrame"></iframe>

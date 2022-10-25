@@ -95,7 +95,7 @@
       <resource>
         <directory>src/main/resources</directory>
       </resource>
-
     </resources>
+    <finalName>APlsystem</finalName>
   </build>
 </project>

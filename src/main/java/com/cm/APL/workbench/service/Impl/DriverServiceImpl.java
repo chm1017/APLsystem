@@ -18,12 +18,9 @@ public class DriverServiceImpl implements DriverService {
     @Override
     public boolean save(Driver driver) {
         int i = driverDao.save(driver);
-        if (i!=1){
-            return false;
-        }
+        if (i!=1){return false;}
         return true;
     }
-
     @Override
     public PaginationVO<Driver> pageList(HashMap<String, Object> map) {
         int count = driverDao.getTotalDriver(map);
@@ -32,9 +29,7 @@ public class DriverServiceImpl implements DriverService {
         vo.setTotal(count);
         vo.setDataList(drivers);
         return vo;
-
     }
-
     @Override
     public List<Driver> getDriverList() {
         List<Driver> drivers = driverDao.getDriver();
@@ -46,7 +41,6 @@ public class DriverServiceImpl implements DriverService {
         Driver d= driverDao.detail(did);
         return d;
     }
-
     @Override
     public HashMap<String, Object> getDriverById(String did) {
         List<User> userList = userDao.getUserList();
@@ -56,22 +50,16 @@ public class DriverServiceImpl implements DriverService {
         map.put("uList", userList);
         return map;
     }
-
     @Override
     public boolean update(Driver driver) {
         int i =driverDao.update(driver);
-        if (i!=1){
-            return false;
-        }
+        if (i!=1){return false;}
         return true;
     }
-
     @Override
     public boolean delete(String[] ids) {
         int i = driverDao.delete(ids);
-        if (i != ids.length) {
-            return false;
-        }
+        if (i != ids.length) {return false;}
         return true;
     }
 }

@@ -10,71 +10,29 @@
     <select id="transHistory" resultType="Orderform">
         select id,name,createDate,totalprice,description from orderform where carid=#{cid}
     </select>
-
     <update id="changeStage">
         update orderform set stage = #{stage} where id =#{id}
     </update>
-
     <select id="detail" resultType="Orderform">
 select
     s.id,s.name,s.description,s.totalprice,s.createDate,s.carid,s.stage,d.dname as did
-    from (select
-              o.id,
-              o.name,
-              o.totalprice,
-              o.createDate,
-              c.cname as carid,
-              c.did,
-              o.description,
-              o.stage
+    from (select o.id, o.name, o.totalprice, o.createDate, c.cname as carid, c.did, o.description, o.stage
           from orderform o join car c on c.cid=o.carid
           where id=#{id} ) as s
 join driver d on s.did=d.did
     </select>
-
     <select id="getOrderList" resultType="Orderform">
-        select
-o.id,
-o.name,
-o.totalprice,
-o.createDate,
-
-c.cname as carid,
-o.description,
-o.stage
+        select o.id, o.name, o.totalprice, o.createDate, c.cname as carid, o.description, o.stage
         from orderform o
 join car c  on c.cid=o.carid
-
 order by createDate desc limit #{skipCount} , #{pageSize}
     </select>
-
     <select id="getTotalOrderCount" resultType="int">
         select count(*) from orderform
     </select>
-
     <insert id="saveOrder">
-        insert into orderform (
-id,
-name,
-totalprice,
-createDate,
-
-carid,
-description,
-stage
- )  values(
- #{id},
- #{name},
- #{totalprice},
- #{createDate},
-
- #{carid},
- #{description},
- #{stage}
+        insert into orderform (id,name,totalprice,createDate,carid,description,stage
+ )  values(#{id},#{name},#{totalprice},#{createDate},#{carid},#{description},#{stage}
 )
     </insert>
-
-
-
-
 </mapper>

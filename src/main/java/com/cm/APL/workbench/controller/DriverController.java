@@ -47,9 +47,7 @@ public class DriverController extends HttpServlet {
         DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
         boolean flag = service.delete(ids);
         PrintJson.printJsonFlag(response,flag);
-
     }
-
     private void update(HttpServletRequest request, HttpServletResponse response) {
         String did = request.getParameter("did");
         String dname = request.getParameter("dname");
@@ -72,13 +70,9 @@ public class DriverController extends HttpServlet {
         driver.setDriveId(driveId);
         driver.setStage(stage);
         driver.setCreateBy(createBy);
-
-
         DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
         boolean flag = service.update(driver);
         PrintJson.printJsonFlag(response,flag);
-
-
     }
 
     private void getDriverById(HttpServletRequest request, HttpServletResponse response) {
@@ -132,7 +126,6 @@ public class DriverController extends HttpServlet {
         driver.setDriveId(driveId);
         driver.setStage(stage);
         driver.setCreateBy(createBy);
-
         DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
         boolean flag = service.save(driver);
         PrintJson.printJsonFlag(response,flag);

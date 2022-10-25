@@ -42,7 +42,6 @@ public class UserController extends HttpServlet {
         PrintJson.printJsonFlag(response, flag);
 
     }
-
     private void eqPwd(HttpServletRequest request, HttpServletResponse response) {
         String loginPwd = request.getParameter("loginPwd");
         String oldPwd = request.getParameter("oldPwd");
@@ -53,7 +52,6 @@ public class UserController extends HttpServlet {
         }
         PrintJson.printJsonFlag(response, flag);
     }
-
     private void login(HttpServletRequest request, HttpServletResponse response) {
         String loginAct = request.getParameter("loginAct");
         String loginPwd = request.getParameter("loginPwd");
@@ -72,6 +70,5 @@ public class UserController extends HttpServlet {
             map.put("msg", msg);
             PrintJson.printJsonObj(response, map);
         }
-
     }
 }

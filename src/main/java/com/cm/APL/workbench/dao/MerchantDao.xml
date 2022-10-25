@@ -10,76 +10,24 @@
     </delete>
     <update id="update">
             update merchant set
-mname=#{mname},
-mage=#{mage},
-maddress=#{maddress},
-memail=#{memail},
-mphone=#{mphone},
-company=#{company},
-description=#{description},
-createBy=#{createBy},
-editDate=#{editDate}
+mname=#{mname},mage=#{mage},maddress=#{maddress},memail=#{memail},mphone=#{mphone},company=#{company},description=#{description},createBy=#{createBy},editDate=#{editDate}
     where mid=#{mid}
     </update>
     <select id="getMerchantById" resultType="Merchant">
-        select  m.mid,
-                m.mname,
-                m.mage,
-                m.maddress,
-                m.memail,
-                m.mphone,
-                m.company,
-                m.description,
-                m.createBy
+        select  m.mid,m.mname,m.mage,m.maddress,m.memail,m.mphone,m.company,m.description,m.createBy
         from merchant m where m.mid = #{mid}
     </select>
     <select id="detail" resultType="Merchant">
-        select
-            m.mid,
-            m.mname,
-            m.mage,
-            m.maddress,
-            m.memail,
-            m.mphone,
-            m.description,
-            u.name as createBy,
-            m.createDate,
-            m.editBy,
-            m.editDate,
-            m.company
+        selectm.mid,m.mname,m.mage,m.maddress,m.memail,m.mphone,m.description,u.name as createBy,m.createDate,m.editBy,m.editDate,m.company
 from merchant m join user u on u.id=m.createBy where m.mid = #{mid}
-
     </select>
-
     <select id="getMerchantList" resultType="Merchant">
         select mid,mname from merchant
-
     </select>
-
     <insert id="save">
-        insert into merchant(
-            mid,
-            mname,
-            mage,
-            maddress,
-            memail,
-            mphone,
-            description,
-            createBy,
-            createDate,
-            company
-        )
-        values(
-#{mid},
-#{mname},
-#{mage},
-#{maddress},
-#{memail},
-#{mphone},
-#{description},
-#{createBy},
-#{createDate},
-#{company}
+        insert into merchant(mid,mname,mage,maddress,memail,mphone,description,createBy,createDate,company
+        )values(
+#{mid},#{mname},#{mage},#{maddress},#{memail},#{mphone},#{description},#{createBy},#{createDate},#{company}
         )
     </insert>
 
@@ -87,65 +35,37 @@ from merchant m join user u on u.id=m.createBy where m.mid = #{mid}
          select count(*)
          from merchant
         <where>
-
             <if test="mname!=null and mname!=''">
-
                 mname like '%' #{mname} '%'
-
             </if>
-
             <if test="mphone!=null and mphone!=''">
-
                 and mphone like '%' #{mphone} '%'
-
             </if>
-
             <if test="maddress!=null and maddress!=''">
-
                 and maddress like '%' #{maddress} '%'
-
             </if>
-
             <if test="description!=null and description!=''">
-
                 and description like '%' #{description} '%'
-
             </if>
-
         </where>
     </select>
-
     <select id="getMerchantListByCondition" resultType="Merchant">
         select mid,mname,mphone,maddress,description,createDate from merchant
         <where>
-
             <if test="mname!=null and mname!=''">
-
                 mname like '%' #{mname} '%'
-
             </if>
-
             <if test="mphone!=null and mphone!=''">
-
                 and mphone like '%' #{mphone} '%'
-
             </if>
-
             <if test="maddress!=null and maddress!=''">
-
                 and maddress like '%' #{maddress} '%'
-
             </if>
-
             <if test="description!=null and description!=''">
-
                 and description like '%' #{description} '%'
-
             </if>
-
         </where>
         order by createDate desc
         limit #{skipCount},#{pageSize}
     </select>
-
 </mapper>

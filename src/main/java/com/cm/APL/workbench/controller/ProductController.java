@@ -52,14 +52,12 @@ public class ProductController extends HttpServlet {
         boolean flag = service.delete(ids);
         PrintJson.printJsonFlag(response, flag);
     }
-
     private void getProductHistory(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("pid");
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
         List<OrderHistoryVo> dataList= service.getProductHistory(pid);
         PrintJson.printJsonObj(response, dataList);
     }
-
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String pid = request.getParameter("id");
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
@@ -67,7 +65,6 @@ public class ProductController extends HttpServlet {
         request.setAttribute("p", p);
         request.getRequestDispatcher("/workbench/product/detail.jsp").forward(request, response);
     }
-
     private void pageList(HttpServletRequest request, HttpServletResponse response) {
         String pname = request.getParameter("pname");
         String paddress = request.getParameter("paddress");
@@ -87,11 +84,14 @@ public class ProductController extends HttpServlet {
         map.put("mid", mid);
         map.put("createDate", createDate);
         map.put("endDate", endDate);
+
+        map.put("mname","刘");
+
+
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
         PaginationVO<Product> vo = service.pageList(map);
         PrintJson.printJsonObj(response, vo);
     }
-
     private void save(HttpServletRequest request, HttpServletResponse response) {
         String pid = UUIDUtil.getUUID();
         String pname = request.getParameter("pname");
@@ -119,20 +119,15 @@ public class ProductController extends HttpServlet {
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
         boolean flag =service.save(fp);
         PrintJson.printJsonFlag(response, flag);
-
-
     }
-
     private void getMerchantList(HttpServletRequest request, HttpServletResponse response) {
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         List<Merchant> merchantList = service.getMerchantList();
         PrintJson.printJsonObj(response, merchantList);
     }
-
     private void getUserList(HttpServletRequest request, HttpServletResponse response) {
         UserService service = (UserService) ServiceFactory.getService(new UserServiceImpl());
         List<User> userList = service.getUserList();
         PrintJson.printJsonObj(response,userList);
-
     }
 }

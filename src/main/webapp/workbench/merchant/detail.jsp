@@ -21,7 +21,6 @@
 
 	//默认情况下取消和保存按钮是隐藏的
 	var cancelAndSaveBtnDefault = true;
-	
 	$(function(){
 		$("#remark").focus(function(){
 			if(cancelAndSaveBtnDefault){
@@ -32,7 +31,6 @@
 				cancelAndSaveBtnDefault = false;
 			}
 		});
-		
 		$("#cancelBtn").click(function(){
 			//显示
 			$("#cancelAndSaveBtn").hide();
@@ -40,7 +38,6 @@
 			$("#remarkDiv").css("height","90px");
 			cancelAndSaveBtnDefault = true;
 		});
-		
 		$(".remarkDiv").mouseover(function(){
 			$(this).children("div").children("div").show();
 		});
@@ -57,8 +54,11 @@
 			$(this).children("span").css("color","#E6E6E6");
 		});
 		pageList(1,3)
-	});
 
+		$("#addBtn").click(function () {
+			window.location.href='workbench/product/index.jsp';
+		});
+	});
 	function pageList(pageNo,pageSize) {
 		//将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
@@ -88,7 +88,6 @@
 					html += '<td>'+n.repertory+'</td>';
 					html += '<td>'+n.price+'</td>';
 					html += '</tr>';
-
 				})
 
 				$("#productBody").html(html);
@@ -101,9 +100,7 @@
 					maxRowsPerPage: 20, // 每页最多显示的记录条数
 					totalPages: totalPages, // 总页数
 					totalRows: data.total, // 总记录条数
-
 					visiblePageLinks: 3, // 显示几个卡片
-
 					showGoToPage: true,
 					showRowsPerPage: true,
 					showRowsInfo: true,

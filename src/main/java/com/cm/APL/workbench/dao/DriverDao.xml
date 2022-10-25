@@ -8,51 +8,21 @@
         delete from driver where did in
         <foreach collection="array" separator="," item="id" open="(" close=")">#{id}</foreach>
     </delete>
-
     <update id="update">
-
-        update driver set
-                            dname=#{dname},
-                            dage=#{dage},
-                            daddress=#{daddress},
-
-                            dphone=#{dphone},
-                            dplace=#{dplace},
-                            idNumber=#{idNumber},
-                            driveId=#{driveId},
-                            createBy=#{createBy},
-                            stage=#{stage}
-
+        update driver set dname=#{dname},dage=#{dage},daddress=#{daddress},dphone=#{dphone},dplace=#{dplace},idNumber=#{idNumber},driveId=#{driveId},createBy=#{createBy},stage=#{stage}
         where did=#{did}
     </update>
-
-
     <select id="getDriverById" resultType="Driver">
-        select *
-        from driver
-        where did = #{did};
-
+        select * from driverwhere did = #{did};
     </select>
-
     <select id="detail" resultType="Driver">
-    select
-    d.did,
-        d.dname,
-        d.dage,
-        d.dphone,
-        d.daddress,
-        d.dplace,
-       d.idNumber,
-        d.driveId,
-        d.stage,
-        u.name as createBy
+    select d.did,d.dname,d.dage,d.dphone,d.daddress,d.dplace,d.idNumber,d.driveId,d.stage,u.name as createBy
 from driver d join user u on u.id = d.createBy
 where did=#{did}
     </select>
     <select id="getDriver" resultType="Driver">
         select did , dname from driver
     </select>
-
     <select id="getTotalDriver" resultType="int">
         select count(*) from driver
     </select>
@@ -60,33 +30,7 @@ where did=#{did}
         select * from driver order by driveId desc limit #{skipCount} , #{pageSize}
     </select>
     <insert id="save">
-        insert into driver(
-            did,
-                dname,
-dage,
-dphone,
-daddress,
-dplace,
-idNumber,
-driveId,
-stage,
-createBy
-        )
-        values(
-#{did},
-#{dname},
-#{dage},
-#{dphone},
-#{daddress},
-#{dplace},
-#{idNumber},
-#{driveId},
-#{stage},
-#{createBy}
-   )
+        insert into driver(did,dname,dage,dphone,daddress,dplace,idNumber,driveId,stage,createBy)
+    values(#{did},#{dname},#{dage},#{dphone},#{daddress},#{dplace},#{idNumber},#{driveId},#{stage},#{createBy})
     </insert>
-
-
-
-
 </mapper>

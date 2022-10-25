@@ -22,13 +22,11 @@
 			$("#loginAct").focus();
 			$("#submitBtn").click(function () {
 				login();
-
 			});
 			$(window).keydown(function (event) {
 				if (event.keyCode == 13) {
 					login();
 				}
-
 			})
 			function login() {
 				var loginAct = $.trim($("#loginAct").val());
@@ -54,11 +52,8 @@
 						}
 					}
 				})
-
 			}
-
 		})
-
 	</script>
 
 </head>

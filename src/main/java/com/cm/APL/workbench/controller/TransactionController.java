@@ -63,7 +63,6 @@ public class TransactionController extends HttpServlet {
         boolean flag = service.deleteRemark(id);
         PrintJson.printJsonFlag(response, flag);
     }
-
     private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
         String id = UUIDUtil.getUUID();
         String noteContent = request.getParameter("noteContent");
@@ -83,22 +82,18 @@ public class TransactionController extends HttpServlet {
         map.put("success", flag);
         map.put("or", or);
         PrintJson.printJsonObj(response, map);
-
     }
-
     private void getRemarkListById(HttpServletRequest request, HttpServletResponse response) {
         String orderFormId = request.getParameter("id");
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         List<OrderFormRemark> remarks = service.getRemarkListById(orderFormId);
         PrintJson.printJsonObj(response, remarks);
     }
-
     private void changeStage(HttpServletRequest request, HttpServletResponse response) {
         String id = request.getParameter("id");
         String stage = request.getParameter("stage");
         String cname = request.getParameter("cname");
         boolean flag = true;
-
         CarService carService = (CarService) ServiceFactory.getService(new CarServiceImpl());
         Car car = new Car();
         car.setStage(stage);
@@ -106,7 +101,6 @@ public class TransactionController extends HttpServlet {
         if (1 != carService.updateCarStage(car)) {
             flag = false;
         }
-
         TransactionService ts = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         HashMap<String, String> map = new HashMap<>();
         map.put("id", id);
@@ -115,25 +109,20 @@ public class TransactionController extends HttpServlet {
             flag = false;
         }
         PrintJson.printJsonFlag(response, flag);
-
-
     }
-
     private void getOrderListById(HttpServletRequest request, HttpServletResponse response) {
         String oid = request.getParameter("oid");
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         List<Order> orderList = service.getOrderListById(oid);
         PrintJson.printJsonObj(response, orderList);
     }
-
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter("id");
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         Orderform o = service.detail(id);
         request.setAttribute("o",o);
-        request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request, response);
+            request.getRequestDispatcher("/workbench/transaction/detail.jsp").forward(request, response);
     }
-
     private void orderListPage(HttpServletRequest request, HttpServletResponse response) {
         String pageSizeStr = request.getParameter("pageSize");
         String pageNOStr = request.getParameter("pageNo");
@@ -146,17 +135,13 @@ public class TransactionController extends HttpServlet {
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         PaginationVO<Orderform> vo = service.orderListPage(map);
         PrintJson.printJsonObj(response, vo);
-
     }
-
     private void saveOrder(HttpServletRequest request, HttpServletResponse response) {
-
         String createDate = DateTimeUtil.getSysTime();
         String name = request.getParameter("name");
         String countStr = request.getParameter("totalprice");
         double count = Double.parseDouble(countStr);
         String createBy = request.getParameter("createBy");
-
         String carid = request.getParameter("carid");
         String description = request.getParameter("description");
         String id = request.getParameter("oid");
@@ -173,21 +158,16 @@ public class TransactionController extends HttpServlet {
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         boolean flag = service.saveOrder(o);
         PrintJson.printJsonFlag(response, flag);
-
     }
-
     private void getSumByOrderId(HttpServletRequest request, HttpServletResponse response) {
         String oid = request.getParameter("oid");
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         Orderform orderform = service.getSumByOrderId(oid);
         PrintJson.printJsonObj(response,orderform);
-
     }
-
     private void orderProductList(HttpServletRequest request, HttpServletResponse response) {
         String oid = request.getParameter("oid");
         String pageNoStr = request.getParameter("pageNo");
-
         String pageSizeStr = request.getParameter("pageSize");
         int pageNo = Integer.parseInt(pageNoStr);
         int pageSize = Integer.parseInt(pageSizeStr);
@@ -200,12 +180,10 @@ public class TransactionController extends HttpServlet {
         PaginationVO<Order> vo = service.orderProductList(map);
         PrintJson.printJsonObj(response, vo);
     }
-
     private void addProductToOrder(HttpServletRequest request, HttpServletResponse response) {
         String id = UUIDUtil.getUUID();
         String pid = request.getParameter("pid");
         String pname = request.getParameter("pname");
-
         String mname = request.getParameter("mname");
         String priceStr = request.getParameter("price");
         String createDate = request.getParameter("createDate");
@@ -231,20 +209,16 @@ public class TransactionController extends HttpServlet {
         if (service.addProductToOrder(o) != 1) {
             flag = false;
         }
-
         System.out.println("pid:"+pid);
         String numberStr = request.getParameter("number");
         int total = Integer.parseInt(numberStr);
         Integer repertory = total - count;
-        System.out.println("kucun======"+repertory);
-
         ProductService service1 = (ProductService) ServiceFactory.getService(new ProductServiceImpl());
         if(service1.updateProductNumberById(repertory,pid)!=1){
             flag = false;
         }
         PrintJson.printJsonFlag(response, flag);
     }
-
     private void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String orderid = UUIDUtil.getUUID();
         OrderId oId = new OrderId();
@@ -252,7 +226,6 @@ public class TransactionController extends HttpServlet {
         request.setAttribute("oid",oId);
         request.getRequestDispatcher("/workbench/transaction/save2.jsp").forward(request, response);
     }
-
     private void getProductById(HttpServletRequest request, HttpServletResponse response) {
         String pid = request.getParameter("pid");
         ProductService service = (ProductService) ServiceFactory.getService(new ProductServiceImpl());

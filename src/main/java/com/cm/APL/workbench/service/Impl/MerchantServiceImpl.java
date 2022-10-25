@@ -17,11 +17,8 @@ public class MerchantServiceImpl implements MerchantService {
     private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);
     @Override
     public boolean save(Merchant merchant) {
-
         int i =merchantDao.save(merchant);
-        if (i != 1) {
-            return false;
-        }
+        if (i != 1) {return false;}
         return true;
     }
 
@@ -61,18 +58,14 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public boolean update(Merchant m) {
         int i = merchantDao.update(m);
-        if (i != 1) {
-            return false;
-        }
+        if (i != 1) {return false;}
         return true;
     }
 
     @Override
     public boolean delete(String[] ids) {
         int i =merchantDao.delete(ids);
-        if (i != ids.length) {
-            return false;
-        }
+        if (i != ids.length) {return false;}
         return true;
     }
 }

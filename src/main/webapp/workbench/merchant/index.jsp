@@ -23,13 +23,9 @@
 <script type="text/javascript">
 
 	$(function(){
-
 		pageList(1,3);
-
-
 		//为创建按钮绑定事件，打开添加操作的模态窗口
 		$("#addBtn").click(function () {
-
 			$(".time").datetimepicker({
 				minView: "month",
 				language:  'zh-CN',
@@ -38,7 +34,6 @@
 				todayBtn: true,
 				pickerPosition: "bottom-left"
 			});
-
 			//走后台，目的是为了取得用户信息列表，为所有者下拉框铺值
 			$.ajax({
 				url : "workbench/merchant/getUserList.do",
@@ -48,31 +43,23 @@
 					var html = "<option></option>";
 					//遍历出来的每一个n，就是每一个user对象
 					$.each(data,function (i,n) {
-
 						html += "<option value='"+n.id+"'>"+n.name+"</option>";
-
 					})
 					$("#create-createBy").html(html);
-
 					//取得当前登录用户的id
 					//在js中使用el表达式，el表达式一定要套用在字符串中
 					var id = "${user.id}";
 					$("#create-createBy").val(id);
 					//所有者下拉框处理完毕后，展现模态窗口
 					$("#createMerchantModal").modal("show");
-
 				}
 			})
-
 		})
 		//为保存按钮绑定事件，执行添加操作
 		$("#saveBtn").click(function () {
-
 			$.ajax({
-
 				url : "workbench/merchant/save.do",
 				data : {
-
 					"createBy" : $.trim($("#create-createBy").val()),
 					"mname" : $.trim($("#create-mname").val()),
 					"mage" : $.trim($("#create-mage").val()),
@@ -82,61 +69,38 @@
 					"company" : $.trim($("#create-company").val()),
 					"createDate" : $.trim($("#create-createDate").val()),
 					"description" : $.trim($("#create-description").val())
-
 				},
 				type : "post",
 				dataType : "json",
 				success : function (data) {
 					if(data.success){
-
 						pageList(1,$("#merchantPage").bs_pagination('getOption', 'rowsPerPage'));
-
 						$("#merchantAddForm")[0].reset();
-
-						//关闭添加操作的模态窗口
+						//闭添加操作的模态窗口
 						$("#createMerchantModal").modal("hide");
-						// alert("添加陈工")
-
-
 					}else{
 						alert("添加商户信息失败");
 					}
-
 				}
 			})
-
 		})
-
 		//为全选的复选框绑定事件，触发全选操作
 		$("#qx").click(function () {
-
 			$("input[name=xz]").prop("checked",this.checked);
-
 		})
 		$("#merchantBody").on("click",$("input[name=xz]"),function () {
-
 			$("#qx").prop("checked",$("input[name=xz]").length==$("input[name=xz]:checked").length);
-
 		})
-
 		$("#editBtn").click(function () {
 			var $xz = $("input[name=xz]:checked");
-
 			if($xz.length==0){
-
 				alert("请选择需要修改的记录");
-
 			}else if($xz.length>1){
-
 				alert("只能选择一条记录进行修改");
-
 				//肯定只选了一条
 			}else{
-
 				var id = $xz.val();
-
 				$.ajax({
-
 					url : "workbench/merhchant/getMerchantById.do",
 					data : {
 						"mid" : id
@@ -144,16 +108,11 @@
 					type : "get",
 					dataType : "json",
 					success : function (data) {
-
 						//处理所有者下拉框
 						var html = "<option></option>";
-
 						$.each(data.uList,function (i,n) {
-
 							html += "<option value='"+n.id+"'>"+n.name+"</option>";
-
 						})
-
 						$("#edit-createBy").html(html);
 						$("#edit-mid").val(data.a.mid);
 						$("#edit-createBy").val(data.a.createBy);
@@ -165,7 +124,6 @@
 						$("#edit-mphone").val(data.a.mphone);
 						$("#edit-company").val(data.a.company);
 						$("#edit-description").val(data.a.description);
-
 						//所有的值都填写好之后，打开修改操作的模态窗口
 						$("#editMerchantModal").modal("show");
 					}
@@ -174,9 +132,7 @@
 		})
 		//为保存按钮绑定事件，执行添加操作
 		$("#updateBtn").click(function () {
-
 			$.ajax({
-
 				url : "workbench/merchant/update.do",
 				data : {
 					"mid" : $.trim($("#edit-mid").val()),
@@ -188,29 +144,19 @@
 					"mphone" : $.trim($("#edit-mphone").val()),
 					"company" : $.trim($("#edit-company").val()),
 					"description" : $.trim($("#edit-description").val())
-
 				},
 				type : "post",
 				dataType : "json",
 				success : function (data) {
 					if(data.success){
-
 						pageList(1,$("#merchantPage").bs_pagination('getOption', 'rowsPerPage'));
-
-
-
 						//关闭添加操作的模态窗口
 						$("#editMerchantModal").modal("hide");
-						// alert("添加陈工")
-
-
 					}else{
 						alert("修改商户信息失败");
 					}
-
 				}
 			})
-
 		})
 		$("#deleteBtn").click(function () {
 			var $xz = $("input[name=xz]:checked");
@@ -241,39 +187,28 @@
 				}
 			}
 		})
-
-
-
-
 	});
 	function pageList(pageNo,pageSize) {
-
 		//将全选的复选框的√干掉
 		$("#qx").prop("checked",false);
-
 		// //查询前，将隐藏域中保存的信息取出来，重新赋予到搜索框中
 		$("#search-mname").val($.trim($("#hidden-mname").val()));
 		$("#search-mphone").val($.trim($("#hidden-mphone").val()));
 		$("#search-maddress").val($.trim($("#hidden-maddress").val()));
 		$("#search-description").val($.trim($("#hidden-description").val()));
-
 		$.ajax({
-
 			url : "workbench/merchant/pageList.do",
 			data : {
-
 				"pageNo" : pageNo,
 				"pageSize" : pageSize,
 				"mname" : $.trim($("#search-mname").val()),
 				"mphone" : $.trim($("#search-mphone").val()),
 				"maddress" : $.trim($("#search-maddress").val()),
 				"description" : $.trim($("#search-description").val())
-
 			},
 			type : "get",
 			dataType : "json",
 			success : function (data) {
-
 				var html = "";
 				//每一个n就是每一个市场活动对象
 				$.each(data.dataList,function (i,n) {
@@ -285,15 +220,10 @@
 					html += '<td>'+n.description+'</td>';
 					html += '<td>'+n.createDate+'</td>';
 					html += '</tr>';
-
 				})
-				// alert(html);
-
 				$("#merchantBody").html(html);
-
 				//计算总页数
 				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
-
 				//数据处理完毕后，结合分页查询，对前端展现分页信息
 				$("#merchantPage").bs_pagination({
 					currentPage: pageNo, // 页码
@@ -301,23 +231,18 @@
 					maxRowsPerPage: 20, // 每页最多显示的记录条数
 					totalPages: totalPages, // 总页数
 					totalRows: data.total, // 总记录条数
-
 					visiblePageLinks: 3, // 显示几个卡片
-
 					showGoToPage: true,
 					showRowsPerPage: true,
 					showRowsInfo: true,
 					showRowsDefaultInfo: true,
-
 					//该回调函数时在，点击分页组件的时候触发的
 					onChangePage : function(event, data){
 						pageList(data.currentPage , data.rowsPerPage);
 					}
 				});
-
 			}
 		})
-
 	}
 	
 </script>
@@ -329,9 +254,6 @@
 <input type="hidden" id="hidden-maddress"/>
 <input type="hidden" id="hidden-description"/>
 <input type="hidden" id="edit-mid"/>
-
-
-
 	<!-- 创建商户活动的模态窗口 -->
 	<div class="modal fade" id="createMerchantModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 85%;">
@@ -380,12 +302,7 @@
 							    <input type="text" class="form-control" id="create-mphone">
 							</div>
                         </div>
-
-
-
-
 						<div class="form-group">
-						
 						    <label for="create-company" class="col-sm-2 control-label">公司</label>
 						    <div class="col-sm-10" style="width: 300px;">
 						        <input type="text" class="form-control" id="create-company">
@@ -394,18 +311,14 @@
 							<div class="col-sm-10" style="width: 300px;">
 								<input type="text" class="form-control time" id="create-createDate">
 							</div>
-							
 						</div>
-						
 						<div class="form-group">
 							<label for="create-description" class="col-sm-2 control-label">描述</label>
 							<div class="col-sm-10" style="width: 81%;">
 								<textarea class="form-control" rows="3" id="create-description"></textarea>
 							</div>
 						</div>
-						
 					</form>
-					
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal" >关闭</button>
@@ -488,10 +401,6 @@
 			</div>
 		</div>
 	</div>
-	
-	
-	
-	
 	<div>
 		<div style="position: relative; left: 10px; top: -10px;">
 			<div class="page-header">

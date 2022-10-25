@@ -33,7 +33,6 @@
     <servlet>
         <servlet-name>ChartController</servlet-name>
         <servlet-class>com.cm.APL.workbench.controller.ChartController</servlet-class>
-
     </servlet>
     <servlet-mapping>
         <servlet-name>ChartController</servlet-name>
@@ -77,7 +76,6 @@
         <url-pattern>/workbench/car/transHistory.do</url-pattern>
         <url-pattern>/workbench/car/isTrans.do</url-pattern>
     </servlet-mapping>
-    
     <servlet>
         <servlet-name>DriverController</servlet-name>
         <servlet-class>com.cm.APL.workbench.controller.DriverController</servlet-class>
@@ -135,6 +133,4 @@
         <url-pattern>/settings/user/eqPwd.do</url-pattern>
         <url-pattern>/settings/user/updatePwd.do</url-pattern>
     </servlet-mapping>
-    
-
 </web-app>

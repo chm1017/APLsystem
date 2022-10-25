@@ -12,9 +12,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
     <script src="jquery/jquery-1.11.1-min.js"></script>
     <script>
         $(function () {
-
             $.ajax({
-
                 url : "workbench/chart/getProductNumber.do",
                 data : {
                 },
@@ -27,7 +25,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     // 指定图表的配置项和数据
                     var option = {
                         title: {
-                            text: '同名数量统计',
+                            text: '产品销量统计',
                             subtext: '纯属虚构',
                             left: 'center'
                         },
@@ -64,7 +62,6 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
                     myChart.setOption(option);
                 }
             })
-
         });
 
         function genData(list) {

@@ -49,39 +49,32 @@ public class CarController extends HttpServlet {
         CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
         List<Orderform> orderformList = service.isTrans(cid);
         System.out.println(orderformList);
-
         PrintJson.printJsonObj(response, orderformList);
     }
-
     private void transHistory(HttpServletRequest request, HttpServletResponse response) {
         String cid = request.getParameter("cid");
         CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
         List<Orderform> orderformList = service.transHistory(cid);
         PrintJson.printJsonObj(response, orderformList);
     }
-
     private void delete(HttpServletRequest request, HttpServletResponse response) {
         String[] ids = request.getParameterValues("id");
         CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
         boolean flag = service.delete(ids);
         PrintJson.printJsonFlag(response, flag);
     }
-
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String cid = request.getParameter("id");
         CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
         Car c = service.detail(cid);
         request.setAttribute("c", c);
         request.getRequestDispatcher("/workbench/car/detail.jsp").forward(request, response);
-
     }
-
     private void getCarList(HttpServletRequest request, HttpServletResponse response) {
         CarService service = (CarService) ServiceFactory.getService(new CarServiceImpl());
         List<Car> cars = service.getCarList();
         PrintJson.printJsonObj(response, cars);
     }
-
     private void pageList(HttpServletRequest request, HttpServletResponse response) {
         String pageNoStr = request.getParameter("pageNo");
         int pageNo = Integer.parseInt(pageNoStr);
@@ -95,13 +88,11 @@ public class CarController extends HttpServlet {
         PaginationVO<Car> vo = service.pageList(map);
         PrintJson.printJsonObj(response, vo);
     }
-
     private void getDriverList(HttpServletRequest request, HttpServletResponse response) {
         DriverService service = (DriverService) ServiceFactory.getService(new DriverServiceImpl());
         List<Driver> drivers = service.getDriverList();
         PrintJson.printJsonObj(response, drivers);
     }
-
     private void save(HttpServletRequest request, HttpServletResponse response) {
         String cid = UUIDUtil.getUUID();
         String plateNo = request.getParameter("plateNo");

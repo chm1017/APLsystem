@@ -18,58 +18,43 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public boolean save(Product fp) {
         int i = productDao.save(fp);
-        if (i != 1) {
-            return false;
-        }
+        if (i != 1) {return false;}
         return true;
     }
-
     @Override
     public PaginationVO<Product> pageList(HashMap<String, Object> map) {
         int total = productDao.getTotalByCondition(map);
-
         List<Product> productList= productDao.getProductListByCondition(map);
-
         System.out.println(productList);
-
         PaginationVO<Product> vo = new PaginationVO<Product>();
         vo.setDataList(productList);
         vo.setTotal(total);
-
         return vo;
     }
-
     @Override
     public Product getProductById(String pid) {
         Product p =productDao.getProductById(pid);
         return p;
     }
-
     @Override
     public Product detail(String pid) {
         Product p =productDao.detail(pid);
         return p;
     }
-
     @Override
     public int updateProductNumberById( Integer repertory,String pid) {
         int i =productDao.updateProductNumberById(repertory,pid);
         return i;
     }
-
     @Override
     public List<OrderHistoryVo> getProductHistory(String pid) {
         List<OrderHistoryVo> orderHistoryVos = orderDao.getProductHistory(pid);
-
         return orderHistoryVos;
     }
-
     @Override
     public boolean delete(String[] ids) {
         int i = productDao.delete(ids);
-        if (i != ids.length) {
-            return false;
-        }
+        if (i != ids.length) {return false;}
         return true;
     }
 

@@ -27,7 +27,6 @@ public class ChartController extends HttpServlet {
             getMPBoss(request, response);
         }
     }
-
     private void getMPBoss(HttpServletRequest request, HttpServletResponse response) {
         ChartService service = (ChartService) ServiceFactory.getService(new ChartServiceImpl());
         MPvo vo = service.getMPBoss();

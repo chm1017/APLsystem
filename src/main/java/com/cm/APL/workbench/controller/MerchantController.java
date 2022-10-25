@@ -49,7 +49,6 @@ public class MerchantController extends HttpServlet {
         boolean flag = service.delete(ids);
         PrintJson.printJsonFlag(response,flag);
     }
-
     private void update(HttpServletRequest request, HttpServletResponse response) {
         String createBy = request.getParameter("createBy");
         String mid = request.getParameter("mid");
@@ -75,23 +74,19 @@ public class MerchantController extends HttpServlet {
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         boolean flag = service.update(m);
         PrintJson.printJsonFlag(response,flag);
-
     }
-
     private void getMerchantById(HttpServletRequest request, HttpServletResponse response) {
         String mid = request.getParameter("mid");
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         HashMap < String, Object> map= service.getMerchantById(mid);
         PrintJson.printJsonObj(response, map);
     }
-
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String mid = request.getParameter("id");
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         Merchant m = service.detail(mid);
         request.setAttribute("m",m);
         request.getRequestDispatcher("/workbench/merchant/detail.jsp").forward(request, response);
-
     }
 
     private void pageList(HttpServletRequest request, HttpServletResponse response) {
@@ -99,10 +94,7 @@ public class MerchantController extends HttpServlet {
         int pageNo = Integer.parseInt(pageNoStr);
         String pageSizeStr = request.getParameter("pageSize");
         int pageSize = Integer.parseInt(pageSizeStr);
-
         int skipCount = (pageNo - 1) * pageSize;
-        System.out.println("跳过的数据"+skipCount);
-
         String mname = request.getParameter("mname");
         String mphone = request.getParameter("mphone");
         String maddress = request.getParameter("maddress");
@@ -114,13 +106,10 @@ public class MerchantController extends HttpServlet {
         map.put("description", description);
         map.put("skipCount", skipCount);
         map.put("pageSize", pageSize);
-
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         PaginationVO<Merchant> vo = service.pageList(map);
         PrintJson.printJsonObj(response, vo);
-
     }
-
     private void save(HttpServletRequest request, HttpServletResponse response) {
         String mid = UUIDUtil.getUUID();
         String createBy = request.getParameter("createBy");
@@ -143,14 +132,11 @@ public class MerchantController extends HttpServlet {
         m.setCompany(company);
         m.setCreateDate(createDate);
         m.setDescription(description);
-
         MerchantService service = (MerchantService) ServiceFactory.getService(new MerchantServiceImpl());
         boolean flag = service.save(m);
         PrintJson.printJsonFlag(response,flag);
     }
-
     private void getUserList(HttpServletRequest request, HttpServletResponse response) {
-
         UserService us = (UserService) ServiceFactory.getService(new UserServiceImpl());
         List<User> userList = us.getUserList();
         PrintJson.printJsonObj(response,userList);

@@ -5,19 +5,12 @@
 
 <mapper namespace="com.cm.APL.settings.dao.UserDao">
     <update id="updatePwd">
-        update user
-        set loginPwd=#{loginPwd}
-        where id = #{id};
-
+        update user set loginPwd=#{loginPwd}where id = #{id};
     </update>
-
     <select id="login" resultType="User">
-
     select * from user where loginAct=#{loginAct} and loginPwd=#{loginPwd}
-
     </select>
     <select id="getUserList" resultType="User">
         select * from user;
     </select>
-
 </mapper>

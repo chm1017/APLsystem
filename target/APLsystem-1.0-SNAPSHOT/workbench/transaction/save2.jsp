@@ -211,21 +211,16 @@
 	function pageList2(pageNo,pageSize) {
 		//将全选的复选框的√干掉
 		$("#qx2").prop("checked",false);
-
 		$.ajax({
-
 			url : "workbench/transaction/orderProductList.do",
 			data : {
-
 				"pageNo" : pageNo,
 				"pageSize" : pageSize,
 				"oid" : "${oid.id}"
-
 			},
 			type : "get",
 			dataType : "json",
 			success : function (data) {
-
 				var html = "";
 				//每一个n就是每一个市场活动对象
 				$.each(data.dataList,function (i,n) {
@@ -239,12 +234,9 @@
 					html += '<td>'+n.count+'</td>';
 					html += '<td>'+n.totalprice+'</td>';
 					html += '</tr>';
-
 				})
 
-
 				$("#orderBody").html(html);
-
 				//计算总页数
 				var totalPages = data.total%pageSize==0?data.total/pageSize:parseInt(data.total/pageSize)+1;
 				//数据处理完毕后，结合分页查询，对前端展现分页信息

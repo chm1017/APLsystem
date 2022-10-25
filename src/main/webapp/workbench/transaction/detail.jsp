@@ -222,10 +222,9 @@
 
 	function changeStage(stage, i) {
 		$.ajax({
-
 			url : "workbench/transaction/changeStage.do",
 			data : {
-				"cname" : ${o.carid},
+				"cname" : "${o.carid}",
 				"id" : "${o.id}",
 				"stage" : stage
 			},
@@ -257,7 +256,6 @@
 				$("#"+i).removeClass();
 				$("#"+i).addClass("glyphicon glyphicon-record mystage");
 				$("#"+i).css("color","#000000");
-
 			}
 		}
 	}
