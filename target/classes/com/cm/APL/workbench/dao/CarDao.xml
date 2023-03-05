@@ -23,7 +23,7 @@ join user u on u.id=c.createBy where cid=#{cid}
         select count(*) from car
     </select>
     <select id="getCarList" resultType="Car">
-        selectc.cid,c.plateNo,c.cplace,c.stage,d.dname as did,c.cload,c.baoxianId,c.cname
+        select c.cid,c.plateNo,c.cplace,c.stage,d.dname as did,c.cload,c.baoxianId,c.cname
         from car c join driver d on c.did=d.did limit #{skipCount} , #{pageSize}
     </select>
     <insert id="save">

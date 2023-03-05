@@ -84,6 +84,20 @@
 				}
 			})
 		})
+
+		//为查询按钮绑定事件，触发pageList方法
+		$("#searchBtn").click(function () {
+			/*
+				点击查询按钮的时候，我们应该将搜索框中的信息保存起来,保存到隐藏域中
+			 */
+			$("#hidden-mname").val($.trim($("#search-mname").val()));
+			$("#hidden-mphone").val($.trim($("#search-mphone").val()));
+			$("#hidden-maddress").val($.trim($("#search-maddress").val()));
+			$("#hidden-description").val($.trim($("#search-description").val()));
+			pageList(1,5);
+
+		})
+
 		//为全选的复选框绑定事件，触发全选操作
 		$("#qx").click(function () {
 			$("input[name=xz]").prop("checked",this.checked);
@@ -442,7 +456,7 @@
 				    </div>
 				  </div>
 				  
-				  <button type="submit" class="btn btn-default">查询</button>
+				  <button type="button" class="btn btn-default" id="searchBtn">查询</button>
 				  
 				</form>
 			</div>

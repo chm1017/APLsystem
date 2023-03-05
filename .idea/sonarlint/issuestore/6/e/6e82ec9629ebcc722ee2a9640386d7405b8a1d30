@@ -1,0 +1,25 @@
+
+J
+java:S3740;"/Provide the parametrized type for this generic.(­×öùÿÿÿÿ
+>
+java:S1604"(Make this anonymous inner class a lambda(éáì™
+C
+java:S1604 "(Make this anonymous inner class a lambda(ƒô‡íıÿÿÿÿ
+T
+java:S18545">Remove this useless assignment to local variable "properties".(ÿ‘¯„
+N	java:S106"9Replace this use of System.out or System.err by a logger.(ù»ÒÖ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ù£·êıÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(ù£·êıÿÿÿÿ
+S	java:S106&"9Replace this use of System.out or System.err by a logger.(ù£·êıÿÿÿÿ
+N	java:S106+"9Replace this use of System.out or System.err by a logger.(©¥ãş
+N	java:S1060"9Replace this use of System.out or System.err by a logger.(©¥ãş
+S	java:S1062"9Replace this use of System.out or System.err by a logger.(ªÓ¼áşÿÿÿÿ
+E
+java:S14815"/Remove this unused "properties" local variable.(ÿ‘¯„
+S	java:S1069"9Replace this use of System.out or System.err by a logger.(èëËıÿÿÿÿ
+S	java:S106:"9Replace this use of System.out or System.err by a logger.(œÇïœşÿÿÿÿ
+N	java:S106<"9Replace this use of System.out or System.err by a logger.(Áß‡Ü
+S	java:S106@"9Replace this use of System.out or System.err by a logger.(ÍÎÆ¥ùÿÿÿÿ
+N	java:S106B"9Replace this use of System.out or System.err by a logger.(Åø¬
+M	java:S106E"9Replace this use of System.out or System.err by a logger.(Ğûÿc
+N	java:S106F"9Replace this use of System.out or System.err by a logger.(Éí˜¤
