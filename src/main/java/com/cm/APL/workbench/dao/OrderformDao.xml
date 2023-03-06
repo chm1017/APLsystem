@@ -23,12 +23,11 @@ join driver d on s.did=d.did
     </select>
     <select id="getOrderList" resultType="Orderform">
         select o.id, o.name, o.totalprice, o.createDate, c.cname as carid, o.description, o.stage
-        from orderform o
-join car c  on c.cid=o.carid
+        from orderform o join car c  on c.cid=o.carid
 order by createDate desc limit #{skipCount} , #{pageSize}
     </select>
     <select id="getTotalOrderCount" resultType="int">
-        select count(*) from orderform
+        select count(*) from orderform o join car c  on c.cid=o.carid
     </select>
     <insert id="saveOrder">
         insert into orderform (id,name,totalprice,createDate,carid,description,stage

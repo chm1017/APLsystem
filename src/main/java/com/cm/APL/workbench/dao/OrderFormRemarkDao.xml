@@ -8,7 +8,6 @@
         select o.id,o.noteContent,o.createDate,u.name as createBy from orderformremark o
                  join user u on u.id=o.createBy
                  where orderFormId = #{orderFormId}
-
     </select>
     <insert id="saveRemark">
         insert into orderformremark(id, noteContent, createDate, createBy, orderFormId)

@@ -24,9 +24,10 @@ where pid = #{pid}
     </select>
 
     <select id="getTotalByCondition" resultType="int">
-        select count(*) from fproduct
+        select count(*) from fproduct f
+        join merchant m
+        on f.mid=m.mid
         <where>
-
             <if test="pname!=null and pname!=''">
                 pname like '%' #{pname} '%'
             </if>
@@ -66,7 +67,6 @@ where pid = #{pid}
             <if test="endDate!=null and endDate!=''">
                 and f.endDate &lt; #{endDate}
             </if>
-
         </where>
         order by f.createDate desc limit #{skipCount} , #{pageSize}
     </select>

@@ -20,7 +20,7 @@ join user u on u.id=c.createBy where cid=#{cid}
         select cid, cname from car;
     </select>
     <select id="getTotal" resultType="int">
-        select count(*) from car
+        select count(*) from car  c join driver d on c.did=d.did
     </select>
     <select id="getCarList" resultType="Car">
         select c.cid,c.plateNo,c.cplace,c.stage,d.dname as did,c.cload,c.baoxianId,c.cname
