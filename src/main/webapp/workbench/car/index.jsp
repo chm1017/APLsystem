@@ -383,11 +383,11 @@
 							<div class="col-sm-10" style="width: 300px;">
 								<select class="form-control" id="create-cplace">
 								  <option></option>
-								  <option>天元区</option>
-								  <option>石峰区</option>
-								  <option>沪松区</option>
-								  <option>荷塘区</option>
-								  <option>禄口区</option>
+								  <option>金水区</option>
+								  <option>二七区</option>
+								  <option>郑东新区</option>
+								  <option>中原区</option>
+								  <option>惠济区</option>
 								</select>
 							</div>
 						</div>
