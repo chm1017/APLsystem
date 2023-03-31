@@ -18,7 +18,7 @@ mname=#{mname},mage=#{mage},maddress=#{maddress},memail=#{memail},mphone=#{mphon
         from merchant m where m.mid = #{mid}
     </select>
     <select id="detail" resultType="Merchant">
-        selectm.mid,m.mname,m.mage,m.maddress,m.memail,m.mphone,m.description,u.name as createBy,m.createDate,m.editBy,m.editDate,m.company
+        select m.mid,m.mname,m.mage,m.maddress,m.memail,m.mphone,m.description,u.name as createBy,m.createDate,m.editBy,m.editDate,m.company
 from merchant m join user u on u.id=m.createBy where m.mid = #{mid}
     </select>
     <select id="getMerchantList" resultType="Merchant">

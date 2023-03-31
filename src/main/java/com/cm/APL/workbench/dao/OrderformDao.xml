@@ -8,7 +8,7 @@
         select id,name,createDate,totalprice,description,stage from orderform where carid=#{cid} and stage!="车辆空闲"
     </select>
     <select id="transHistory" resultType="Orderform">
-        select id,name,createDate,totalprice,description from orderform where carid=#{cid}
+        select id,name,createDate,totalprice,description from orderform where carid=#{cid} and stage="车辆空闲"
     </select>
     <update id="changeStage">
         update orderform set stage = #{stage} where id =#{id}

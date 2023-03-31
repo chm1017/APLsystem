@@ -29,13 +29,16 @@
 			type : "get",
 			dataType : "json",
 			success : function (data) {
-				var html = "<option></option>";
-				//遍历出来的每一个n，就是每一个user对象
-				$.each(data,function (i,n) {
+				if (data.length == 0) {
+					var html = "<option>暂无空闲车辆</option>";
+				} else {
+					var html = "<option></option>";
+					//遍历出来的每一个n，就是每一个user对象
+					$.each(data,function (i,n) {
+						html += "<option value='"+n.cid+"'>"+n.cname+"</option>";
+					})
+				}
 
-					html += "<option value='"+n.cid+"'>"+n.cname+"</option>";
-
-				})
 				$("#create-carid").html(html);
 			}
 		})

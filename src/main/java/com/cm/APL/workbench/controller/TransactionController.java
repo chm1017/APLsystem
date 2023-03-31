@@ -1,6 +1,7 @@
 package com.cm.APL.workbench.controller;
 
 
+import com.cm.APL.settings.domain.DicType;
 import com.cm.APL.utils.DateTimeUtil;
 import com.cm.APL.utils.PrintJson;
 import com.cm.APL.utils.ServiceFactory;
@@ -114,6 +115,9 @@ public class TransactionController extends HttpServlet {
         String oid = request.getParameter("oid");
         TransactionService service = (TransactionService) ServiceFactory.getService(new TransactionServiceImpl());
         List<Order> orderList = service.getOrderListById(oid);
+        List<DicType> dicTypeList = (List<DicType>) request.getAttribute("dic");
+        System.out.println(dicTypeList);
+        
         PrintJson.printJsonObj(response, orderList);
     }
     private void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

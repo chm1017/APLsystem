@@ -24,9 +24,9 @@
                                                   group by a.mid,a.pname ) as ss join merchant m  on ss.mid=m.mid
     </select>
     <select id="getProductSailNumber" resultType="ProductSailNumber">
-        select sum(count) as tol,f.pname as name
+        select distinct o.pname  as name,sum(count) as tol
         from orderList o
-         join fproduct f on o.pid=f.pid group by o.pid
+         left join fproduct f on o.pid=f.pid group by o.pid
     </select>
     <select id="getProductType" resultType="int">
         select count(distinct pid) from orderlist

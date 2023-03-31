@@ -24,24 +24,24 @@ where pid = #{pid}
     </select>
 
     <select id="getTotalByCondition" resultType="int">
-        select count(*) from fproduct f
+        select count(*) from fproduct p
         join merchant m
-        on f.mid=m.mid
+        on p.mid=m.mid
         <where>
             <if test="pname!=null and pname!=''">
-                pname like '%' #{pname} '%'
+                p.pname like '%' #{pname} '%'
             </if>
             <if test="paddress!=null and paddress!=''">
-                and paddress like '%' #{paddress} '%'
+                and p.paddress like '%' #{paddress} '%'
             </if>
             <if test="mid!=null and mid!=''">
-                and mid like '%' #{mid} '%'
+                and p.mid like '%' #{mid} '%'
             </if>
             <if test="createDate!=null and createDate!=''">
-                and createDate &gt; #{createDate}
+                and p.createDate &gt; #{createDate}
             </if>
             <if test="endDate!=null and endDate!=''">
-                and endDate &lt; #{endDate}
+                and p.endDate &lt; #{endDate}
             </if>
         </where>
     </select>
@@ -59,7 +59,7 @@ where pid = #{pid}
                 and f.paddress like '%' #{paddress} '%'
             </if>
             <if test="mid!=null and mid!=''">
-                and m.mid like '%' #{mid} '%'
+                and f.mid like '%' #{mid} '%'
             </if>
             <if test="createDate!=null and createDate!=''">
                 and f.createDate &gt; #{createDate}

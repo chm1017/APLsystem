@@ -12,19 +12,19 @@
         <foreach collection="array" separator="," item="id" open="(" close=")">#{id}</foreach>
     </delete>
     <select id="detail" resultType="Car">
-        selectc.cid,c.plateNo,c.cplace,c.stage,c.company,d.dname as did,c.cload,c.fdjId,c.baoxianId,c.description,c.cname,u.name as createBy
+        select c.cid,c.plateNo,c.cplace,c.stage,c.company,d.dname as did,c.cload,c.fdjId,c.baoxianId,c.description,c.cname,u.name as createBy
         from car c join driver d on d.did=c.did
 join user u on u.id=c.createBy where cid=#{cid}
     </select>
     <select id="getCarnameList" resultType="Car">
-        select cid, cname from car;
+        select c.cid, c.cname from car c  join driver d on c.did=d.did where c.stage='车辆空闲'
     </select>
     <select id="getTotal" resultType="int">
-        select count(*) from car
+        select count(*) from car  c join driver d on c.did=d.did
     </select>
     <select id="getCarList" resultType="Car">
         select c.cid,c.plateNo,c.cplace,c.stage,d.dname as did,c.cload,c.baoxianId,c.cname
-        from car c join driver d on c.did=d.did limit #{skipCount} , #{pageSize}
+        from car c  LEFT join driver d on c.did=d.did limit #{skipCount} , #{pageSize}
     </select>
     <insert id="save">
         insert into car(cid,plateNo,cplace,stage,company,did,cload,fdjId,baoxianId,description,cname,createBy)
